@@ -1,0 +1,32 @@
+[
+  {
+    "id": "4-7-8-breathing",
+    "title": "4-7-8 breathing",
+    "duration_minutes": 3,
+    "steps": ["Inhale for 4 counts", "Hold for 7 counts", "Exhale for 8 counts", "Repeat two rounds"]
+  },
+  {
+    "id": "five-four-three-two-one",
+    "title": "5-4-3-2-1 grounding",
+    "duration_minutes": 5,
+    "steps": ["Name 5 things you see", "Name 4 things you feel", "Name 3 things you hear", "Name 2 things you smell", "Name 1 thing you taste"]
+  },
+  {
+    "id": "thought-reframing",
+    "title": "Thought reframing",
+    "duration_minutes": 7,
+    "steps": ["Write the thought", "Name the emotion", "List one fact for and against it", "Create a balanced thought"]
+  },
+  {
+    "id": "worry-parking",
+    "title": "Worry parking",
+    "duration_minutes": 5,
+    "steps": ["Write the worry once", "Schedule a review time", "Park it until then", "Return to one present task"]
+  },
+  {
+    "id": "one-small-step",
+    "title": "One small step planning",
+    "duration_minutes": 4,
+    "steps": ["Choose one useful action", "Make it under 10 minutes", "Remove one obstacle", "Start with the first minute"]
+  }
+]

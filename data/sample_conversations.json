@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "I feel overwhelmed"
+  },
+  {
+    "role": "assistant",
+    "content": "Let us take one slow breath and name what feels most urgent."
+  }
+]

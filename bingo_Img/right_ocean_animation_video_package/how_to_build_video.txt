@@ -1,0 +1,23 @@
+# طريقة التنفيذ السريعة على CapCut / Canva / Runway
+
+1. افتح مشروع 16:9 جديد.
+2. أضف صور المشاهد بالترتيب من 1 إلى 18.
+3. اجعل مدة كل صورة 10 ثواني.
+4. أضف حركة بسيطة لكل مشهد:
+   - Zoom in / Zoom out
+   - Pan left / Pan right
+   - Cinematic slow movement
+5. أضف الحوار كـ Text-to-Speech لكل شخصية، أو استخدم أداة Lip Sync.
+6. استورد ملف dialogue_subtitles_arabic.srt للترجمة.
+7. استخدم موسيقى خلفية خفيفة:
+   - البداية: ملهمة وهادئة
+   - الفشل: حزينة بسيطة
+   - تحت الماء: انتصار وحرية
+8. في آخر 10 ثواني أضف النص النهائي:
+   The Right Ocean Leadership
+   Find Your Ocean, Then Lead From It
+   لا تجبر نفسك أن تطير في سماء لا تشبهك.
+   اكتشف محيطك… ثم قُد منه.
+
+ملاحظة مهمة:
+لو الأداة لا تدعم العربية في Lip Sync، استخدم ElevenLabs أو CapCut Text-to-Speech للصوت، واجعل حركة الفم بسيطة أو استخدم Subtitles بوضوح.
