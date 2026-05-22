@@ -19,7 +19,7 @@ export function MoodChart({ data }: { data?: Array<{ day: string; mood: string; 
  />
  </div>
  
- <span className="text-right text-muted font-semibold tracking-wide bg-slate-100/60 rounded px-2 py-0.5 border border-border">
+ <span className="text-right text-muted font-semibold tracking-wide bg-surface/60 rounded px-2 py-0.5 border border-border">
  {item.mood}
  </span>
  </div>

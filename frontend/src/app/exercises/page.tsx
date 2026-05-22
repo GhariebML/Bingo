@@ -75,7 +75,7 @@ export default function Page() {
  key={exercise.id} 
  title={exercise.title}
  className={`flex flex-col justify-between transition-all duration-500 ${
- isActive ? 'ring-2 ring-calm/10 border-primary/20 scale-[1.01]' : ''
+ isActive ? 'ring-2 ring-primary/10 border-primary/20 scale-[1.01]' : ''
  }`}
  >
  <div className="space-y-4">
@@ -95,7 +95,7 @@ export default function Page() {
  <ol className="space-y-3.5">
  {(isActive ? exercise.steps : exercise.steps.slice(0, 2)).map((step, index) => (
  <li key={step} className="flex gap-3 text-sm leading-relaxed text-textSecondary transition-opacity duration-300">
- <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-sky to-mint/40 text-xs font-bold text-textPrimary border border-border shadow-sm select-none">
+ <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-surface text-xs font-bold text-textPrimary border border-border shadow-sm select-none">
  {index + 1}
  </span>
  <span className="pt-0.5">{step}</span>

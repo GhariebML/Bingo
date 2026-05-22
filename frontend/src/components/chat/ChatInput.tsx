@@ -19,7 +19,7 @@ export function ChatInput({ disabled = false, onSend }: { disabled?: boolean; on
  <input
  value={value}
  onChange={(event) => setValue(event.target.value)}
- className="min-h-12 rounded-lg border border-border bg-surface px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-mint"
+ className="min-h-12 rounded-lg border border-border bg-surface px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
  disabled={disabled}
  placeholder="Share what is on your mind..."
  />

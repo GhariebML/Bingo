@@ -36,7 +36,7 @@ export default function Page() {
  </div>
 
  {error?.includes('log in') ? (
- <Card className="border border-coral/30 bg-error/20 p-6 rounded-2xl" title="Sign in required">
+ <Card className="border border-error/30 bg-error/20 p-6 rounded-2xl" title="Sign in required">
  <p className="mt-2 mb-4 text-sm leading-relaxed text-textSecondary">
  Journal entries are safely isolated per user. Log in, create an account, or use demo login for local testing.
  </p>
@@ -65,7 +65,7 @@ export default function Page() {
  {entries.map((entry) => (
  <div 
  key={entry.id ?? entry.title} 
- className="relative group rounded-xl bg-gradient-to-r from-sky/10 to-foam p-5 border border-border transition-all duration-300 hover:shadow-sm"
+ className="relative group rounded-xl bg-surface p-5 border border-border transition-all duration-300 hover:shadow-sm"
  >
  <div className="flex items-start justify-between gap-4">
  <div className="space-y-2">

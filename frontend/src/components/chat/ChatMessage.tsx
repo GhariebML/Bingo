@@ -30,8 +30,8 @@ export function ChatMessage({
  isUser
  ? 'bg-primary text-white rounded-tr-none shadow-[0_4px_12px_rgba(8,58,92,0.15)]'
  : crisisMode
- ? 'border-2 border-coral/30 bg-error/20 text-[#852C1E] rounded-tl-none font-medium'
- : 'border border-border bg-surface/70 backdrop-blur rounded-tl-none text-textSecondary border-l-4 border-l-mint shadow-[0_4px_12px_rgba(8,58,92,0.02)]'
+ ? 'border-2 border-error/30 bg-error/20 text-[#852C1E] rounded-tl-none font-medium'
+ : 'border border-border bg-surface/70 backdrop-blur rounded-tl-none text-textSecondary border-l-4 border-l-primary shadow-[0_4px_12px_rgba(8,58,92,0.02)]'
  }`}
  >
  {!isUser ? (

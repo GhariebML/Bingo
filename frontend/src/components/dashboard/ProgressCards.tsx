@@ -1,7 +1,7 @@
 const stats = [
- { label: 'Journal Entries', value: '3', borderClass: 'border-t-mint bg-surface' },
- { label: 'Mood Check-ins', value: '5', borderClass: 'border-t-sky bg-surface' },
- { label: 'Exercises Completed', value: '2', borderClass: 'border-t-coral bg-error/20' },
+  { label: 'Journal Entries', value: '3', borderClass: 'border-t-primary bg-surface' },
+  { label: 'Mood Check-ins', value: '5', borderClass: 'border-t-secondary bg-surface' },
+  { label: 'Exercises Completed', value: '2', borderClass: 'border-t-success bg-surface' },
 ];
 
 export function ProgressCards() {

@@ -42,9 +42,9 @@ export default function Page() {
  </div>
 
  <div className="grid gap-6 lg:grid-cols-2">
- <Card className="border-t-4 border-t-coral" title="Crisis guidance">
+ <Card className="border-t-4 border-t-error" title="Crisis guidance">
  <div className="space-y-5">
- <div className="flex items-start gap-4 rounded-xl border border-coral/30 bg-error/20 p-5 text-textPrimary transition-all duration-300 hover:border-coral/50 shadow-sm">
+ <div className="flex items-start gap-4 rounded-xl border border-error/30 bg-error/20 p-5 text-textPrimary transition-all duration-300 hover:border-error/50 shadow-sm">
  <div className="rounded-lg bg-error/20 p-2.5 text-error shrink-0">
  <AlertTriangle className="" size={24} />
  </div>
@@ -80,11 +80,11 @@ export default function Page() {
  </div>
  </Card>
 
- <Card className="border-t-4 border-t-calm" title="Bingo will not provide">
+ <Card className="border-t-4 border-t-primary" title="Bingo will not provide">
  <ul className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-1">
  {notFor.map((item) => (
  <li key={item} className="flex items-center gap-3.5 bg-surface/40 border border-border rounded-xl px-4 py-3 shadow-sm hover:bg-surface/70 transition-all duration-200">
- <div className="rounded-full bg-calm/10 p-1.5 text-muted shrink-0">
+ <div className="rounded-full bg-primary/10 p-1.5 text-muted shrink-0">
  <ShieldCheck size={18} />
  </div>
  <span className="text-sm font-semibold text-textSecondary capitalize tracking-tight font-heading">{item}</span>
@@ -105,7 +105,7 @@ export default function Page() {
  sizes="(min-width: 1024px) 520px, 100vw" 
  src="/bingo/bingo-support.png" 
  />
- <div className="absolute inset-0 bg-gradient-to-t from-ocean/50 via-transparent to-transparent"></div>
+ <div className="absolute inset-0 bg-gradient-to-t from-primary/50 via-transparent to-transparent"></div>
  </div>
  <div className="grid gap-6 p-6 md:p-8 sm:grid-cols-2 bg-surface/50 backdrop-blur-md">
  <div className="space-y-2 border-b sm:border-b-0 sm:border-r border-slate-100 pb-6 sm:pb-0 sm:pr-6">

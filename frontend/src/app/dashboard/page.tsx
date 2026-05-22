@@ -59,7 +59,7 @@ export default function Page() {
  <p className="mt-2 text-sm text-muted leading-relaxed max-w-xl">
  Gentle progress tracking, common emotional vocabulary, and personalized wellness suggestions from your recent check-ins.
  {isConnected && (
- <span className="block mt-2 text-xs text-[#0b8a5c] font-semibold ">
+ <span className="block mt-2 text-xs text-success font-semibold ">
  ✓ Dashboard loaded from backend APIs
  </span>
  )}
@@ -69,14 +69,14 @@ export default function Page() {
  {/* Dynamic Status Badge */}
  <div className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold border transition-colors select-none ${
  isConnected 
- ? 'bg-surface border-mint/45 text-textPrimary' 
- : 'bg-surface border-sand text-textPrimary'
+ ? 'bg-surface border-success/40 text-textPrimary' 
+ : 'bg-surface border-border text-textPrimary'
  }`}>
  {isConnected ? (
  <>
  <span className="relative flex h-2 w-2">
- <span className=" absolute inline-flex h-full w-full rounded-full bg-[#0b8a5c] opacity-75"></span>
- <span className="relative inline-flex rounded-full h-2 w-2 bg-[#12a16d]"></span>
+ <span className=" absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
+ <span className="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
  </span>
  <span>Backend Connected</span>
  </>

@@ -25,7 +25,7 @@ export function MoodSelector() {
  onClick={() => setSelected(isSelected ? null : label)}
  className={`flex items-center gap-2 rounded-full border px-4.5 py-2 text-xs font-bold tracking-wide transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 hover:shadow-sm ${
  isSelected
- ? 'border-primary bg-surface text-textPrimary scale-[1.03] shadow-sm ring-2 ring-calm/10'
+ ? 'border-primary bg-surface text-textPrimary scale-[1.03] shadow-sm ring-2 ring-primary/10'
  : `border-border bg-surface/60 backdrop-blur text-textPrimary/85 ${bg}`
  }`}
  key={label}

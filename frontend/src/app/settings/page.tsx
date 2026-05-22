@@ -200,7 +200,7 @@ export default function Page() {
  onChange={(event) => setSettings({ ...settings, enable_real_ai: event.target.checked })}
  className="sr-only peer"
  />
- <div className="w-11 h-6 bg-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-border after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-surface after:border-textSecondary/20 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-calm"></div>
+ <div className="w-11 h-6 bg-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-border after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-surface after:border-textSecondary/20 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
  </label>
  </div>
 
@@ -450,7 +450,7 @@ export default function Page() {
  </div>
  <div className="rounded-xl border border-border bg-surface/40 p-4 transition-all duration-300">
  <div className="flex items-center gap-2 mb-1.5">
- <span className="w-2.5 h-2.5 rounded-full bg-calm "></span>
+ <span className="w-2.5 h-2.5 rounded-full bg-primary "></span>
  <span className="text-xs font-bold uppercase tracking-wider text-muted font-heading">Status Console</span>
  </div>
  <p className="text-xs text-textSecondary font-semibold leading-relaxed">{status}</p>
@@ -459,7 +459,7 @@ export default function Page() {
  </Card>
 
  {/* Vercel Deployment Notice Card */}
- <Card className="border-t-4 border-t-calm" title="Production & Local Routing">
+ <Card className="border-t-4 border-t-primary" title="Production & Local Routing">
  <div className="space-y-4 text-xs leading-relaxed text-textSecondary">
  <div className="bg-surface/40 border border-border p-3.5 rounded-xl space-y-1 shadow-sm">
  <span className="font-bold text-muted font-heading uppercase tracking-wider block text-[10px]">Local Application</span>
@@ -477,7 +477,7 @@ export default function Page() {
  </Card>
 
  {/* Safety Card */}
- <Card className="border-t-4 border-t-sky" title="Safety boundary">
+ <Card className="border-t-4 border-t-secondary" title="Safety boundary">
  <p className="text-sm leading-relaxed text-textSecondary">
  Bingo offers supportive reflection, not therapy, diagnosis, medication advice, or emergency care. Real AI providers remain gated until clinical, legal, and privacy reviews are complete.
  </p>
