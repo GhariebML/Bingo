@@ -1,5 +1,11 @@
 import { expect, test } from '@playwright/test';
 
+test.beforeEach(async ({ context }) => {
+  await context.setExtraHTTPHeaders({
+    'x-bingo-test-mode': 'true',
+  });
+});
+
 test('chat sends quick-start prompts to the backend', async ({ page }) => {
   await page.goto('/chat');
   await page.getByRole('button', { name: 'I am overthinking' }).first().click();
@@ -9,6 +15,7 @@ test('chat sends quick-start prompts to the backend', async ({ page }) => {
 test('journal persists an entry for the demo user', async ({ page }) => {
   await page.goto('/journal');
   await page.getByRole('button', { name: 'Demo login' }).click();
+  await expect(page.getByRole('button', { name: 'Demo login' })).toBeHidden();
   await page.getByPlaceholder('Entry title').fill('E2E reflection');
   await page.getByPlaceholder(/Write privately/).fill('A browser test saved this reflection.');
   await page.getByRole('button', { name: 'Save entry' }).click();

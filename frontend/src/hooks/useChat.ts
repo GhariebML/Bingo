@@ -34,8 +34,15 @@ export function useChat() {
     setLoading(true);
     setError(null);
 
+    const history = messages
+      .filter((m) => m.id !== 'welcome')
+      .map((m) => ({
+        role: m.role,
+        content: m.content,
+      }));
+
     try {
-      const response = await sendChatMessage({ message: trimmed, mood });
+      const response = await sendChatMessage({ message: trimmed, mood, history });
       const assistantMessage: ChatMessage = {
         id: crypto.randomUUID(),
         role: 'assistant',

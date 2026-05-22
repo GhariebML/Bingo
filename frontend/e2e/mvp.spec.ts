@@ -1,5 +1,11 @@
 import { expect, test } from '@playwright/test';
 
+test.beforeEach(async ({ context }) => {
+  await context.setExtraHTTPHeaders({
+    'x-bingo-test-mode': 'true',
+  });
+});
+
 test('landing, safety, and unauthenticated protected states load cleanly', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { name: /Meet Bingo/i })).toBeVisible();

@@ -1,6 +1,12 @@
-from pydantic_settings import BaseSettings
+import os
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'),
+        env_file_encoding='utf-8',
+        extra='ignore'
+    )
     app_name: str = 'Bingo API'
     app_env: str = 'development'
     environment: str = 'local'

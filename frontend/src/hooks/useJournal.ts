@@ -59,10 +59,11 @@ export function useJournal() {
 
   const startDemoSession = useCallback(async () => {
     setLoading(true);
-    setError(null);
     try {
       await loginWithDemo();
-      setEntries(await listJournalEntries());
+      const loaded = await listJournalEntries();
+      setEntries(loaded);
+      setError(null);
     } catch {
       setError('Could not start demo login.');
     } finally {

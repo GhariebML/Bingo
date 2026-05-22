@@ -12,10 +12,16 @@ export interface ChatMessage {
   mode?: string;
 }
 
+export interface ChatHistoryMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
 export interface ChatRequest {
   message: string;
   mood?: string;
   conversation_id?: string;
+  history?: ChatHistoryMessage[];
 }
 
 export interface ChatResponse {

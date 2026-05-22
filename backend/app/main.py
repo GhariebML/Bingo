@@ -6,7 +6,28 @@ from app.config import settings
 from app.core.rate_limit import rate_limit_middleware
 from app.db.database import init_db
 
-app = FastAPI(title='Bingo API', version='0.1.0')
+from contextlib import asynccontextmanager
+
+from contextvars import ContextVar
+from fastapi import Request
+
+is_test_mode: ContextVar[bool] = ContextVar('is_test_mode', default=False)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_db()
+    yield
+
+app = FastAPI(title='Bingo API', version='0.1.0', lifespan=lifespan)
+
+@app.middleware("http")
+async def test_mode_middleware(request: Request, call_next):
+    token = is_test_mode.set(request.headers.get("x-bingo-test-mode") == "true")
+    try:
+        return await call_next(request)
+    finally:
+        is_test_mode.reset(token)
+
 app.middleware('http')(rate_limit_middleware)
 app.add_middleware(
     CORSMiddleware,
@@ -18,7 +39,3 @@ app.add_middleware(
 app.include_router(health_router)
 app.include_router(v1_router, prefix='/api/v1')
 
-
-@app.on_event('startup')
-def startup() -> None:
-    init_db()

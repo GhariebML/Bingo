@@ -18,7 +18,7 @@ def generate_reply(payload: ChatRequest) -> ChatResponse:
             provider='mock',
             mode='demo',
         )
-    provider_response = generate_supportive_response(payload.message, payload.mood)
+    provider_response = generate_supportive_response(payload.message, payload.mood, payload.history)
     cleaned, notes = validate_response(provider_response.reply)
     return ChatResponse(
         reply=cleaned,
