@@ -19,21 +19,37 @@ export function ChatMessage({
   const isUser = role === 'user';
 
   return (
-    <div className={`flex items-start gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
-      {!isUser ? <BingoAvatar size={38} /> : null}
+    <div className={`flex items-start gap-3.5 ${isUser ? 'justify-end' : 'justify-start'} animate-pulse-subtle`}>
+      {!isUser ? (
+        <div className="shrink-0 transition-transform hover:scale-105">
+          <BingoAvatar size={40} />
+        </div>
+      ) : null}
       <div
-        className={`max-w-[82%] rounded-2xl px-4 py-3 text-sm leading-6 shadow-sm ${
-          isUser ? 'bg-ocean text-white' : crisisMode ? 'border border-[#F5B7B7] bg-[#FFE8E8] text-[#7A2323]' : 'border border-white bg-white text-slate-700'
+        className={`max-w-[78%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm transition-all duration-300 ${
+          isUser
+            ? 'bg-gradient-to-br from-ocean to-[#0E4F75] text-white rounded-tr-none shadow-[0_4px_12px_rgba(8,58,92,0.15)]'
+            : crisisMode
+              ? 'border-2 border-coral/30 bg-coral/5 text-[#852C1E] rounded-tl-none font-medium'
+              : 'border border-white/50 bg-white/70 backdrop-blur rounded-tl-none text-slate-700 border-l-4 border-l-mint shadow-[0_4px_12px_rgba(8,58,92,0.02)]'
         }`}
       >
-        {!isUser ? <p className="mb-1 text-xs font-bold uppercase tracking-wide text-calm">Bingo</p> : null}
-        <p>{content}</p>
-        {!isUser && provider ? (
-          <p className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-slate-500">{provider} / {mode}</p>
+        {!isUser ? (
+          <div className="flex items-center justify-between gap-4 mb-1 border-b border-ocean/5 pb-1 select-none">
+            <span className="text-[11px] font-extrabold uppercase tracking-widest text-calm">Bingo</span>
+            {provider ? (
+              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 bg-slate-100/60 rounded px-1.5 py-0.5">
+                {provider} · {mode}
+              </span>
+            ) : null}
+          </div>
         ) : null}
+        
+        <p className="whitespace-pre-wrap">{content}</p>
+        
         {!isUser && suggestedExercise && !crisisMode ? (
-          <div className="mt-3">
-            <Badge tone="mint">Suggested: {suggestedExercise}</Badge>
+          <div className="mt-3.5 pt-2 border-t border-ocean/5">
+            <Badge tone="mint">💡 Suggested Exercise: {suggestedExercise}</Badge>
           </div>
         ) : null}
       </div>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 import type { CreateJournalEntry } from '@/types/journal';
 
 export function JournalEditor({ onSave }: { onSave: (entry: CreateJournalEntry) => Promise<void> }) {
@@ -16,7 +17,7 @@ export function JournalEditor({ onSave }: { onSave: (entry: CreateJournalEntry) 
 
   return (
     <form
-      className="space-y-4 rounded-lg border border-white bg-white/90 p-5 shadow-soft"
+      className="glass-card rounded-2xl p-6 shadow-soft space-y-5"
       onSubmit={async (event) => {
         event.preventDefault();
         if (!title.trim() || !content.trim()) return;
@@ -25,25 +26,63 @@ export function JournalEditor({ onSave }: { onSave: (entry: CreateJournalEntry) 
         setContent('');
       }}
     >
-      <input value={title} onChange={(event) => setTitle(event.target.value)} className="w-full rounded-lg border border-sky px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-mint" placeholder="Entry title" />
-      <textarea
-        value={content}
-        onChange={(event) => setContent(event.target.value)}
-        className="min-h-64 w-full rounded-lg border border-sky p-4 text-sm leading-6 outline-none focus:ring-2 focus:ring-mint"
-        placeholder="Write privately. Start with what happened, what emotion was strongest, and one small step..."
-      />
-      <select value={mood} onChange={(event) => setMood(event.target.value)} className="w-full rounded-lg border border-sky px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-mint">
-        {['calm', 'anxious', 'sad', 'stressed', 'hopeful', 'tired', 'grateful', 'confused'].map((option) => <option key={option}>{option}</option>)}
-      </select>
-      <div className="flex flex-wrap gap-2">
-        {['calm', 'anxious', 'sad', 'stressed', 'hopeful', 'tired', 'grateful', 'confused'].map((tag) => (
-          <button key={tag} type="button" onClick={() => toggleTag(tag)} className={`rounded-full px-3 py-1 text-sm font-medium ${tags.includes(tag) ? 'bg-ocean text-white' : 'bg-mint/40 text-ocean'}`}>
-            {tag}
-          </button>
-        ))}
+      <div className="space-y-4">
+        <Input 
+          value={title} 
+          onChange={(event) => setTitle(event.target.value)} 
+          placeholder="Entry title" 
+          required
+        />
+        
+        <textarea
+          value={content}
+          onChange={(event) => setContent(event.target.value)}
+          className="min-h-56 w-full rounded-xl border border-slate-200 bg-white/70 p-4 text-sm leading-relaxed placeholder:text-slate-400 outline-none transition-all duration-300 focus:border-calm focus:bg-white focus:ring-4 focus:ring-calm/10 resize-y"
+          placeholder="Write privately here. What is on your mind? What emotion is strongest, and what is one small step you can take today?"
+          required
+        />
+        
+        <div className="grid gap-3 sm:grid-cols-2 items-center">
+          <div className="space-y-1.5">
+            <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Primary Mood</label>
+            <select 
+              value={mood} 
+              onChange={(event) => setMood(event.target.value)} 
+              className="w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-2.5 text-sm outline-none transition-all duration-300 focus:border-calm focus:bg-white focus:ring-4 focus:ring-calm/10 cursor-pointer"
+            >
+              {['calm', 'anxious', 'sad', 'stressed', 'hopeful', 'tired', 'grateful', 'confused'].map((option) => (
+                <option key={option} value={option}>{option.charAt(0).toUpperCase() + option.slice(1)}</option>
+              ))}
+            </select>
+          </div>
+          
+          <div className="space-y-1.5">
+            <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Select Emotion Tags</label>
+            <div className="flex flex-wrap gap-1.5">
+              {['calm', 'anxious', 'sad', 'stressed', 'hopeful', 'tired'].map((tag) => {
+                const isSelected = tags.includes(tag);
+                return (
+                  <button 
+                    key={tag} 
+                    type="button" 
+                    onClick={() => toggleTag(tag)} 
+                    className={`rounded-full px-3 py-1 text-xs font-bold transition-all duration-200 transform active:scale-95 border ${
+                      isSelected 
+                        ? 'bg-gradient-to-r from-ocean to-calm text-white border-transparent shadow-sm' 
+                        : 'bg-white/50 text-ocean border-slate-200 hover:bg-white'
+                    }`}
+                  >
+                    {tag}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="flex justify-end">
-        <Button type="submit">Save entry</Button>
+      
+      <div className="flex justify-end pt-2 border-t border-ocean/5">
+        <Button type="submit">Save Entry</Button>
       </div>
     </form>
   );

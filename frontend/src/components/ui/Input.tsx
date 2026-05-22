@@ -1,1 +1,8 @@
-export function Input(props: React.InputHTMLAttributes<HTMLInputElement>) { return <input {...props} className="w-full rounded-md border border-sage/50 px-3 py-2 outline-none focus:ring-2 focus:ring-calm" />; }
+export function Input({ className = '', ...props }: React.InputHTMLAttributes<HTMLInputElement>) {
+  return (
+    <input
+      {...props}
+      className={`w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-2.5 text-sm placeholder:text-slate-400 outline-none transition-all duration-300 focus:border-calm focus:bg-white focus:ring-4 focus:ring-calm/10 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+    />
+  );
+}

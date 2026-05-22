@@ -6,13 +6,42 @@
   color-scheme: light;
 }
 
-body {
-  min-height: 100vh;
-  background:
-    radial-gradient(circle at top left, rgba(221, 244, 255, 0.85), transparent 34rem),
-    radial-gradient(circle at bottom right, rgba(184, 235, 217, 0.45), transparent 28rem),
-    linear-gradient(135deg, #fff9ef 0%, #f8fcfd 54%, #f7e8c9 100%);
-  color: #102a43;
+@layer base {
+  body {
+    @apply font-sans text-ink min-h-screen bg-foam overflow-x-hidden;
+    background:
+      radial-gradient(circle at top left, rgba(221, 244, 255, 0.9), transparent 45rem),
+      radial-gradient(circle at bottom right, rgba(184, 235, 217, 0.6), transparent 45rem),
+      linear-gradient(135deg, #fff9ef 0%, #f4fbfd 50%, #f9f2e3 100%);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-outfit tracking-tight text-ocean;
+  }
+}
+
+/* Glassmorphism Card Style */
+.glass-card {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(14px) saturate(110%);
+  -webkit-backdrop-filter: blur(14px) saturate(110%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 10px 30px -5px rgba(8, 58, 92, 0.04), 0 4px 12px -2px rgba(8, 58, 92, 0.02);
+}
+
+/* Interactive card glow effect on hover */
+.glass-card-interactive {
+  @apply transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft;
+}
+
+/* Decorative Background Glow Blobs */
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: -1;
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 a {
@@ -23,4 +52,20 @@ a {
 ::selection {
   background: #a9e7d3;
   color: #0b3558;
+}
+
+/* Elegant Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(8, 58, 92, 0.15);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(8, 58, 92, 0.3);
 }

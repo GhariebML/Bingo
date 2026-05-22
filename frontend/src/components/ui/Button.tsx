@@ -1,9 +1,9 @@
 type ButtonVariant = 'primary' | 'secondary' | 'ghost';
 
 const variants: Record<ButtonVariant, string> = {
-  primary: 'bg-ocean text-white shadow-soft hover:bg-ink',
-  secondary: 'bg-mint text-ocean hover:bg-sky',
-  ghost: 'bg-white/70 text-ocean ring-1 ring-ocean/10 hover:bg-white',
+  primary: 'bg-gradient-to-r from-ocean to-[#0E4F75] text-white shadow-[0_4px_20px_-2px_rgba(8,58,92,0.25)] hover:from-[#0E4F75] hover:to-ocean hover:shadow-[0_6px_24px_-2px_rgba(8,58,92,0.35)]',
+  secondary: 'bg-gradient-to-r from-mint to-sky/90 text-ocean shadow-[0_4px_16px_rgba(184,235,217,0.25)] hover:brightness-[1.03] hover:shadow-[0_6px_20px_rgba(184,235,217,0.35)]',
+  ghost: 'bg-white/50 backdrop-blur-sm text-ocean border border-white/60 hover:bg-white/90 hover:border-white shadow-sm',
 };
 
 export function Button({
@@ -26,7 +26,7 @@ export function Button({
       disabled={disabled}
       onClick={onClick}
       type={type}
-      className={`inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60 ${variants[variant]} ${className}`}
+      className={`inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:transform-none disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]} ${className}`}
     >
       {children}
     </button>
