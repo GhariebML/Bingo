@@ -2,18 +2,18 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
-import { Outfit, Inter } from 'next/font/google';
+import { Plus_Jakarta_Sans, Manrope } from 'next/font/google';
 
-const outfit = Outfit({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  variable: '--font-outfit',
+  variable: '--font-heading',
   weight: ['400', '500', '600', '700', '800'],
   display: 'swap',
 });
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-sans',
   weight: ['400', '500', '600', '700'],
   display: 'swap',
 });
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${outfit.variable} ${inter.variable}`}>
+    <html lang="en" className={`${plusJakartaSans.variable} ${manrope.variable}`}>
       <body className="relative min-h-screen">
         {/* Decorative Floating Orbs */}
         <div className="glow-orb animate-float-slow bg-sky/50 w-[32rem] h-[32rem] top-[-10rem] left-[-10rem]" />

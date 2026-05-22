@@ -12,7 +12,7 @@ export function ProgressCards() {
           key={stat.label} 
           className={`glass-card glass-card-interactive rounded-2xl p-5 border-t-4 ${stat.borderClass} shadow-soft hover:-translate-y-0.5 transition-all duration-300`}
         >
-          <p className="text-3xl font-extrabold text-ocean font-outfit">{stat.value}</p>
+          <p className="text-3xl font-extrabold text-ocean font-heading">{stat.value}</p>
           <p className="mt-1.5 text-xs font-bold uppercase tracking-wider text-slate-500">{stat.label}</p>
         </div>
       ))}

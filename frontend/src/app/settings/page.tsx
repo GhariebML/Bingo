@@ -92,8 +92,8 @@ export default function Page() {
   return (
     <section className="space-y-8 animate-fade-in">
       <div>
-        <p className="text-xs font-bold uppercase tracking-widest text-calm font-outfit">Configuration</p>
-        <h1 className="text-4xl font-extrabold tracking-tight text-ocean sm:text-5xl font-outfit mt-1">Settings</h1>
+        <p className="text-xs font-bold uppercase tracking-widest text-calm font-heading">Configuration</p>
+        <h1 className="text-4xl font-extrabold tracking-tight text-ocean sm:text-5xl font-heading mt-1">Settings</h1>
         <p className="mt-3 max-w-2xl text-base text-slate-600">Manage preferences, saved data choices, and regional safety resources.</p>
       </div>
 
@@ -103,7 +103,7 @@ export default function Page() {
           <Card title="General Preferences">
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="space-y-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-calm font-outfit" htmlFor="preferred-language">
+                <label className="block text-xs font-bold uppercase tracking-wider text-calm font-heading" htmlFor="preferred-language">
                   Preferred language
                 </label>
                 <select
@@ -119,7 +119,7 @@ export default function Page() {
               </div>
 
               <div className="space-y-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-calm font-outfit" htmlFor="response-style">
+                <label className="block text-xs font-bold uppercase tracking-wider text-calm font-heading" htmlFor="response-style">
                   Response style
                 </label>
                 <select
@@ -140,7 +140,7 @@ export default function Page() {
           <Card title="Privacy & Regional Safety">
             <div className="space-y-5">
               <div className="space-y-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-calm font-outfit" htmlFor="crisis-region">
+                <label className="block text-xs font-bold uppercase tracking-wider text-calm font-heading" htmlFor="crisis-region">
                   Crisis resources region
                 </label>
                 <select
@@ -165,7 +165,7 @@ export default function Page() {
                       type="checkbox"
                       className="rounded border-slate-300 text-calm focus:ring-calm/20 h-4.5 w-4.5 cursor-pointer"
                     />
-                    <span className="text-sm font-semibold text-slate-700 font-outfit">Save journal history</span>
+                    <span className="text-sm font-semibold text-slate-700 font-heading">Save journal history</span>
                   </div>
                 </label>
 
@@ -178,7 +178,7 @@ export default function Page() {
                       type="checkbox"
                       className="rounded border-slate-300 text-calm focus:ring-calm/20 h-4.5 w-4.5 cursor-pointer"
                     />
-                    <span className="text-sm font-semibold text-slate-700 font-outfit">Save mood history</span>
+                    <span className="text-sm font-semibold text-slate-700 font-heading">Save mood history</span>
                   </div>
                 </label>
               </div>
@@ -190,7 +190,7 @@ export default function Page() {
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div>
-                  <h4 className="font-bold text-ocean font-outfit text-base">Enable Real AI</h4>
+                  <h4 className="font-bold text-ocean font-heading text-base">Enable Real AI</h4>
                   <p className="text-xs text-slate-500 font-medium mt-0.5">Connect Bingo to live active model completion endpoints</p>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
@@ -207,7 +207,7 @@ export default function Page() {
               {settings.enable_real_ai && (
                 <div className="space-y-4 pt-2">
                   <div className="space-y-2">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-calm font-outfit" htmlFor="ai-provider">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-calm font-heading" htmlFor="ai-provider">
                       AI Provider
                     </label>
                     <select
@@ -226,7 +226,7 @@ export default function Page() {
 
                   {settings.ai_provider === 'pollinations' && (
                     <div className="rounded-xl bg-sky/15 border border-sky/35 p-4 text-xs text-slate-700 leading-relaxed shadow-sm">
-                      <strong className="text-ocean block mb-1 font-outfit text-sm">Free & Keyless Completions</strong> 
+                      <strong className="text-ocean block mb-1 font-heading text-sm">Free & Keyless Completions</strong> 
                       Pollinations.ai provides free, direct completion responses for your mental wellness companion without requiring API keys or account setup.
                     </div>
                   )}
@@ -234,7 +234,7 @@ export default function Page() {
                   {settings.ai_provider === 'huggingface' && (
                     <div className="space-y-4 pt-3 border-t border-slate-100/80">
                       <div className="space-y-2">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-outfit" htmlFor="hf-token">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-heading" htmlFor="hf-token">
                           Hugging Face API Token
                         </label>
                         <div className="relative">
@@ -265,7 +265,7 @@ export default function Page() {
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-outfit" htmlFor="hf-model">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-heading" htmlFor="hf-model">
                           Hugging Face Model ID
                         </label>
                         <input
@@ -278,7 +278,7 @@ export default function Page() {
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-outfit" htmlFor="hf-base-url">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-heading" htmlFor="hf-base-url">
                           Inference URL Override (Optional)
                         </label>
                         <input
@@ -296,7 +296,7 @@ export default function Page() {
                   {settings.ai_provider === 'openai' && (
                     <div className="space-y-4 pt-3 border-t border-slate-100/80">
                       <div className="space-y-2">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-outfit" htmlFor="openai-key">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-heading" htmlFor="openai-key">
                           OpenAI API Key
                         </label>
                         <div className="relative">
@@ -327,7 +327,7 @@ export default function Page() {
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-outfit" htmlFor="openai-model">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-heading" htmlFor="openai-model">
                           OpenAI Model
                         </label>
                         <input
@@ -340,7 +340,7 @@ export default function Page() {
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-outfit" htmlFor="openai-base-url">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-heading" htmlFor="openai-base-url">
                           API Base URL (Optional)
                         </label>
                         <input
@@ -358,7 +358,7 @@ export default function Page() {
                   {settings.ai_provider === 'openrouter' && (
                     <div className="space-y-4 pt-3 border-t border-slate-100/80">
                       <div className="space-y-2">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-outfit" htmlFor="openrouter-key">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-heading" htmlFor="openrouter-key">
                           OpenRouter API Key
                         </label>
                         <div className="relative">
@@ -389,7 +389,7 @@ export default function Page() {
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-outfit" htmlFor="openrouter-model">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-heading" htmlFor="openrouter-model">
                           OpenRouter Model
                         </label>
                         <input
@@ -402,7 +402,7 @@ export default function Page() {
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-outfit" htmlFor="openrouter-base-url">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-calm font-heading" htmlFor="openrouter-base-url">
                           API Base URL
                         </label>
                         <input
@@ -451,7 +451,7 @@ export default function Page() {
               <div className="rounded-xl border border-slate-200/80 bg-white/40 p-4 transition-all duration-300">
                 <div className="flex items-center gap-2 mb-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-calm animate-pulse-subtle"></span>
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 font-outfit">Status Console</span>
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 font-heading">Status Console</span>
                 </div>
                 <p className="text-xs text-slate-700 font-semibold leading-relaxed">{status}</p>
               </div>
@@ -462,13 +462,13 @@ export default function Page() {
           <Card className="border-t-4 border-t-calm" title="Production & Local Routing">
             <div className="space-y-4 text-xs leading-relaxed text-slate-600">
               <div className="bg-white/40 border border-white/60 p-3.5 rounded-xl space-y-1 shadow-sm">
-                <span className="font-bold text-calm font-outfit uppercase tracking-wider block text-[10px]">Local Application</span>
+                <span className="font-bold text-calm font-heading uppercase tracking-wider block text-[10px]">Local Application</span>
                 <p className="text-slate-700">
                   The local Bingo uvicorn server now automatically routes completions directly to the Hugging Face Inference API using your newly configured token!
                 </p>
               </div>
               <div className="bg-white/40 border border-white/60 p-3.5 rounded-xl space-y-1 shadow-sm">
-                <span className="font-bold text-calm font-outfit uppercase tracking-wider block text-[10px]">Production Application</span>
+                <span className="font-bold text-calm font-heading uppercase tracking-wider block text-[10px]">Production Application</span>
                 <p className="text-slate-700">
                   For your live Vercel production deployment, simply log into your account, go to Settings (/settings), turn on Enable Real AI, select Hugging Face, enter your access token in the UI, and click Save settings. Your settings will be instantly saved to your production database!
                 </p>

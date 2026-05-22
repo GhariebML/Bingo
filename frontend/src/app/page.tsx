@@ -97,7 +97,7 @@ export default function Page() {
               className="relative overflow-hidden pt-8 hover:-translate-y-1 transition-all duration-300"
             >
               {/* Process Number Bubble */}
-              <div className="absolute top-0 right-0 h-16 w-16 translate-x-4 translate-y-[-1rem] rounded-full bg-gradient-to-bl from-mint/35 to-sky/20 flex items-center justify-center font-outfit text-3xl font-extrabold text-calm/40 select-none">
+              <div className="absolute top-0 right-0 h-16 w-16 translate-x-4 translate-y-[-1rem] rounded-full bg-gradient-to-bl from-mint/35 to-sky/20 flex items-center justify-center font-heading text-3xl font-extrabold text-calm/40 select-none">
                 0{index + 1}
               </div>
               

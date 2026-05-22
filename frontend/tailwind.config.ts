@@ -5,20 +5,20 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter)', 'sans-serif'],
-        outfit: ['var(--font-outfit)', 'sans-serif'],
+        sans: ['var(--font-sans)', 'sans-serif'],
+        heading: ['var(--font-heading)', 'sans-serif'],
       },
       colors: {
-        ocean: '#083A5C',
-        navy: '#062B44',
-        sky: '#DDF4FF',
-        mint: '#B8EBD9',
-        sand: '#F7E8C9',
-        foam: '#FFF9EF',
-        calm: '#2F6F73',
-        sage: '#8AA399',
-        coral: '#D97862',
-        ink: '#102A43',
+        ocean: '#0F172A', /* slate-900 */
+        navy: '#020617',  /* slate-950 */
+        sky: '#F1F5F9',   /* slate-100 */
+        mint: '#E2E8F0',  /* slate-200 */
+        sand: '#F8FAFC',  /* slate-50 */
+        foam: '#FFFFFF',  /* white */
+        calm: '#334155',  /* slate-700 */
+        sage: '#94A3B8',  /* slate-400 */
+        coral: '#F87171', /* red-400 */
+        ink: '#020617',   /* slate-950 */
       },
       boxShadow: {
         soft: '0 18px 50px rgba(11, 53, 88, 0.12)',
