@@ -16,7 +16,7 @@ const config: Config = {
         textPrimary: 'rgb(var(--textPrimary) / <alpha-value>)',
         textSecondary: 'rgb(var(--textSecondary) / <alpha-value>)',
         muted: 'rgb(var(--muted) / <alpha-value>)',
-        border: 'rgba(var(--border), 0.18)',
+        border: 'rgb(var(--border) / <alpha-value>)',
         success: '#22C55E',
         error: 'rgb(var(--error) / <alpha-value>)',
       },

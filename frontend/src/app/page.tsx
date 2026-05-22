@@ -23,7 +23,7 @@ export default function Page() {
  
  <div className="space-y-4">
  <h1 className="text-4xl sm:text-5xl font-extrabold leading-[1.15] text-textPrimary lg:max-w-xl">
- Meet Bingo, a calm place to <span className="text-primary font-bold bg-clip-text text-transparent">pause, reflect</span>, and take one safe step.
+ Meet Bingo, a calm place to <span className="text-primary font-bold">pause, reflect</span>, and take one safe step.
  </h1>
  <p className="max-w-xl text-md leading-relaxed text-textSecondary/90">
  Bingo offers warm emotional support, journaling prompts, mood reflection, and guided grounding exercises. It is not a therapist, doctor, or emergency service.
