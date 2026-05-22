@@ -1,5 +1,5 @@
 import { SafetyNotice } from '@/components/ui/SafetyNotice';
 
 export function SafetyBanner() {
-  return <SafetyNotice compact />;
+ return <SafetyNotice compact />;
 }

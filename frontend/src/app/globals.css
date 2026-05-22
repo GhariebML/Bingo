@@ -3,45 +3,27 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 @layer base {
   body {
-    @apply font-sans text-ink min-h-screen bg-foam overflow-x-hidden;
-    background:
-      radial-gradient(circle at top left, rgba(241, 245, 249, 0.7), transparent 45rem),
-      radial-gradient(circle at bottom right, rgba(226, 232, 240, 0.5), transparent 45rem),
-      linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+    @apply font-sans text-textPrimary min-h-screen bg-background overflow-x-hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading tracking-tight text-ocean;
+    @apply font-heading tracking-tight text-textPrimary font-semibold;
   }
 }
 
-/* Glassmorphism Card Style */
+/* Premium Card Style */
 .glass-card {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(20px) saturate(100%);
-  -webkit-backdrop-filter: blur(20px) saturate(100%);
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.03), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
+  @apply bg-surface border border-border shadow-soft rounded-2xl;
 }
 
-/* Interactive card glow effect on hover */
+/* Interactive card effect on hover */
 .glass-card-interactive {
-  @apply transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft;
-}
-
-/* Decorative Background Glow Blobs */
-.glow-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  z-index: -1;
-  opacity: 0.25;
-  pointer-events: none;
+  @apply transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg;
 }
 
 a {
@@ -50,8 +32,8 @@ a {
 }
 
 ::selection {
-  background: #cbd5e1;
-  color: #0f172a;
+  background: #38BDF8;
+  color: #0F172A;
 }
 
 /* Elegant Scrollbars */
@@ -63,9 +45,16 @@ a {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(8, 58, 92, 0.15);
+  background: rgba(148, 163, 184, 0.3);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(8, 58, 92, 0.3);
+  background: rgba(148, 163, 184, 0.5);
 }
+
+/* Animation Delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }

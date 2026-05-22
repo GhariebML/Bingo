@@ -9,34 +9,43 @@ const config: Config = {
         heading: ['var(--font-heading)', 'sans-serif'],
       },
       colors: {
-        ocean: '#0F172A', /* slate-900 */
-        navy: '#020617',  /* slate-950 */
-        sky: '#F1F5F9',   /* slate-100 */
-        mint: '#E2E8F0',  /* slate-200 */
-        sand: '#F8FAFC',  /* slate-50 */
-        foam: '#FFFFFF',  /* white */
-        calm: '#334155',  /* slate-700 */
-        sage: '#94A3B8',  /* slate-400 */
-        coral: '#F87171', /* red-400 */
-        ink: '#020617',   /* slate-950 */
+        background: '#0B1020',
+        surface: '#111827',
+        primary: '#2563EB',
+        secondary: '#38BDF8',
+        textPrimary: '#F8FAFC',
+        textSecondary: '#CBD5E1',
+        muted: '#94A3B8',
+        border: 'rgba(148, 163, 184, 0.18)',
+        success: '#22C55E',
+        error: '#F87171',
       },
       boxShadow: {
-        soft: '0 18px 50px rgba(11, 53, 88, 0.12)',
-        glass: '0 8px 32px 0 rgba(8, 58, 92, 0.05)',
+        soft: '0 4px 20px rgba(0, 0, 0, 0.15)',
+        glass: '0 8px 32px 0 rgba(0, 0, 0, 0.2)',
       },
       animation: {
-        'float-slow': 'float 12s ease-in-out infinite',
-        'float-medium': 'float 8s ease-in-out infinite',
-        'pulse-subtle': 'pulseSubtle 2.5s ease-in-out infinite',
+        'fade-in': 'fadeIn 0.3s ease-out forwards',
+        'fade-in-up': 'fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'slide-in-right': 'slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'scale-in': 'scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
       },
       keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0) scale(1)' },
-          '50%': { transform: 'translateY(-20px) scale(1.05)' },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
-        pulseSubtle: {
-          '0%, 100%': { opacity: '0.6' },
-          '50%': { opacity: '1' },
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(12px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideInRight: {
+          '0%': { opacity: '0', transform: 'translateX(15px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        scaleIn: {
+          '0%': { opacity: '0', transform: 'scale(0.97)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
         },
       },
     },

@@ -21,16 +21,40 @@ class HuggingfaceProvider(AIProvider):
     ) -> str:
         if not self.token or not self.model:
             raise RuntimeError('Hugging Face token/model is not configured')
-        prompt = '\n'.join(f"{message['role']}: {message['content']}" for message in messages)
-        url = self.base_url or f'https://api-inference.huggingface.co/models/{self.model}'
+        
+        # Determine the base URL. For standard chat models, we want the chat completions endpoint.
+        base = self.base_url or f'https://api-inference.huggingface.co/models/{self.model}'
+        url = base if 'v1/chat/completions' in base else f'{base.rstrip("/")}/v1/chat/completions'
+        
+        payload = {
+            "model": self.model,
+            "messages": messages,
+            "max_tokens": 512,
+            "temperature": 0.7,
+        }
+        
         request = urllib.request.Request(
             url,
-            data=json.dumps({'inputs': prompt}).encode(),
+            data=json.dumps(payload).encode(),
             headers={'Authorization': f'Bearer {self.token}', 'Content-Type': 'application/json'},
             method='POST',
         )
-        with urllib.request.urlopen(request, timeout=20) as response:
-            payload = json.loads(response.read().decode())
-        if isinstance(payload, list) and payload and isinstance(payload[0], dict):
-            return str(payload[0].get('generated_text') or payload[0].get('summary_text') or '')
-        return str(payload)
+        
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                resp_data = json.loads(response.read().decode())
+                
+                # Parse the OpenAI-compatible response format
+                if isinstance(resp_data, dict) and 'choices' in resp_data:
+                    return str(resp_data['choices'][0]['message']['content'])
+                
+                # Fallback for alternative HF response structures
+                if isinstance(resp_data, list) and resp_data and isinstance(resp_data[0], dict):
+                    return str(resp_data[0].get('generated_text') or resp_data[0].get('summary_text') or '')
+                    
+                return str(resp_data)
+        except urllib.error.HTTPError as e:
+            err_msg = e.read().decode(errors='ignore')
+            raise RuntimeError(f"Hugging Face API Error {e.code}: {err_msg}")
+        except Exception as e:
+            raise RuntimeError(f"Hugging Face Request Failed: {str(e)}")
