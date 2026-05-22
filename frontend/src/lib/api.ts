@@ -221,6 +221,13 @@ function isNetworkError(error: unknown): boolean {
 }
 
 export async function sendChatMessage(payload: ChatRequest): Promise<ChatResponse> {
+  const normalized = payload.message.trim();
+  const isCrisis = CRISIS_PATTERNS.some((pattern) => pattern.test(normalized));
+  if (isCrisis) {
+    console.warn('Crisis pattern detected in sendChatMessage. Routing to local safe crisis response.');
+    return Promise.resolve(handleOfflineChat(payload));
+  }
+
   try {
     return await request<ChatResponse>('/api/v1/chat', {
       method: 'POST',
@@ -228,7 +235,40 @@ export async function sendChatMessage(payload: ChatRequest): Promise<ChatRespons
     });
   } catch (error) {
     if (isNetworkError(error)) {
-      console.warn('FastAPI backend unreachable. Using client-side safe offline AI agent.');
+      console.warn('FastAPI backend unreachable. Attempting direct online keyless AI completions via Pollinations.ai...');
+      try {
+        const response = await fetch('https://text.pollinations.ai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: 'openai',
+            messages: [{ role: 'user', content: payload.message }]
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const replyText = data.choices[0]?.message?.content || '';
+          const category = classifyIntent(payload.message, payload.mood);
+          const [_, exercise] = RESPONSES[category];
+
+          return {
+            reply: replyText,
+            risk_level: 'low',
+            category,
+            suggested_exercise: exercise,
+            safety_triggered: false,
+            crisis_mode: false,
+            safety_notes: [],
+            provider: 'pollinations',
+            mode: 'client-online-fallback',
+          };
+        }
+      } catch (clientError) {
+        console.warn('Direct Pollinations.ai fetch failed. Falling back to offline static agent.', clientError);
+      }
       return Promise.resolve(handleOfflineChat(payload));
     }
     throw error;
