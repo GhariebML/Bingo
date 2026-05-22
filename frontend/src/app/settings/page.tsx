@@ -110,10 +110,10 @@ export default function Page() {
  id="preferred-language"
  value={settings.preferred_language}
  onChange={(event) => setSettings({ ...settings, preferred_language: event.target.value })}
- className="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-calm/15 focus:border-primary transition-all duration-300 font-medium text-sm hover:border-slate-300 shadow-sm cursor-pointer"
+ className="w-full rounded-xl border border-border bg-surface/50 px-4 py-3 text-textPrimary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 font-medium text-sm hover:border-textSecondary/20 shadow-sm cursor-pointer"
  >
  {['English', 'Arabic', 'Both'].map((option) => (
- <option key={option} className="bg-white text-slate-800">{option}</option>
+ <option key={option} className="bg-surface text-textPrimary">{option}</option>
  ))}
  </select>
  </div>
@@ -126,10 +126,10 @@ export default function Page() {
  id="response-style"
  value={settings.response_style}
  onChange={(event) => setSettings({ ...settings, response_style: event.target.value })}
- className="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-calm/15 focus:border-primary transition-all duration-300 font-medium text-sm hover:border-slate-300 shadow-sm cursor-pointer"
+ className="w-full rounded-xl border border-border bg-surface/50 px-4 py-3 text-textPrimary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 font-medium text-sm hover:border-textSecondary/20 shadow-sm cursor-pointer"
  >
  {['short', 'balanced', 'detailed'].map((option) => (
- <option key={option} className="bg-white text-slate-800">{option}</option>
+ <option key={option} className="bg-surface text-textPrimary">{option}</option>
  ))}
  </select>
  </div>
@@ -147,36 +147,36 @@ export default function Page() {
  id="crisis-region"
  value={settings.crisis_region}
  onChange={(event) => setSettings({ ...settings, crisis_region: event.target.value })}
- className="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-calm/15 focus:border-primary transition-all duration-300 font-medium text-sm hover:border-slate-300 shadow-sm cursor-pointer"
+ className="w-full rounded-xl border border-border bg-surface/50 px-4 py-3 text-textPrimary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 font-medium text-sm hover:border-textSecondary/20 shadow-sm cursor-pointer"
  >
  {['United States', 'Egypt', 'United Kingdom', 'Global'].map((option) => (
- <option key={option} className="bg-white text-slate-800">{option}</option>
+ <option key={option} className="bg-surface text-textPrimary">{option}</option>
  ))}
  </select>
  </div>
 
  <div className="grid gap-3 sm:grid-cols-2 pt-2">
- <label htmlFor="save-journal-history" className="flex items-center justify-between p-3.5 bg-white/40 border border-border rounded-xl cursor-pointer hover:bg-white/70 hover:border-slate-300 transition-all duration-300 shadow-sm">
+ <label htmlFor="save-journal-history" className="flex items-center justify-between p-3.5 bg-surface/40 border border-border rounded-xl cursor-pointer hover:bg-surface/70 hover:border-textSecondary/20 transition-all duration-300 shadow-sm">
  <div className="flex items-center gap-3">
  <input
  id="save-journal-history"
  checked={settings.save_journal_history}
  onChange={(event) => setSettings({ ...settings, save_journal_history: event.target.checked })}
  type="checkbox"
- className="rounded border-slate-300 text-muted focus:ring-calm/20 h-4.5 w-4.5 cursor-pointer"
+ className="rounded border-textSecondary/20 text-muted focus:ring-primary/20 h-4.5 w-4.5 cursor-pointer"
  />
  <span className="text-sm font-semibold text-textSecondary font-heading">Save journal history</span>
  </div>
  </label>
 
- <label htmlFor="save-mood-history" className="flex items-center justify-between p-3.5 bg-white/40 border border-border rounded-xl cursor-pointer hover:bg-white/70 hover:border-slate-300 transition-all duration-300 shadow-sm">
+ <label htmlFor="save-mood-history" className="flex items-center justify-between p-3.5 bg-surface/40 border border-border rounded-xl cursor-pointer hover:bg-surface/70 hover:border-textSecondary/20 transition-all duration-300 shadow-sm">
  <div className="flex items-center gap-3">
  <input
  id="save-mood-history"
  checked={settings.save_mood_history}
  onChange={(event) => setSettings({ ...settings, save_mood_history: event.target.checked })}
  type="checkbox"
- className="rounded border-slate-300 text-muted focus:ring-calm/20 h-4.5 w-4.5 cursor-pointer"
+ className="rounded border-textSecondary/20 text-muted focus:ring-primary/20 h-4.5 w-4.5 cursor-pointer"
  />
  <span className="text-sm font-semibold text-textSecondary font-heading">Save mood history</span>
  </div>
@@ -200,7 +200,7 @@ export default function Page() {
  onChange={(event) => setSettings({ ...settings, enable_real_ai: event.target.checked })}
  className="sr-only peer"
  />
- <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-border after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-calm"></div>
+ <div className="w-11 h-6 bg-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-border after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-surface after:border-textSecondary/20 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-calm"></div>
  </label>
  </div>
 
@@ -214,7 +214,7 @@ export default function Page() {
  id="ai-provider"
  value={settings.ai_provider}
  onChange={(event) => setSettings({ ...settings, ai_provider: event.target.value })}
- className="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-calm/15 focus:border-primary transition-all duration-300 font-medium text-sm hover:border-slate-300 shadow-sm cursor-pointer"
+ className="w-full rounded-xl border border-border bg-surface/50 px-4 py-3 text-textPrimary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 font-medium text-sm hover:border-textSecondary/20 shadow-sm cursor-pointer"
  >
  <option value="mock">Offline Simulator (Demo Mode)</option>
  <option value="pollinations">Pollinations.ai (Keyless & Free)</option>
@@ -225,7 +225,7 @@ export default function Page() {
  </div>
 
  {settings.ai_provider === 'pollinations' && (
- <div className="rounded-xl bg-surface border border-sky/35 p-4 text-xs text-textSecondary leading-relaxed shadow-sm">
+ <div className="rounded-xl bg-surface border border-border p-4 text-xs text-textSecondary leading-relaxed shadow-sm">
  <strong className="text-textPrimary block mb-1 font-heading text-sm">Free & Keyless Completions</strong> 
  Pollinations.ai provides free, direct completion responses for your mental wellness companion without requiring API keys or account setup.
  </div>
@@ -244,12 +244,12 @@ export default function Page() {
  value={settings.hf_token || ''}
  onChange={(event) => setSettings({ ...settings, hf_token: event.target.value })}
  placeholder="hf_..."
- className="w-full rounded-xl border border-slate-200 bg-white/50 pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-calm/15 focus:border-primary transition-all duration-300"
+ className="w-full rounded-xl border border-border bg-surface/50 pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300"
  />
  <button
  type="button"
  onClick={() => setShowHFToken(!showHFToken)}
- className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-textSecondary focus:outline-none"
+ className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-textSecondary focus:outline-none"
  >
  {showHFToken ? (
  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
@@ -274,7 +274,7 @@ export default function Page() {
  value={settings.hf_model || ''}
  onChange={(event) => setSettings({ ...settings, hf_model: event.target.value })}
  placeholder="e.g. meta-llama/Meta-Llama-3-8B-Instruct"
- className="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-calm/15 focus:border-primary transition-all duration-300"
+ className="w-full rounded-xl border border-border bg-surface/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300"
  />
  </div>
  <div className="space-y-2">
@@ -287,7 +287,7 @@ export default function Page() {
  value={settings.hf_base_url || ''}
  onChange={(event) => setSettings({ ...settings, hf_base_url: event.target.value })}
  placeholder="Defaults to standard HF Hub Endpoint"
- className="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-calm/15 focus:border-primary transition-all duration-300"
+ className="w-full rounded-xl border border-border bg-surface/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300"
  />
  </div>
  </div>
@@ -306,12 +306,12 @@ export default function Page() {
  value={settings.openai_api_key || ''}
  onChange={(event) => setSettings({ ...settings, openai_api_key: event.target.value })}
  placeholder="sk-..."
- className="w-full rounded-xl border border-slate-200 bg-white/50 pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-calm/15 focus:border-primary transition-all duration-300"
+ className="w-full rounded-xl border border-border bg-surface/50 pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300"
  />
  <button
  type="button"
  onClick={() => setShowOpenAIKey(!showOpenAIKey)}
- className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-textSecondary focus:outline-none"
+ className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-textSecondary focus:outline-none"
  >
  {showOpenAIKey ? (
  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
@@ -336,7 +336,7 @@ export default function Page() {
  value={settings.openai_model || ''}
  onChange={(event) => setSettings({ ...settings, openai_model: event.target.value })}
  placeholder="gpt-4o-mini"
- className="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-calm/15 focus:border-primary transition-all duration-300"
+ className="w-full rounded-xl border border-border bg-surface/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300"
  />
  </div>
  <div className="space-y-2">
@@ -349,7 +349,7 @@ export default function Page() {
  value={settings.openai_base_url || ''}
  onChange={(event) => setSettings({ ...settings, openai_base_url: event.target.value })}
  placeholder="Defaults to OpenAI Endpoint"
- className="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-calm/15 focus:border-primary transition-all duration-300"
+ className="w-full rounded-xl border border-border bg-surface/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300"
  />
  </div>
  </div>
@@ -368,12 +368,12 @@ export default function Page() {
  value={settings.openrouter_api_key || ''}
  onChange={(event) => setSettings({ ...settings, openrouter_api_key: event.target.value })}
  placeholder="sk-or-..."
- className="w-full rounded-xl border border-slate-200 bg-white/50 pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-calm/15 focus:border-primary transition-all duration-300"
+ className="w-full rounded-xl border border-border bg-surface/50 pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300"
  />
  <button
  type="button"
  onClick={() => setShowOpenRouterKey(!showOpenRouterKey)}
- className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-textSecondary focus:outline-none"
+ className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-textSecondary focus:outline-none"
  >
  {showOpenRouterKey ? (
  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
@@ -398,7 +398,7 @@ export default function Page() {
  value={settings.openrouter_model || ''}
  onChange={(event) => setSettings({ ...settings, openrouter_model: event.target.value })}
  placeholder="openai/gpt-4o-mini"
- className="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-calm/15 focus:border-primary transition-all duration-300"
+ className="w-full rounded-xl border border-border bg-surface/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300"
  />
  </div>
  <div className="space-y-2">
@@ -411,7 +411,7 @@ export default function Page() {
  value={settings.openrouter_base_url || ''}
  onChange={(event) => setSettings({ ...settings, openrouter_base_url: event.target.value })}
  placeholder="https://openrouter.ai/api/v1"
- className="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-calm/15 focus:border-primary transition-all duration-300"
+ className="w-full rounded-xl border border-border bg-surface/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300"
  />
  </div>
  </div>
@@ -448,7 +448,7 @@ export default function Page() {
  </Button>
  </div>
  </div>
- <div className="rounded-xl border border-slate-200/80 bg-white/40 p-4 transition-all duration-300">
+ <div className="rounded-xl border border-border bg-surface/40 p-4 transition-all duration-300">
  <div className="flex items-center gap-2 mb-1.5">
  <span className="w-2.5 h-2.5 rounded-full bg-calm "></span>
  <span className="text-xs font-bold uppercase tracking-wider text-muted font-heading">Status Console</span>
@@ -461,13 +461,13 @@ export default function Page() {
  {/* Vercel Deployment Notice Card */}
  <Card className="border-t-4 border-t-calm" title="Production & Local Routing">
  <div className="space-y-4 text-xs leading-relaxed text-textSecondary">
- <div className="bg-white/40 border border-border p-3.5 rounded-xl space-y-1 shadow-sm">
+ <div className="bg-surface/40 border border-border p-3.5 rounded-xl space-y-1 shadow-sm">
  <span className="font-bold text-muted font-heading uppercase tracking-wider block text-[10px]">Local Application</span>
  <p className="text-textSecondary">
  The local Bingo uvicorn server now automatically routes completions directly to the Hugging Face Inference API using your newly configured token!
  </p>
  </div>
- <div className="bg-white/40 border border-border p-3.5 rounded-xl space-y-1 shadow-sm">
+ <div className="bg-surface/40 border border-border p-3.5 rounded-xl space-y-1 shadow-sm">
  <span className="font-bold text-muted font-heading uppercase tracking-wider block text-[10px]">Production Application</span>
  <p className="text-textSecondary">
  For your live Vercel production deployment, simply log into your account, go to Settings (/settings), turn on Enable Real AI, select Hugging Face, enter your access token in the UI, and click Save settings. Your settings will be instantly saved to your production database!

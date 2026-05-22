@@ -31,14 +31,14 @@ export function ChatMessage({
  ? 'bg-primary text-white rounded-tr-none shadow-[0_4px_12px_rgba(8,58,92,0.15)]'
  : crisisMode
  ? 'border-2 border-coral/30 bg-error/20 text-[#852C1E] rounded-tl-none font-medium'
- : 'border border-border bg-white/70 backdrop-blur rounded-tl-none text-textSecondary border-l-4 border-l-mint shadow-[0_4px_12px_rgba(8,58,92,0.02)]'
+ : 'border border-border bg-surface/70 backdrop-blur rounded-tl-none text-textSecondary border-l-4 border-l-mint shadow-[0_4px_12px_rgba(8,58,92,0.02)]'
  }`}
  >
  {!isUser ? (
  <div className="flex items-center justify-between gap-4 mb-1 border-b border-border pb-1 select-none">
  <span className="text-[11px] font-extrabold uppercase tracking-widest text-muted">Bingo</span>
  {provider ? (
- <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 bg-slate-100/60 rounded px-1.5 py-0.5">
+ <span className="text-[9px] font-bold uppercase tracking-wider text-muted bg-slate-100/60 rounded px-1.5 py-0.5">
  {provider} · {mode}
  </span>
  ) : null}

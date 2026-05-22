@@ -27,9 +27,9 @@ export default function Page() {
  <p className="max-w-2xl text-lg text-textSecondary">Set up a private account for mood, journal, and settings history.</p>
  <Card>
  <div className="grid gap-3">
- <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} className="rounded-lg border border-sky px-4 py-3" placeholder="Display name" />
- <input value={email} onChange={(event) => setEmail(event.target.value)} className="rounded-lg border border-sky px-4 py-3" placeholder="Email" />
- <input value={password} onChange={(event) => setPassword(event.target.value)} className="rounded-lg border border-sky px-4 py-3" placeholder="Password, 8+ characters" type="password" />
+ <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} className="rounded-lg border border-border px-4 py-3" placeholder="Display name" />
+ <input value={email} onChange={(event) => setEmail(event.target.value)} className="rounded-lg border border-border px-4 py-3" placeholder="Email" />
+ <input value={password} onChange={(event) => setPassword(event.target.value)} className="rounded-lg border border-border px-4 py-3" placeholder="Password, 8+ characters" type="password" />
  <Button onClick={() => void submit()}>Create account</Button>
  <p className="text-sm text-textSecondary">{status}</p>
  </div>

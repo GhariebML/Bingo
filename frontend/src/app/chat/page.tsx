@@ -42,7 +42,7 @@ export default function Page() {
  <Card title="Quick starts">
  <div className="grid gap-2">
  {quickStarts.map((prompt) => (
- <div key={prompt} className="rounded-lg border border-sky bg-background px-3 py-3 text-left text-sm font-semibold text-textPrimary">
+ <div key={prompt} className="rounded-lg border border-border bg-background px-3 py-3 text-left text-sm font-semibold text-textPrimary">
  {prompt}
  </div>
  ))}

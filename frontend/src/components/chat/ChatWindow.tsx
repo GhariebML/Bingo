@@ -15,7 +15,7 @@ export function ChatWindow({ quickPrompts = [] }: { quickPrompts?: string[] }) {
  <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3 select-none">
  {quickPrompts.map((prompt) => (
  <button
- className="rounded-xl border border-sky bg-white/60 backdrop-blur px-4 py-3 text-left text-sm font-semibold text-textPrimary transition-all duration-300 hover:bg-gradient-to-r hover:from-sky/40 hover:to-white hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 disabled:opacity-50"
+ className="rounded-xl border border-border bg-surface/60 backdrop-blur px-4 py-3 text-left text-sm font-semibold text-textPrimary transition-all duration-300 hover:bg-gradient-to-r hover:from-sky/40 hover:to-surface hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 disabled:opacity-50"
  disabled={loading}
  key={prompt}
  onClick={() => sendMessage(prompt)}
@@ -55,7 +55,7 @@ export function ChatWindow({ quickPrompts = [] }: { quickPrompts?: string[] }) {
  {loading ? (
  <div className="flex items-start gap-3.5 ">
  <BingoAvatar size={40} />
- <div className="rounded-2xl rounded-tl-none bg-white/80 backdrop-blur px-5 py-4 border border-border shadow-sm flex items-center justify-center min-w-16">
+ <div className="rounded-2xl rounded-tl-none bg-surface/80 backdrop-blur px-5 py-4 border border-border shadow-sm flex items-center justify-center min-w-16">
  <div className="flex items-center gap-1.5 py-1">
  <span className="h-2.5 w-2.5 rounded-full bg-calm/75 " style={{ animationDelay: '0ms' }} />
  <span className="h-2.5 w-2.5 rounded-full bg-calm/75 " style={{ animationDelay: '150ms' }} />

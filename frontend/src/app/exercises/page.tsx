@@ -61,7 +61,7 @@ export default function Page() {
  <p className="text-sm leading-relaxed text-textSecondary">
  Taking just two minutes to focus on your breathing or look around the room can noticeably reset your nervous system.
  </p>
- <p className="text-[11px] font-bold text-slate-400">Status: {status}</p>
+ <p className="text-[11px] font-bold text-muted">Status: {status}</p>
  </div>
  </div>
  </Card>
@@ -102,7 +102,7 @@ export default function Page() {
  </li>
  ))}
  {!isActive && exercise.steps.length > 2 ? (
- <li className="text-xs text-slate-400 font-semibold italic pl-9">
+ <li className="text-xs text-muted font-semibold italic pl-9">
  + {exercise.steps.length - 2} more steps...
  </li>
  ) : null}

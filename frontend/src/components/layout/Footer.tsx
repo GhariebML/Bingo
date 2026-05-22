@@ -7,7 +7,7 @@ export function Footer() {
  Bingo is a safe, AI-assisted self-reflection tool for emotional support.
  It is not a therapy, medical, or clinical service. In case of emergency or immediate risk, please seek professional crisis support.
  </p>
- <p className="mt-4 text-[10px] text-slate-400">
+ <p className="mt-4 text-[10px] text-muted">
  © {new Date().getFullYear()} Bingo. All rights reserved. Made with care for wellness.
  </p>
  </div>

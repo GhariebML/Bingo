@@ -37,7 +37,7 @@ export function JournalEditor({ onSave }: { onSave: (entry: CreateJournalEntry) 
  <textarea
  value={content}
  onChange={(event) => setContent(event.target.value)}
- className="min-h-56 w-full rounded-xl border border-slate-200 bg-white/70 p-4 text-sm leading-relaxed placeholder:text-slate-400 outline-none transition-all duration-300 focus:border-primary focus:bg-white focus:ring-4 focus:ring-calm/10 resize-y"
+ className="min-h-56 w-full rounded-xl border border-border bg-surface/70 p-4 text-sm leading-relaxed placeholder:text-muted outline-none transition-all duration-300 focus:border-primary focus:bg-surface focus:ring-4 focus:ring-primary/20 resize-y"
  placeholder="Write privately here. What is on your mind? What emotion is strongest, and what is one small step you can take today?"
  required
  />
@@ -48,7 +48,7 @@ export function JournalEditor({ onSave }: { onSave: (entry: CreateJournalEntry) 
  <select 
  value={mood} 
  onChange={(event) => setMood(event.target.value)} 
- className="w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-2.5 text-sm outline-none transition-all duration-300 focus:border-primary focus:bg-white focus:ring-4 focus:ring-calm/10 cursor-pointer"
+ className="w-full rounded-xl border border-border bg-surface/70 px-4 py-2.5 text-sm outline-none transition-all duration-300 focus:border-primary focus:bg-surface focus:ring-4 focus:ring-primary/20 cursor-pointer"
  >
  {['calm', 'anxious', 'sad', 'stressed', 'hopeful', 'tired', 'grateful', 'confused'].map((option) => (
  <option key={option} value={option}>{option.charAt(0).toUpperCase() + option.slice(1)}</option>
@@ -69,7 +69,7 @@ export function JournalEditor({ onSave }: { onSave: (entry: CreateJournalEntry) 
  className={`rounded-full px-3 py-1 text-xs font-bold transition-all duration-200 transform active:scale-95 border ${
  isSelected 
  ? 'bg-gradient-to-r from-primary to-secondary text-white border-transparent shadow-sm' 
- : 'bg-white/50 text-textPrimary border-slate-200 hover:bg-white'
+ : 'bg-surface/50 text-textPrimary border-border hover:bg-surface'
  }`}
  >
  {tag}

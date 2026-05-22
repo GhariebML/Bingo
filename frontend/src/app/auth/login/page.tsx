@@ -26,8 +26,8 @@ export default function Page() {
  <p className="max-w-2xl text-lg text-textSecondary">Return to your private wellness workspace.</p>
  <Card>
  <div className="grid gap-3">
- <input value={email} onChange={(event) => setEmail(event.target.value)} className="rounded-lg border border-sky px-4 py-3" placeholder="Email" />
- <input value={password} onChange={(event) => setPassword(event.target.value)} className="rounded-lg border border-sky px-4 py-3" placeholder="Password" type="password" />
+ <input value={email} onChange={(event) => setEmail(event.target.value)} className="rounded-lg border border-border px-4 py-3" placeholder="Email" />
+ <input value={password} onChange={(event) => setPassword(event.target.value)} className="rounded-lg border border-border px-4 py-3" placeholder="Password" type="password" />
  <div className="flex flex-wrap gap-3">
  <Button onClick={() => void submit(false)}>Continue</Button>
  <Button onClick={() => void submit(true)} variant="secondary">Demo login</Button>

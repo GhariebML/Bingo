@@ -44,7 +44,7 @@ export default function Page() {
  <div className="grid gap-6 lg:grid-cols-2">
  <Card className="border-t-4 border-t-coral" title="Crisis guidance">
  <div className="space-y-5">
- <div className="flex items-start gap-4 rounded-xl border border-coral/30 bg-error/20 p-5 text-slate-800 transition-all duration-300 hover:border-coral/50 shadow-sm">
+ <div className="flex items-start gap-4 rounded-xl border border-coral/30 bg-error/20 p-5 text-textPrimary transition-all duration-300 hover:border-coral/50 shadow-sm">
  <div className="rounded-lg bg-error/20 p-2.5 text-error shrink-0">
  <AlertTriangle className="" size={24} />
  </div>
@@ -57,7 +57,7 @@ export default function Page() {
  </div>
  
  {resources ? (
- <div className="rounded-xl border border-sky/40 bg-white/40 p-4 transition-all duration-300 hover:bg-white/60">
+ <div className="rounded-xl border border-border bg-surface/40 p-4 transition-all duration-300 hover:bg-surface/60">
  <h4 className="text-xs font-bold uppercase tracking-wider text-muted mb-2 font-heading">Your Regional Resources</h4>
  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-sm">
  <div>
@@ -66,14 +66,14 @@ export default function Page() {
  {resources.region ?? 'Global'}
  </span>
  </div>
- <div className="text-textPrimary font-semibold font-heading flex items-center gap-1.5 bg-surface px-3 py-1.5 rounded-lg border border-sky/30">
+ <div className="text-textPrimary font-semibold font-heading flex items-center gap-1.5 bg-surface px-3 py-1.5 rounded-lg border border-border">
  <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 "></span>
  {resources.crisis_line ?? resources.emergency ?? resources.note}
  </div>
  </div>
  </div>
  ) : (
- <div className="rounded-xl border border-dashed border-slate-200 p-4 text-center text-xs text-muted">
+ <div className="rounded-xl border border-dashed border-border p-4 text-center text-xs text-muted">
  Loading regional crisis contact numbers...
  </div>
  )}
@@ -83,7 +83,7 @@ export default function Page() {
  <Card className="border-t-4 border-t-calm" title="Bingo will not provide">
  <ul className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-1">
  {notFor.map((item) => (
- <li key={item} className="flex items-center gap-3.5 bg-white/40 border border-border rounded-xl px-4 py-3 shadow-sm hover:bg-white/70 transition-all duration-200">
+ <li key={item} className="flex items-center gap-3.5 bg-surface/40 border border-border rounded-xl px-4 py-3 shadow-sm hover:bg-surface/70 transition-all duration-200">
  <div className="rounded-full bg-calm/10 p-1.5 text-muted shrink-0">
  <ShieldCheck size={18} />
  </div>
@@ -107,7 +107,7 @@ export default function Page() {
  />
  <div className="absolute inset-0 bg-gradient-to-t from-ocean/50 via-transparent to-transparent"></div>
  </div>
- <div className="grid gap-6 p-6 md:p-8 sm:grid-cols-2 bg-white/50 backdrop-blur-md">
+ <div className="grid gap-6 p-6 md:p-8 sm:grid-cols-2 bg-surface/50 backdrop-blur-md">
  <div className="space-y-2 border-b sm:border-b-0 sm:border-r border-slate-100 pb-6 sm:pb-0 sm:pr-6">
  <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-surface text-textPrimary mb-2 font-bold font-heading">✓</div>
  <h2 className="text-lg font-bold text-textPrimary font-heading font-semibold">What Bingo can help with</h2>

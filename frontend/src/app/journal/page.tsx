@@ -85,7 +85,7 @@ export default function Page() {
  
  {entry.id ? (
  <button 
- className="text-slate-400 hover:text-error transition-colors p-1.5 rounded-lg hover:bg-error/20 shrink-0" 
+ className="text-muted hover:text-error transition-colors p-1.5 rounded-lg hover:bg-error/20 shrink-0" 
  onClick={() => void removeEntry(entry.id!)} 
  title="Delete Entry"
  type="button"
@@ -98,7 +98,7 @@ export default function Page() {
  ))}
 
  {!loading && entries.length === 0 ? (
- <div className="py-12 text-center text-sm text-slate-400 select-none">
+ <div className="py-12 text-center text-sm text-muted select-none">
  <Sparkles size={24} className="mx-auto mb-2 text-muted/50 " />
  No reflections saved yet. Your first entry will appear here.
  </div>
@@ -115,7 +115,7 @@ export default function Page() {
  {prompts.map((prompt) => (
  <button 
  key={prompt} 
- className="rounded-xl border border-sky/30 bg-surface px-4 py-3 text-left text-xs font-semibold text-textPrimary transition-all duration-300 hover:bg-surface hover:-translate-y-0.5 active:translate-y-0 select-none"
+ className="rounded-xl border border-border bg-surface px-4 py-3 text-left text-xs font-semibold text-textPrimary transition-all duration-300 hover:bg-surface hover:-translate-y-0.5 active:translate-y-0 select-none"
  type="button"
  >
  {prompt}
