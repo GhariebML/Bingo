@@ -17,3 +17,5 @@ dist/
 test-results/
 playwright-report/
 bingo_Img/exports/
+
+.vercel
