@@ -2,10 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: dark;
-}
+@layer base {
+  :root {
+    --background: 248 250 252; /* slate-50 */
+    --surface: 255 255 255; /* white */
+    --primary: 15 23 42; /* slate-900 */
+    --secondary: 51 65 85; /* slate-700 */
+    --textPrimary: 15 23 42;
+    --textSecondary: 71 85 105;
+    --muted: 148 163 184;
+    --border: 226 232 240;
+    --error: 248 113 113;
+  }
 
+  .dark {
+    --background: 11 16 32; /* #0B1020 */
+    --surface: 17 24 39; /* #111827 */
+    --primary: 37 99 235; /* #2563EB */
+    --secondary: 56 189 248; /* #38BDF8 */
+    --textPrimary: 248 250 252;
+    --textSecondary: 203 213 225;
+    --muted: 148 163 184;
+    --border: 148 163 184;
+    --error: 248 113 113;
+  }
+}
 @layer base {
   body {
     @apply font-sans text-textPrimary min-h-screen bg-background overflow-x-hidden;

@@ -4,16 +4,18 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
+import { ThemeToggle } from '@/components/layout/ThemeToggle';
+
 const links = ['chat', 'dashboard', 'journal', 'exercises', 'safety', 'settings'];
 
 export function Navbar() {
  const pathname = usePathname();
 
  return (
- <nav className="sticky top-0 z-10 border-b border-border bg-background backdrop-blur">
+ <nav className="sticky top-0 z-10 border-b border-border bg-background/80 backdrop-blur">
  <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4 py-4">
  <Link className="flex items-center gap-2 font-bold text-textPrimary" href="/">
- <span className="relative h-10 w-10 overflow-hidden rounded-lg bg-white shadow-sm">
+ <span className="relative h-10 w-10 overflow-hidden rounded-lg bg-surface shadow-sm">
  <Image alt="Bingo logo" fill sizes="40px" src="/bingo-logo.png" className="object-contain" priority />
  </span>
  Bingo
@@ -25,12 +27,13 @@ export function Navbar() {
  {links.map((link) => (
  <Link
  key={link}
- className={`rounded-lg px-3 py-2 text-sm font-medium capitalize transition hover:bg-white hover:text-textPrimary ${pathname === `/${link}` ? 'bg-white text-textPrimary shadow-sm' : 'text-textSecondary'}`}
+ className={`rounded-lg px-3 py-2 text-sm font-medium capitalize transition hover:bg-surface hover:text-textPrimary ${pathname === `/${link}` ? 'bg-surface text-textPrimary shadow-sm' : 'text-textSecondary'}`}
  href={`/${link}`}
  >
  {link}
  </Link>
  ))}
+ <ThemeToggle />
  </div>
  </div>
  </nav>
