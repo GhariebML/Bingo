@@ -12,16 +12,31 @@ const defaults: UserSettings = {
   crisis_region: 'United States',
   save_journal_history: true,
   save_mood_history: true,
+  ai_provider: 'mock',
+  enable_real_ai: false,
+  openai_api_key: '',
+  openai_model: 'gpt-4o-mini',
+  openai_base_url: '',
+  openrouter_api_key: '',
+  openrouter_model: 'openai/gpt-4o-mini',
+  openrouter_base_url: 'https://openrouter.ai/api/v1',
+  hf_token: '',
+  hf_model: '',
+  hf_base_url: '',
 };
 
 export default function Page() {
   const [settings, setSettings] = useState<UserSettings>(defaults);
   const [status, setStatus] = useState('Loading saved settings...');
+  const [showHFToken, setShowHFToken] = useState(false);
+  const [showOpenAIKey, setShowOpenAIKey] = useState(false);
+  const [showOpenRouterKey, setShowOpenRouterKey] = useState(false);
 
   useEffect(() => {
     async function load() {
       try {
-        setSettings(await getSettings());
+        const loaded = await getSettings();
+        setSettings({ ...defaults, ...loaded });
         setStatus('Settings loaded from persistent storage.');
       } catch {
         setStatus('Please log in or use demo login to load settings.');
@@ -33,7 +48,8 @@ export default function Page() {
   async function startDemoSession() {
     try {
       const auth = await mockLogin();
-      setSettings(await getSettings());
+      const loaded = await getSettings();
+      setSettings({ ...defaults, ...loaded });
       setStatus('Demo login active. Settings loaded from persistent storage.');
     } catch {
       setStatus('Could not start demo login.');
@@ -42,7 +58,8 @@ export default function Page() {
 
   async function save() {
     try {
-      setSettings(await updateSettings(settings));
+      const saved = await updateSettings(settings);
+      setSettings({ ...defaults, ...saved });
       setStatus('Settings saved for the current user.');
     } catch {
       setStatus('Please log in or use demo login before saving settings.');
@@ -72,46 +89,298 @@ export default function Page() {
     }
   }
 
-  return <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-    <div className="space-y-5">
-      <p className="text-sm font-semibold uppercase tracking-wide text-calm">Bingo</p>
-      <h1 className="text-4xl font-bold text-ink">Settings</h1>
-      <p className="max-w-2xl text-lg text-slate-700">Manage preferences, saved data choices, and regional safety resources.</p>
-      <div className="grid gap-4">
-        <Card title="Preferred language">
-          <label className="mb-2 block text-sm font-semibold text-ocean" htmlFor="preferred-language">Preferred language</label>
-          <select id="preferred-language" value={settings.preferred_language} onChange={(event) => setSettings({ ...settings, preferred_language: event.target.value })} className="w-full rounded-lg border border-sky px-4 py-3">
-            {['English', 'Arabic', 'Both'].map((option) => <option key={option}>{option}</option>)}
-          </select>
-        </Card>
-        <Card title="Response style">
-          <label className="mb-2 block text-sm font-semibold text-ocean" htmlFor="response-style">Response style</label>
-          <select id="response-style" value={settings.response_style} onChange={(event) => setSettings({ ...settings, response_style: event.target.value })} className="w-full rounded-lg border border-sky px-4 py-3">
-            {['short', 'balanced', 'detailed'].map((option) => <option key={option}>{option}</option>)}
-          </select>
-        </Card>
-        <Card title="Crisis resources region">
-          <label className="mb-2 block text-sm font-semibold text-ocean" htmlFor="crisis-region">Crisis resources region</label>
-          <select id="crisis-region" value={settings.crisis_region} onChange={(event) => setSettings({ ...settings, crisis_region: event.target.value })} className="w-full rounded-lg border border-sky px-4 py-3">
-            {['United States', 'Egypt', 'United Kingdom', 'Global'].map((option) => <option key={option}>{option}</option>)}
-          </select>
-        </Card>
-        <Card title="Data privacy">
-          <label className="flex items-center gap-3"><input checked={settings.save_journal_history} onChange={(event) => setSettings({ ...settings, save_journal_history: event.target.checked })} type="checkbox" /> Save journal history</label>
-          <label className="mt-3 flex items-center gap-3"><input checked={settings.save_mood_history} onChange={(event) => setSettings({ ...settings, save_mood_history: event.target.checked })} type="checkbox" /> Save mood history</label>
-        </Card>
+  return (
+    <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="space-y-5">
+        <p className="text-sm font-semibold uppercase tracking-wide text-calm">Bingo</p>
+        <h1 className="text-4xl font-bold text-ink">Settings</h1>
+        <p className="max-w-2xl text-lg text-slate-700">Manage preferences, saved data choices, and regional safety resources.</p>
+        <div className="grid gap-4">
+          <Card title="Preferred language">
+            <label className="mb-2 block text-sm font-semibold text-ocean" htmlFor="preferred-language">Preferred language</label>
+            <select
+              id="preferred-language"
+              value={settings.preferred_language}
+              onChange={(event) => setSettings({ ...settings, preferred_language: event.target.value })}
+              className="w-full rounded-lg border border-sky px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-sky"
+            >
+              {['English', 'Arabic', 'Both'].map((option) => <option key={option}>{option}</option>)}
+            </select>
+          </Card>
+          <Card title="Response style">
+            <label className="mb-2 block text-sm font-semibold text-ocean" htmlFor="response-style">Response style</label>
+            <select
+              id="response-style"
+              value={settings.response_style}
+              onChange={(event) => setSettings({ ...settings, response_style: event.target.value })}
+              className="w-full rounded-lg border border-sky px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-sky"
+            >
+              {['short', 'balanced', 'detailed'].map((option) => <option key={option}>{option}</option>)}
+            </select>
+          </Card>
+          <Card title="Crisis resources region">
+            <label className="mb-2 block text-sm font-semibold text-ocean" htmlFor="crisis-region">Crisis resources region</label>
+            <select
+              id="crisis-region"
+              value={settings.crisis_region}
+              onChange={(event) => setSettings({ ...settings, crisis_region: event.target.value })}
+              className="w-full rounded-lg border border-sky px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-sky"
+            >
+              {['United States', 'Egypt', 'United Kingdom', 'Global'].map((option) => <option key={option}>{option}</option>)}
+            </select>
+          </Card>
+          <Card title="Data privacy">
+            <div className="space-y-3">
+              <label className="flex items-center gap-3 text-slate-700 cursor-pointer">
+                <input
+                  checked={settings.save_journal_history}
+                  onChange={(event) => setSettings({ ...settings, save_journal_history: event.target.checked })}
+                  type="checkbox"
+                  className="rounded text-sky focus:ring-sky h-4 w-4"
+                />
+                Save journal history
+              </label>
+              <label className="flex items-center gap-3 text-slate-700 cursor-pointer">
+                <input
+                  checked={settings.save_mood_history}
+                  onChange={(event) => setSettings({ ...settings, save_mood_history: event.target.checked })}
+                  type="checkbox"
+                  className="rounded text-sky focus:ring-sky h-4 w-4"
+                />
+                Save mood history
+              </label>
+            </div>
+          </Card>
+
+          {/* Premium AI Provider Panel */}
+          <Card title="AI & Inference Settings">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div>
+                  <h4 className="font-semibold text-slate-800">Enable Real AI</h4>
+                  <p className="text-xs text-slate-500">Connect Bingo to live active model completion endpoints</p>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={settings.enable_real_ai}
+                    onChange={(event) => setSettings({ ...settings, enable_real_ai: event.target.checked })}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky"></div>
+                </label>
+              </div>
+
+              {settings.enable_real_ai && (
+                <div className="space-y-4 pt-2">
+                  <div>
+                    <label className="mb-1 block text-sm font-semibold text-ocean" htmlFor="ai-provider">AI Provider</label>
+                    <select
+                      id="ai-provider"
+                      value={settings.ai_provider}
+                      onChange={(event) => setSettings({ ...settings, ai_provider: event.target.value })}
+                      className="w-full rounded-lg border border-sky px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-sky text-sm"
+                    >
+                      <option value="mock">Offline Simulator (Demo Mode)</option>
+                      <option value="pollinations">Pollinations.ai (Keyless & Free)</option>
+                      <option value="huggingface">Hugging Face Inference Hub</option>
+                      <option value="openai">OpenAI Direct API</option>
+                      <option value="openrouter">OpenRouter API</option>
+                    </select>
+                  </div>
+
+                  {settings.ai_provider === 'pollinations' && (
+                    <div className="rounded-lg bg-sky/10 border border-sky/30 p-3 text-xs text-slate-700 leading-relaxed">
+                      <strong>Free & Keyless Completions:</strong> Pollinations.ai provides free, direct completion responses for your mental wellness companion without requiring API keys or account setup.
+                    </div>
+                  )}
+
+                  {settings.ai_provider === 'huggingface' && (
+                    <div className="space-y-3 pt-1 border-t border-slate-100">
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold text-ocean" htmlFor="hf-token">Hugging Face API Token</label>
+                        <div className="relative">
+                          <input
+                            id="hf-token"
+                            type={showHFToken ? 'text' : 'password'}
+                            value={settings.hf_token || ''}
+                            onChange={(event) => setSettings({ ...settings, hf_token: event.target.value })}
+                            placeholder="hf_..."
+                            className="w-full rounded-lg border border-sky pl-4 pr-10 py-2.5 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowHFToken(!showHFToken)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 focus:outline-none"
+                          >
+                            {showHFToken ? (
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M21 21l-3.486-3.486m0 0a9 9 0 0 1-12.802-12.802L3 3m15.357 15.357A9.003 9.003 0 0 0 12 4.5c-4.756 0-8.773 3.162-10.065 7.498a10.522 10.522 0 0 0 1.718 3.213m15.357 2.446L14.54 14.54m-1.157-1.157a3 3 0 1 1-4.243-4.243m4.242 4.242L9.88 9.88" />
+                              </svg>
+                            ) : (
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                              </svg>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold text-ocean" htmlFor="hf-model">Hugging Face Model ID</label>
+                        <input
+                          id="hf-model"
+                          type="text"
+                          value={settings.hf_model || ''}
+                          onChange={(event) => setSettings({ ...settings, hf_model: event.target.value })}
+                          placeholder="e.g. meta-llama/Meta-Llama-3-8B-Instruct"
+                          className="w-full rounded-lg border border-sky px-4 py-2.5 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky"
+                        />
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold text-ocean" htmlFor="hf-base-url">Inference URL Override (Optional)</label>
+                        <input
+                          id="hf-base-url"
+                          type="text"
+                          value={settings.hf_base_url || ''}
+                          onChange={(event) => setSettings({ ...settings, hf_base_url: event.target.value })}
+                          placeholder="Defaults to standard HF Hub Endpoint"
+                          className="w-full rounded-lg border border-sky px-4 py-2.5 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {settings.ai_provider === 'openai' && (
+                    <div className="space-y-3 pt-1 border-t border-slate-100">
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold text-ocean" htmlFor="openai-key">OpenAI API Key</label>
+                        <div className="relative">
+                          <input
+                            id="openai-key"
+                            type={showOpenAIKey ? 'text' : 'password'}
+                            value={settings.openai_api_key || ''}
+                            onChange={(event) => setSettings({ ...settings, openai_api_key: event.target.value })}
+                            placeholder="sk-..."
+                            className="w-full rounded-lg border border-sky pl-4 pr-10 py-2.5 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowOpenAIKey(!showOpenAIKey)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 focus:outline-none"
+                          >
+                            {showOpenAIKey ? (
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M21 21l-3.486-3.486m0 0a9 9 0 0 1-12.802-12.802L3 3m15.357 15.357A9.003 9.003 0 0 0 12 4.5c-4.756 0-8.773 3.162-10.065 7.498a10.522 10.522 0 0 0 1.718 3.213m15.357 2.446L14.54 14.54m-1.157-1.157a3 3 0 1 1-4.243-4.243m4.242 4.242L9.88 9.88" />
+                              </svg>
+                            ) : (
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                              </svg>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold text-ocean" htmlFor="openai-model">OpenAI Model</label>
+                        <input
+                          id="openai-model"
+                          type="text"
+                          value={settings.openai_model || ''}
+                          onChange={(event) => setSettings({ ...settings, openai_model: event.target.value })}
+                          placeholder="gpt-4o-mini"
+                          className="w-full rounded-lg border border-sky px-4 py-2.5 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky"
+                        />
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold text-ocean" htmlFor="openai-base-url">API Base URL (Optional)</label>
+                        <input
+                          id="openai-base-url"
+                          type="text"
+                          value={settings.openai_base_url || ''}
+                          onChange={(event) => setSettings({ ...settings, openai_base_url: event.target.value })}
+                          placeholder="Defaults to OpenAI Endpoint"
+                          className="w-full rounded-lg border border-sky px-4 py-2.5 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {settings.ai_provider === 'openrouter' && (
+                    <div className="space-y-3 pt-1 border-t border-slate-100">
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold text-ocean" htmlFor="openrouter-key">OpenRouter API Key</label>
+                        <div className="relative">
+                          <input
+                            id="openrouter-key"
+                            type={showOpenRouterKey ? 'text' : 'password'}
+                            value={settings.openrouter_api_key || ''}
+                            onChange={(event) => setSettings({ ...settings, openrouter_api_key: event.target.value })}
+                            placeholder="sk-or-..."
+                            className="w-full rounded-lg border border-sky pl-4 pr-10 py-2.5 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowOpenRouterKey(!showOpenRouterKey)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 focus:outline-none"
+                          >
+                            {showOpenRouterKey ? (
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M21 21l-3.486-3.486m0 0a9 9 0 0 1-12.802-12.802L3 3m15.357 15.357A9.003 9.003 0 0 0 12 4.5c-4.756 0-8.773 3.162-10.065 7.498a10.522 10.522 0 0 0 1.718 3.213m15.357 2.446L14.54 14.54m-1.157-1.157a3 3 0 1 1-4.243-4.243m4.242 4.242L9.88 9.88" />
+                              </svg>
+                            ) : (
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                              </svg>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold text-ocean" htmlFor="openrouter-model">OpenRouter Model</label>
+                        <input
+                          id="openrouter-model"
+                          type="text"
+                          value={settings.openrouter_model || ''}
+                          onChange={(event) => setSettings({ ...settings, openrouter_model: event.target.value })}
+                          placeholder="openai/gpt-4o-mini"
+                          className="w-full rounded-lg border border-sky px-4 py-2.5 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky"
+                        />
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold text-ocean" htmlFor="openrouter-base-url">API Base URL</label>
+                        <input
+                          id="openrouter-base-url"
+                          type="text"
+                          value={settings.openrouter_base_url || ''}
+                          onChange={(event) => setSettings({ ...settings, openrouter_base_url: event.target.value })}
+                          placeholder="https://openrouter.ai/api/v1"
+                          className="w-full rounded-lg border border-sky px-4 py-2.5 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </Card>
+        </div>
+        <div className="flex flex-wrap items-center gap-3 pt-3">
+          {status.includes('log in') ? <Button onClick={startDemoSession} variant="secondary">Demo login</Button> : null}
+          <Button onClick={save}>Save settings</Button>
+          <Button onClick={downloadExport} variant="secondary">Export data</Button>
+          <Button onClick={signOut} variant="ghost">Log out</Button>
+          <Button onClick={requestDelete} variant="ghost">Delete account</Button>
+          <p className="text-sm text-slate-600 font-medium">{status}</p>
+        </div>
       </div>
-      <div className="flex flex-wrap items-center gap-3">
-        {status.includes('log in') ? <Button onClick={startDemoSession} variant="secondary">Demo login</Button> : null}
-        <Button onClick={save}>Save settings</Button>
-        <Button onClick={downloadExport} variant="secondary">Export data</Button>
-        <Button onClick={signOut} variant="ghost">Log out</Button>
-        <Button onClick={requestDelete} variant="ghost">Delete account</Button>
-        <p className="text-sm text-slate-600">{status}</p>
-      </div>
-    </div>
-    <Card title="Safety boundary">
-      <p>Bingo offers supportive reflection, not therapy, diagnosis, medication advice, or emergency care. Real AI providers remain gated until clinical, legal, and privacy reviews are complete.</p>
-    </Card>
-  </section>;
+      <Card title="Safety boundary">
+        <p className="leading-relaxed">
+          Bingo offers supportive reflection, not therapy, diagnosis, medication advice, or emergency care. Real AI providers remain gated until clinical, legal, and privacy reviews are complete.
+        </p>
+      </Card>
+    </section>
+  );
 }

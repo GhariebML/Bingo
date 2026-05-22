@@ -7,6 +7,11 @@ class OpenRouterProvider(AIProvider):
     name = 'openrouter'
     mode = 'real_ai_gated'
 
+    def __init__(self, api_key: str | None = None, model: str | None = None, base_url: str | None = None):
+        self.api_key = api_key or settings.openrouter_api_key
+        self.model = model or settings.openrouter_model
+        self.base_url = base_url or settings.openrouter_base_url
+
     def generate_response(
         self,
         messages: list[dict[str, str]],
@@ -17,10 +22,10 @@ class OpenRouterProvider(AIProvider):
             from openai import OpenAI  # type: ignore
         except Exception as exc:
             raise RuntimeError('OpenAI-compatible SDK is not installed') from exc
-        if not settings.openrouter_api_key:
+        if not self.api_key:
             raise RuntimeError('OpenRouter API key is not configured')
-        client = OpenAI(api_key=settings.openrouter_api_key, base_url=settings.openrouter_base_url)
-        response = client.chat.completions.create(model=settings.openrouter_model, messages=messages)
+        client = OpenAI(api_key=self.api_key, base_url=self.base_url)
+        response = client.chat.completions.create(model=self.model, messages=messages)
         return response.choices[0].message.content or ''
 
     def complete(self, prompt: str, mood: str | None = None) -> ProviderResponse:

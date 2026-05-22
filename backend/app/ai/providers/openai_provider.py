@@ -7,6 +7,11 @@ class OpenAIProvider(AIProvider):
     name = 'openai'
     mode = 'real_ai_gated'
 
+    def __init__(self, api_key: str | None = None, model: str | None = None, base_url: str | None = None):
+        self.api_key = api_key or settings.openai_api_key
+        self.model = model or settings.openai_model
+        self.base_url = base_url or settings.openai_base_url
+
     def generate_response(
         self,
         messages: list[dict[str, str]],
@@ -17,10 +22,10 @@ class OpenAIProvider(AIProvider):
             from openai import OpenAI  # type: ignore
         except Exception as exc:
             raise RuntimeError('OpenAI SDK is not installed') from exc
-        if not settings.openai_api_key:
+        if not self.api_key:
             raise RuntimeError('OpenAI API key is not configured')
-        client = OpenAI(api_key=settings.openai_api_key, base_url=settings.openai_base_url or None)
-        response = client.chat.completions.create(model=settings.openai_model, messages=messages)
+        client = OpenAI(api_key=self.api_key, base_url=self.base_url or None)
+        response = client.chat.completions.create(model=self.model, messages=messages)
         return response.choices[0].message.content or ''
 
     def complete(self, prompt: str, mood: str | None = None) -> ProviderResponse:

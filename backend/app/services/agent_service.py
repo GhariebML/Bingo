@@ -7,14 +7,15 @@ from app.services.ai_service import get_provider
 from app.services.safety_service import CRISIS_REPLY
 
 
-def generate_supportive_response(message: str, mood: str | None = None, history: list | None = None) -> ProviderResponse:
+def generate_supportive_response(message: str, mood: str | None = None, history: list | None = None, user = None) -> ProviderResponse:
     normalized = ' '.join(message.strip().split())
     crisis = detect_crisis(normalized)
     if crisis['is_crisis']:
         return ProviderResponse(CRISIS_REPLY, 'crisis', 'Contact emergency support', 'mock', 'demo')
 
     category = classify_intent(normalized, mood)
-    provider = get_provider()
+    user_settings = user.settings if user else None
+    provider = get_provider(user_settings)
     
     # Load system prompt professionally from file with fallback
     system_prompt = (

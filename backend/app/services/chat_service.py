@@ -4,7 +4,7 @@ from app.services.safety_service import CRISIS_REPLY
 from app.ai.guardrails.risk_classifier import classify_risk
 from app.ai.guardrails.response_validator import validate_response
 
-def generate_reply(payload: ChatRequest) -> ChatResponse:
+def generate_reply(payload: ChatRequest, user = None) -> ChatResponse:
     risk = classify_risk(payload.message)
     if risk['risk_level'] == 'crisis':
         return ChatResponse(
@@ -18,7 +18,7 @@ def generate_reply(payload: ChatRequest) -> ChatResponse:
             provider='mock',
             mode='demo',
         )
-    provider_response = generate_supportive_response(payload.message, payload.mood, payload.history)
+    provider_response = generate_supportive_response(payload.message, payload.mood, payload.history, user=user)
     cleaned, notes = validate_response(provider_response.reply)
     return ChatResponse(
         reply=cleaned,
