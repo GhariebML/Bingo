@@ -57,9 +57,7 @@ def generate_supportive_response(message: str, mood: str | None = None, history:
         cleaned, _ = validate_response(reply)
         return ProviderResponse(cleaned or fallback.reply, category, fallback.suggested_exercise, provider.name, provider.mode)
     except Exception as exc:
-        from app.config import settings
-        if settings.enable_real_ai and provider.name != 'mock':
-            err_msg = str(exc)
-            friendly_err = f"API connection issue: {err_msg}. Please check your OpenRouter configuration, balance, or key settings."
-            return ProviderResponse(friendly_err, category, "One small step planning", provider.name, "error")
+        import logging
+        logging.getLogger(__name__).warning("AI provider %s failed: %s — falling back to mock", provider.name, exc)
+        # Always fall back to the high-quality mock provider so the user always gets a real, helpful response
         return MockProvider().complete(normalized, mood)

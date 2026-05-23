@@ -23,7 +23,7 @@ class HuggingfaceProvider(AIProvider):
             raise RuntimeError('Hugging Face token/model is not configured')
         
         # Determine the base URL. For standard chat models, we want the chat completions endpoint.
-        base = self.base_url or f'https://api-inference.huggingface.co/models/{self.model}'
+        base = self.base_url or f'https://router.huggingface.co/hf-inference/models/{self.model}'
         url = base if 'v1/chat/completions' in base else f'{base.rstrip("/")}/v1/chat/completions'
         
         payload = {
