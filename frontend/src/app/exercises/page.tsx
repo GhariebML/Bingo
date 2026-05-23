@@ -47,10 +47,11 @@ export default function Page() {
  <div className="relative h-56 bg-surface">
  <Image 
  alt="Bingo in a calming underwater exercise scene" 
- className="object-cover transition-transform duration-500 hover:scale-105" 
+ className="object-cover transition-transform duration-700 hover:scale-105" 
  fill 
  sizes="(min-width: 1024px) 520px, 100vw" 
  src="/bingo/bingo-ocean.png" 
+ priority
  />
  </div>
  <div className="p-6 space-y-2 select-none">

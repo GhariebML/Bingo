@@ -147,6 +147,7 @@ export default function Page() {
  fill 
  sizes="(min-width: 1024px) 520px, 100vw" 
  src="/bingo/bingo-calm.png" 
+ priority
  />
  </div>
  <div className="p-6 space-y-2">

@@ -1,5 +1,5 @@
 import './globals.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { Plus_Jakarta_Sans, Manrope } from 'next/font/google';
@@ -19,9 +19,35 @@ const manrope = Manrope({
   display: 'swap',
 });
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#F8FAFC' },
+    { media: '(prefers-color-scheme: dark)', color: '#0B1020' },
+  ],
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   title: 'Bingo · AI Mental Wellness Companion',
-  description: 'A calm place to pause, reflect, and take one safe next step.',
+  description: 'A calm place to pause, reflect, and take one safe next step. Bingo offers warm emotional support, journaling prompts, and guided grounding exercises.',
+  openGraph: {
+    title: 'Bingo · AI Mental Wellness Companion',
+    description: 'A calm place to pause, reflect, and take one safe next step.',
+    url: 'https://bingo-wellness.vercel.app',
+    siteName: 'Bingo',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bingo · AI Mental Wellness Companion',
+    description: 'A calm place to pause, reflect, and take one safe next step.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
