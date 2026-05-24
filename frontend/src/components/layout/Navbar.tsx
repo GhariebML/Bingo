@@ -12,6 +12,7 @@ const links = [
   { name: 'dashboard', label: 'Dashboard' },
   { name: 'journal', label: 'Journal' },
   { name: 'breathe', label: 'Breathe' },
+  { name: 'games', label: '🎮 Games' },
   { name: 'school', label: '🏫 School' },
   { name: 'clinic', label: '🏥 Clinic' },
   { name: 'safety', label: 'Safety' },

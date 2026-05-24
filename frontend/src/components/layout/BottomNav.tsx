@@ -2,12 +2,13 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { MessageCircle, LayoutDashboard, BookOpen, Compass, ShieldCheck, Settings } from 'lucide-react';
+import { MessageCircle, LayoutDashboard, BookOpen, Compass, Gamepad2, ShieldCheck, Settings } from 'lucide-react';
 
 const tabs = [
   { href: '/chat', label: 'Chat', icon: MessageCircle },
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/journal', label: 'Journal', icon: BookOpen },
+  { href: '/games', label: 'Games', icon: Gamepad2 },
   { href: '/exercises', label: 'Exercises', icon: Compass },
   { href: '/safety', label: 'Safety', icon: ShieldCheck },
   { href: '/settings', label: 'Settings', icon: Settings },
