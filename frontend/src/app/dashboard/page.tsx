@@ -8,8 +8,11 @@ import { InsightPanel } from '@/components/dashboard/InsightPanel';
 import { MoodChart } from '@/components/dashboard/MoodChart';
 import { ProgressCards } from '@/components/dashboard/ProgressCards';
 import { Button } from '@/components/ui/Button';
-import { getDashboardSummary, mockLogin } from '@/lib/api';
+import { getDashboardSummary, mockLogin, listMoodEntries } from '@/lib/api';
 import type { DashboardSummary } from '@/types/dashboard';
+import type { MoodEntry } from '@/types/mood';
+import { MoodCheckIn } from '@/components/dashboard/MoodCheckIn';
+import { WellnessGrid } from '@/components/dashboard/WellnessGrid';
 
 const fallbackMoodData = [
  { day: 'Mon', mood: 'Stressed', score: 4 },
@@ -19,26 +22,29 @@ const fallbackMoodData = [
 ];
 
 export default function Page() {
- const [summary, setSummary] = useState<DashboardSummary | null>(null);
- const [status, setStatus] = useState('Loading dashboard summary...');
+  const [summary, setSummary] = useState<DashboardSummary | null>(null);
+  const [moodHistory, setMoodHistory] = useState<MoodEntry[]>([]);
+  const [status, setStatus] = useState('Loading dashboard summary...');
 
- async function load() {
- try {
- setSummary(await getDashboardSummary());
- setStatus('Connected to backend API. Dashboard loaded from backend APIs.');
- } catch {
- setStatus('Sign in or use demo login to synchronize your reflection dashboard.');
- }
- }
+  async function load() {
+    try {
+      const [sum, history] = await Promise.all([getDashboardSummary(), listMoodEntries()]);
+      setSummary(sum);
+      setMoodHistory(history);
+      setStatus('Connected to backend API. Dashboard loaded from backend APIs.');
+    } catch {
+      setStatus('Sign in or use demo login to synchronize your reflection dashboard.');
+    }
+  }
 
- async function startDemoSession() {
- await mockLogin();
- await load();
- }
+  async function startDemoSession() {
+    await mockLogin();
+    await load();
+  }
 
- useEffect(() => {
- void load();
- }, []);
+  useEffect(() => {
+    void load();
+  }, []);
 
  const chartData = summary?.mood_trend?.length ? summary.mood_trend : fallbackMoodData;
  const emotions = summary?.most_common_emotions?.length ? summary.most_common_emotions : ['anxious', 'stressed', 'hopeful'];
@@ -89,9 +95,18 @@ export default function Page() {
  </div>
  </div>
 
- <div className="animate-fade-in-up delay-100">
- <ProgressCards />
- </div>
+  <div className="animate-fade-in-up delay-100">
+    <ProgressCards 
+      journals={summary?.journal_entries}
+      moods={summary?.mood_checkins}
+      exercises={summary?.exercises_tried}
+    />
+  </div>
+
+  <div className="grid gap-6 md:grid-cols-2 animate-fade-in-up delay-150">
+    <MoodCheckIn onSuccess={load} />
+    <WellnessGrid moodHistory={moodHistory} />
+  </div>
 
  {/* Connection Actions if guest */}
  {!isConnected ? (

@@ -29,32 +29,38 @@ export default function Page() {
  <ChatWindow quickPrompts={quickStarts} />
  </Card>
  </div>
- <aside className="space-y-4">
- <Card className="overflow-hidden p-0">
- <div className="relative h-56">
- <Image alt="Bingo assistant avatar in an ocean scene" className="object-cover" fill priority sizes="(min-width: 1024px) 520px, 100vw" src="/bingo/bingo-avatar.png" />
- </div>
- <div className="p-5">
- <h2 className="font-semibold text-textPrimary">Bingo is listening</h2>
- <p className="mt-2 text-sm leading-6 text-textSecondary">The chat now sends messages to the local FastAPI backend and uses the safe mock provider.</p>
- </div>
- </Card>
- <Card title="Quick starts">
- <div className="grid gap-2">
- {quickStarts.map((prompt) => (
- <div key={prompt} className="rounded-lg border border-border bg-background px-3 py-3 text-left text-sm font-semibold text-textPrimary">
- {prompt}
- </div>
- ))}
- </div>
- </Card>
- <Card title="Safety note">
- <p className="text-sm leading-6">
- If you may hurt yourself, hurt someone else, or are in immediate danger, contact local emergency services now and reach a trusted person.
- </p>
- </Card>
- <Button variant="secondary">Save reflection</Button>
- </aside>
+  <aside className="hidden lg:block space-y-4">
+    <Card className="overflow-hidden p-0">
+      <div className="relative h-56">
+        <Image alt="Bingo assistant avatar in an ocean scene" className="object-cover" fill priority sizes="(min-width: 1024px) 520px, 100vw" src="/bingo/bingo-avatar.png" />
+      </div>
+      <div className="p-5">
+        <h2 className="font-semibold text-textPrimary">Bingo is listening</h2>
+        <p className="mt-2 text-sm leading-6 text-textSecondary">The chat now sends messages to the local FastAPI backend and uses the safe mock provider.</p>
+      </div>
+    </Card>
+    <Card title="Reflection tips">
+      <ul className="space-y-3 text-xs leading-relaxed text-textSecondary">
+        <li className="flex gap-2">
+          <span className="text-primary font-bold">😌</span>
+          <span>Take a slow breath before typing to settle your thoughts.</span>
+        </li>
+        <li className="flex gap-2">
+          <span className="text-primary font-bold">🏷️</span>
+          <span>Name the specific emotions you feel to down-regulate stress.</span>
+        </li>
+        <li className="flex gap-2">
+          <span className="text-primary font-bold">🎯</span>
+          <span>Focus on one small, safe next action you can take right now.</span>
+        </li>
+      </ul>
+    </Card>
+    <Card title="Safety note">
+      <p className="text-sm leading-6">
+        If you may hurt yourself, hurt someone else, or are in immediate danger, contact local emergency services now and reach a trusted person.
+      </p>
+    </Card>
+  </aside>
  </section>
  );
 }

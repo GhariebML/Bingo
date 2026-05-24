@@ -13,6 +13,7 @@ export function Button({
  onClick,
  type = 'button',
  variant = 'primary',
+ title,
 }: {
  children: React.ReactNode;
  className?: string;
@@ -20,12 +21,14 @@ export function Button({
  onClick?: () => void;
  type?: 'button' | 'submit';
  variant?: ButtonVariant;
+ title?: string;
 }) {
  return (
  <button
  disabled={disabled}
  onClick={onClick}
  type={type}
+ title={title}
  className={`inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:transform-none disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]} ${className}`}
  >
  {children}

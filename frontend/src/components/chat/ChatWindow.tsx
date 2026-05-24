@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
+
 import { ChatInput } from './ChatInput';
 import { ChatMessage } from './ChatMessage';
 import { MoodSelector } from './MoodSelector';
@@ -8,6 +10,11 @@ import { useChat } from '@/hooks/useChat';
 
 export function ChatWindow({ quickPrompts = [] }: { quickPrompts?: string[] }) {
  const { error, loading, messages, sendMessage } = useChat();
+ const messagesEndRef = useRef<HTMLDivElement>(null);
+
+ useEffect(() => {
+   messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+ }, [messages, loading]);
 
  return (
  <div className="space-y-6">
@@ -64,6 +71,7 @@ export function ChatWindow({ quickPrompts = [] }: { quickPrompts?: string[] }) {
  </div>
  </div>
  ) : null}
+ <div ref={messagesEndRef} />
  </div>
 
  {error ? (

@@ -79,3 +79,11 @@ a {
 .delay-300 { animation-delay: 300ms; }
 .delay-400 { animation-delay: 400ms; }
 .delay-500 { animation-delay: 500ms; }
+
+/* Custom animation delay classes for concentric waves */
+.delay-2000 { animation-delay: 2s; }
+
+/* Enhanced hover transitions for cards */
+.glass-card-interactive {
+  @apply transition-all duration-500 hover:-translate-y-1.5 hover:shadow-glass hover:border-primary/20;
+}

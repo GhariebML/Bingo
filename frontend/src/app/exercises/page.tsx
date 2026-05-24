@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { getExercises } from '@/lib/api';
 import type { Exercise } from '@/types/exercises';
+import { ActiveExercise } from '@/components/exercises/ActiveExercise';
 
 export default function Page() {
  const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -71,57 +72,70 @@ export default function Page() {
  <div className="grid gap-6 md:grid-cols-2">
  {exercises.map((exercise) => {
  const isActive = active === exercise.id;
- return (
- <Card 
- key={exercise.id} 
- title={exercise.title}
- className={`flex flex-col justify-between transition-all duration-500 ${
- isActive ? 'ring-2 ring-primary/10 border-primary/20 scale-[1.01]' : ''
- }`}
- >
- <div className="space-y-4">
- {/* Meta Tags */}
- <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-wider select-none">
- <span className="flex items-center gap-1 rounded-full bg-surface px-3 py-1 text-textPrimary border border-border">
- <Clock size={11} />
- {exercise.duration_minutes} Min
- </span>
- <span className="flex items-center gap-1 rounded-full bg-surface px-3 py-1 text-textPrimary border border-border">
- <Target size={11} />
- {exercise.purpose}
- </span>
- </div>
- 
- {/* Steps List */}
- <ol className="space-y-3.5">
- {(isActive ? exercise.steps : exercise.steps.slice(0, 2)).map((step, index) => (
- <li key={step} className="flex gap-3 text-sm leading-relaxed text-textSecondary transition-opacity duration-300">
- <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-surface text-xs font-bold text-textPrimary border border-border shadow-sm select-none">
- {index + 1}
- </span>
- <span className="pt-0.5">{step}</span>
- </li>
- ))}
- {!isActive && exercise.steps.length > 2 ? (
- <li className="text-xs text-muted font-semibold italic pl-9">
- + {exercise.steps.length - 2} more steps...
- </li>
- ) : null}
- </ol>
- </div>
-
- {/* Action Button */}
- <div className="mt-6 pt-4 border-t border-border flex justify-end">
- <Button 
- onClick={() => setActive(isActive ? null : exercise.id)} 
- variant="secondary"
- className="text-xs px-4 py-2"
- >
- {isActive ? 'Minimize Exercise' : 'Start Practice'}
- </Button>
- </div>
- </Card>
- );
+  return (
+  <Card 
+  key={exercise.id} 
+  title={isActive ? undefined : exercise.title}
+  className={`flex flex-col justify-between transition-all duration-500 ${
+  isActive ? 'ring-2 ring-primary/10 border-primary/20 scale-[1.01] bg-surface' : ''
+  }`}
+  >
+  {isActive ? (
+    <ActiveExercise
+      exerciseId={exercise.id}
+      category={exercise.category}
+      title={exercise.title}
+      steps={exercise.steps}
+      durationMinutes={exercise.duration_minutes}
+      onClose={() => setActive(null)}
+    />
+  ) : (
+    <>
+      <div className="space-y-4">
+      {/* Meta Tags */}
+      <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-wider select-none">
+      <span className="flex items-center gap-1 rounded-full bg-surface px-3 py-1 text-textPrimary border border-border">
+      <Clock size={11} />
+      {exercise.duration_minutes} Min
+      </span>
+      <span className="flex items-center gap-1 rounded-full bg-surface px-3 py-1 text-textPrimary border border-border">
+      <Target size={11} />
+      {exercise.purpose}
+      </span>
+      </div>
+      
+      {/* Steps List */}
+      <ol className="space-y-3.5">
+      {exercise.steps.slice(0, 2).map((step, index) => (
+      <li key={step} className="flex gap-3 text-sm leading-relaxed text-textSecondary transition-opacity duration-300">
+      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-surface text-xs font-bold text-textPrimary border border-border shadow-sm select-none">
+      {index + 1}
+      </span>
+      <span className="pt-0.5">{step}</span>
+      </li>
+      ))}
+      {exercise.steps.length > 2 ? (
+      <li className="text-xs text-muted font-semibold italic pl-9">
+      + {exercise.steps.length - 2} more steps...
+      </li>
+      ) : null}
+      </ol>
+      </div>
+     
+      {/* Action Button */}
+      <div className="mt-6 pt-4 border-t border-border flex justify-end">
+      <Button 
+      onClick={() => setActive(exercise.id)} 
+      variant="secondary"
+      className="text-xs px-4 py-2"
+      >
+      Start Practice
+      </Button>
+      </div>
+    </>
+  )}
+  </Card>
+  );
  })}
  </div>
  </section>

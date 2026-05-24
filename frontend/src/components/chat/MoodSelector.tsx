@@ -20,10 +20,13 @@ export function MoodSelector() {
  <div className="flex flex-wrap gap-2">
  {moods.map(({ label, emoji, bg }) => {
  const isSelected = selected === label;
+ const isWiggle = label === 'Calm' || label === 'Hopeful' || label === 'Tired';
+ const animClass = isWiggle ? 'group-hover:animate-emoji-wiggle' : 'group-hover:animate-emoji-bounce';
+
  return (
  <button
  onClick={() => setSelected(isSelected ? null : label)}
- className={`flex items-center gap-2 rounded-full border px-4.5 py-2 text-xs font-bold tracking-wide transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 hover:shadow-sm ${
+ className={`group flex items-center gap-2 rounded-full border px-4.5 py-2 text-xs font-bold tracking-wide transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 hover:shadow-sm ${
  isSelected
  ? 'border-primary bg-surface text-textPrimary scale-[1.03] shadow-sm ring-2 ring-primary/10'
  : `border-border bg-surface/60 backdrop-blur text-textPrimary/85 ${bg}`
@@ -31,7 +34,9 @@ export function MoodSelector() {
  key={label}
  type="button"
  >
- <span className="text-sm">{emoji}</span>
+ <span className={`text-sm transition-transform inline-block ${isSelected ? 'animate-emoji-bounce' : animClass}`}>
+ {emoji}
+ </span>
  <span>{label}</span>
  </button>
  );

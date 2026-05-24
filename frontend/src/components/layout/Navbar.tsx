@@ -23,7 +23,8 @@ export function Navbar() {
  <span className="rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-wide text-textPrimary">
  Demo Mode
  </span>
- <div className="flex flex-1 flex-wrap items-center justify-end gap-2">
+ <div className="flex flex-1 items-center justify-end gap-2">
+ <div className="hidden md:flex items-center gap-2">
  {links.map((link) => (
  <Link
  key={link}
@@ -33,6 +34,7 @@ export function Navbar() {
  {link}
  </Link>
  ))}
+ </div>
  <ThemeToggle />
  </div>
  </div>
