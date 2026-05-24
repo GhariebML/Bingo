@@ -3,14 +3,26 @@
 import { useEffect, useState } from 'react';
 import { LayoutDashboard, Wifi, LogIn } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
-import { MoodChart } from '@/components/dashboard/MoodChart';
+import { MoodCheckIn } from '@/components/dashboard/MoodCheckIn';
+import { WellnessGrid } from '@/components/dashboard/WellnessGrid';
 import { ProgressCards } from '@/components/dashboard/ProgressCards';
 import { Button } from '@/components/ui/Button';
 import { getDashboardSummary, mockLogin, listMoodEntries } from '@/lib/api';
 import type { DashboardSummary } from '@/types/dashboard';
 import type { MoodEntry } from '@/types/mood';
-import { MoodCheckIn } from '@/components/dashboard/MoodCheckIn';
-import { WellnessGrid } from '@/components/dashboard/WellnessGrid';
+import dynamic from 'next/dynamic';
+
+const MoodChart = dynamic(
+  () => import('@/components/dashboard/MoodChart').then((mod) => mod.MoodChart),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-[200px] w-full bg-background rounded-lg mt-4 flex items-center justify-center text-textSecondary text-xs animate-pulse">
+        Loading chart...
+      </div>
+    ),
+  }
+);
 
 // Import new well-being components
 import { VirtualTwin } from '@/components/dashboard/VirtualTwin';

@@ -180,7 +180,7 @@ export default function Page() {
       </Card>
 
       {/* Features Grid */}
-      <div className="space-y-8 animate-fade-in-up delay-300">
+      <div className="space-y-8 animate-fade-in-up delay-300 content-visibility-auto">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <h2 className="text-3xl font-extrabold text-textPrimary">{copy.featuresTitle}</h2>
         </div>
@@ -196,7 +196,7 @@ export default function Page() {
       </div>
 
       {/* Partnerships Section */}
-      <div className="space-y-8 animate-fade-in-up delay-400">
+      <div className="space-y-8 animate-fade-in-up delay-400 content-visibility-auto">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <h2 className="text-3xl font-extrabold text-textPrimary">{copy.partnersTitle}</h2>
         </div>
@@ -223,7 +223,7 @@ export default function Page() {
       </div>
 
       {/* FAQ Section */}
-      <div className="space-y-6 max-w-3xl mx-auto animate-fade-in-up delay-500">
+      <div className="space-y-6 max-w-3xl mx-auto animate-fade-in-up delay-500 content-visibility-auto">
         <h2 className="text-2xl font-extrabold text-textPrimary text-center">{copy.faqTitle}</h2>
         <div className="space-y-4">
           {copy.faqs.map((faq) => (

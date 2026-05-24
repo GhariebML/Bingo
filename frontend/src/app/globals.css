@@ -106,3 +106,15 @@ a {
 .glass-card-interactive {
   @apply transition-all duration-500 hover:-translate-y-1.5 hover:shadow-glass hover:border-primary/20;
 }
+
+/* Performance Optimizations */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 350px;
+}
+
+body {
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
