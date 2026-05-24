@@ -8,3 +8,15 @@ export interface JournalEntry {
 }
 
 export type CreateJournalEntry = Omit<JournalEntry, 'id' | 'created_at'>;
+
+export interface StructuredJournalEntry {
+  id?: number;
+  user_id?: number;
+  situation: string;
+  thought: string;
+  emotion: string;
+  action: string;
+  created_at?: string;
+}
+
+export type CreateStructuredJournalEntry = Omit<StructuredJournalEntry, 'id' | 'user_id' | 'created_at'>;

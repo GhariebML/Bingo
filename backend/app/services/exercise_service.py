@@ -12,3 +12,39 @@ def list_exercises() -> list[dict[str, object]]:
 
 def get_exercise(exercise_id: str) -> dict[str, object] | None:
     return next((exercise for exercise in list_exercises() if exercise['id'] == exercise_id), None)
+
+
+from app.models.exercise import BreathingSessionModel
+from app.models.user import User
+from app.schemas.exercise_schema import BreathingSession, BreathingSessionCreate
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+def create_breathing_session(db: Session, user: User, payload: BreathingSessionCreate) -> BreathingSession:
+    session = BreathingSessionModel(
+        user_id=user.id,
+        duration_seconds=payload.duration_seconds,
+        cycles=payload.cycles,
+    )
+    db.add(session)
+    db.commit()
+    db.refresh(session)
+    return serialize_breathing_session(session)
+
+def list_breathing_sessions(db: Session, user: User) -> list[BreathingSession]:
+    sessions = db.scalars(
+        select(BreathingSessionModel)
+        .where(BreathingSessionModel.user_id == user.id)
+        .order_by(BreathingSessionModel.created_at.desc())
+    ).all()
+    return [serialize_breathing_session(s) for s in sessions]
+
+def serialize_breathing_session(session: BreathingSessionModel) -> BreathingSession:
+    return BreathingSession(
+        id=session.id,
+        user_id=session.user_id,
+        duration_seconds=session.duration_seconds,
+        cycles=session.cycles,
+        created_at=session.created_at.isoformat() if session.created_at else None,
+    )
+

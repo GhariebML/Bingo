@@ -1,11 +1,12 @@
 import type { ChatRequest, ChatResponse, RiskLevel } from '@/types/chat';
 import type { DashboardSummary } from '@/types/dashboard';
-import type { Exercise } from '@/types/exercises';
-import type { CreateJournalEntry, JournalEntry } from '@/types/journal';
+import type { Exercise, BreathingSession } from '@/types/exercises';
+import type { CreateJournalEntry, JournalEntry, CreateStructuredJournalEntry, StructuredJournalEntry } from '@/types/journal';
 import type { CreateMoodEntry, MoodEntry } from '@/types/mood';
 import type { SafetyDisclaimer, SafetyResources } from '@/types/safety';
 import type { UserSettings } from '@/types/settings';
 import type { AuthResponse } from '@/types/user';
+
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:8000';
 
@@ -276,61 +277,63 @@ export async function sendChatMessage(payload: ChatRequest): Promise<ChatRespons
 }
 
 export async function getDashboardSummary(): Promise<DashboardSummary> {
- try {
- return await request<DashboardSummary>('/api/v1/dashboard/summary');
- } catch (error) {
- if (isNetworkError(error)) {
- console.warn('FastAPI backend unreachable. Generating dashboard summary from local storage.');
- const journals = JSON.parse(localStorage.getItem('bingo_journals') || JSON.stringify(defaultJournals));
- const moods = JSON.parse(localStorage.getItem('bingo_moods') || JSON.stringify(defaultMoods));
+  try {
+    return await request<DashboardSummary>('/api/v1/dashboard/summary');
+  } catch (error) {
+    if (isNetworkError(error)) {
+      console.warn('FastAPI backend unreachable. Generating dashboard summary from local storage.');
+      const journals = JSON.parse(localStorage.getItem('bingo_journals') || JSON.stringify(defaultJournals));
+      const structuredJournals = JSON.parse(localStorage.getItem('bingo_structured_journals') || '[]');
+      const breathingSessions = JSON.parse(localStorage.getItem('bingo_breathing_sessions') || '[]');
+      const moods = JSON.parse(localStorage.getItem('bingo_moods') || JSON.stringify(defaultMoods));
 
- const emotionsMap: Record<string, number> = {};
- journals.forEach((j: any) => {
- (j.emotion_tags || []).forEach((e: string) => {
- emotionsMap[e] = (emotionsMap[e] || 0) + 1;
- });
- });
- moods.forEach((m: any) => {
- if (m.label) {
- emotionsMap[m.label] = (emotionsMap[m.label] || 0) + 1;
- }
- });
+      const emotionsMap: Record<string, number> = {};
+      journals.forEach((j: any) => {
+        (j.emotion_tags || []).forEach((e: string) => {
+          emotionsMap[e] = (emotionsMap[e] || 0) + 1;
+        });
+      });
+      moods.forEach((m: any) => {
+        if (m.label) {
+          emotionsMap[m.label] = (emotionsMap[m.label] || 0) + 1;
+        }
+      });
 
- const sortedEmotions = Object.entries(emotionsMap)
- .sort((a, b) => b[1] - a[1])
- .map(([name]) => name)
- .slice(0, 3);
- if (sortedEmotions.length === 0) {
- sortedEmotions.push('calm', 'hopeful');
- }
+      const sortedEmotions = Object.entries(emotionsMap)
+        .sort((a, b) => b[1] - a[1])
+        .map(([name]) => name)
+        .slice(0, 3);
+      if (sortedEmotions.length === 0) {
+        sortedEmotions.push('calm', 'hopeful');
+      }
 
- const lastMood = moods[0]?.label || 'general_support';
- const suggestedExercise = lastMood === 'anxiety' ? '4-7-8 breathing' : 
- lastMood === 'overthinking' ? 'Worry parking' :
- lastMood === 'stressed' ? 'Study/work reset' : 'One small step planning';
+      const lastMood = moods[0]?.label || 'general_support';
+      const suggestedExercise = lastMood === 'anxiety' ? '4-7-8 breathing' : 
+        lastMood === 'overthinking' ? 'Worry parking' :
+        lastMood === 'stressed' ? 'Study/work reset' : 'One small step planning';
 
- const trendPoints = moods.slice(0, 7).reverse().map((m: any) => {
- const date = new Date(m.created_at || Date.now());
- return {
- day: date.toLocaleDateString('en-US', { weekday: 'short' }),
- mood: m.label,
- score: m.intensity,
- };
- });
+      const trendPoints = moods.slice(0, 7).reverse().map((m: any) => {
+        const date = new Date(m.created_at || Date.now());
+        return {
+          day: date.toLocaleDateString('en-US', { weekday: 'short' }),
+          mood: m.label,
+          score: m.intensity,
+        };
+      });
 
- return Promise.resolve({
- journal_entries: journals.length,
- mood_checkins: moods.length,
- exercises_tried: 3,
- most_common_emotions: sortedEmotions,
- suggested_exercise: suggestedExercise,
- today_reflection: 'Every small breath counts. Today, be kind to your thoughts.',
- mood_trend: trendPoints,
- recommended_exercises: exercises.slice(0, 3),
- });
- }
- throw error;
- }
+      return Promise.resolve({
+        journal_entries: journals.length + structuredJournals.length,
+        mood_checkins: moods.length,
+        exercises_tried: breathingSessions.length,
+        most_common_emotions: sortedEmotions,
+        suggested_exercise: suggestedExercise,
+        today_reflection: 'Every small breath counts. Today, be kind to your thoughts.',
+        mood_trend: trendPoints,
+        recommended_exercises: exercises.slice(0, 3),
+      });
+    }
+    throw error;
+  }
 }
 
 export async function getExercises(): Promise<Exercise[]> {
@@ -662,17 +665,85 @@ export async function getSafetyResources(region?: string): Promise<SafetyResourc
 }
 
 export async function getSafetyDisclaimer(): Promise<SafetyDisclaimer> {
- try {
- return await request<SafetyDisclaimer>('/api/v1/safety/disclaimer');
- } catch (error) {
- if (isNetworkError(error)) {
- return Promise.resolve({
- title: 'Bingo safety boundaries',
- message: 'Bingo supports reflection, journaling, grounding, and small next steps. It is not a therapist, doctor, crisis line, or emergency service.',
- crisis_guidance: 'I am really sorry you are facing this. If you or someone else may be in immediate danger, contact local emergency services now and reach a trusted person who can stay with you. I can stay with you for grounding, but I cannot replace urgent help.',
- not_for: ['diagnosis', 'medication advice', 'therapy replacement', 'emergency response'],
- });
- }
- throw error;
- }
+  try {
+    return await request<SafetyDisclaimer>('/api/v1/safety/disclaimer');
+  } catch (error) {
+    if (isNetworkError(error)) {
+      return Promise.resolve({
+        title: 'Bingo safety boundaries',
+        message: 'Bingo supports reflection, journaling, grounding, and small next steps. It is not a therapist, doctor, crisis line, or emergency service.',
+        crisis_guidance: 'I am really sorry you are facing this. If you or someone else may be in immediate danger, contact local emergency services now and reach a trusted person who can stay with you. I can stay with you for grounding, but I cannot replace urgent help.',
+        not_for: ['diagnosis', 'medication advice', 'therapy replacement', 'emergency response'],
+      });
+    }
+    throw error;
+  }
+}
+
+export async function createStructuredJournalEntry(payload: CreateStructuredJournalEntry): Promise<StructuredJournalEntry> {
+  try {
+    return await request<StructuredJournalEntry>('/api/v1/journal/structured', { method: 'POST', body: JSON.stringify(payload) });
+  } catch (error) {
+    if (isNetworkError(error)) {
+      const stored = localStorage.getItem('bingo_structured_journals');
+      const list = stored ? JSON.parse(stored) : [];
+      const newEntry: StructuredJournalEntry = {
+        id: Math.floor(Math.random() * 1000000),
+        situation: payload.situation,
+        thought: payload.thought,
+        emotion: payload.emotion,
+        action: payload.action,
+        created_at: new Date().toISOString(),
+      };
+      list.unshift(newEntry);
+      localStorage.setItem('bingo_structured_journals', JSON.stringify(list));
+      return Promise.resolve(newEntry);
+    }
+    throw error;
+  }
+}
+
+export async function listStructuredJournalEntries(): Promise<StructuredJournalEntry[]> {
+  try {
+    return await request<StructuredJournalEntry[]>('/api/v1/journal/structured');
+  } catch (error) {
+    if (isNetworkError(error)) {
+      const stored = localStorage.getItem('bingo_structured_journals');
+      return Promise.resolve(stored ? JSON.parse(stored) : []);
+    }
+    throw error;
+  }
+}
+
+export async function recordBreathingSession(payload: { duration_seconds: number; cycles: number }): Promise<BreathingSession> {
+  try {
+    return await request<BreathingSession>('/api/v1/exercises/breathing', { method: 'POST', body: JSON.stringify(payload) });
+  } catch (error) {
+    if (isNetworkError(error)) {
+      const stored = localStorage.getItem('bingo_breathing_sessions');
+      const list = stored ? JSON.parse(stored) : [];
+      const newEntry: BreathingSession = {
+        id: Math.floor(Math.random() * 1000000),
+        duration_seconds: payload.duration_seconds,
+        cycles: payload.cycles,
+        created_at: new Date().toISOString(),
+      };
+      list.unshift(newEntry);
+      localStorage.setItem('bingo_breathing_sessions', JSON.stringify(list));
+      return Promise.resolve(newEntry);
+    }
+    throw error;
+  }
+}
+
+export async function listBreathingSessions(): Promise<BreathingSession[]> {
+  try {
+    return await request<BreathingSession[]>('/api/v1/exercises/breathing');
+  } catch (error) {
+    if (isNetworkError(error)) {
+      const stored = localStorage.getItem('bingo_breathing_sessions');
+      return Promise.resolve(stored ? JSON.parse(stored) : []);
+    }
+    throw error;
+  }
 }

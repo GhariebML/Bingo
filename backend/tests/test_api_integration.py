@@ -93,3 +93,44 @@ def test_crisis_chat_uses_safe_response_without_real_provider() -> None:
         assert body['risk_level'] == 'crisis'
         assert body['provider'] == 'mock'
         assert body['safety_triggered'] is True
+
+
+def test_structured_journal_and_breathing_sessions() -> None:
+    with TestClient(app) as client:
+        headers = _headers(client)
+
+        breathe = client.post(
+            '/api/v1/exercises/breathing',
+            headers=headers,
+            json={'duration_seconds': 120, 'cycles': 3}
+        )
+        assert breathe.status_code == 200
+        breathe_data = breathe.json()
+        assert breathe_data['duration_seconds'] == 120
+        assert breathe_data['cycles'] == 3
+        assert 'id' in breathe_data
+
+        history = client.get('/api/v1/exercises/breathing', headers=headers)
+        assert history.status_code == 200
+        assert len(history.json()) >= 1
+
+        structured = client.post(
+            '/api/v1/journal/structured',
+            headers=headers,
+            json={
+                'situation': 'Hard class',
+                'thought': 'I cannot do it',
+                'emotion': 'Overwhelmed',
+                'action': 'Break task into small steps'
+            }
+        )
+        assert structured.status_code == 200
+        structured_data = structured.json()
+        assert structured_data['situation'] == 'Hard class'
+        assert structured_data['thought'] == 'I cannot do it'
+        assert 'id' in structured_data
+
+        s_list = client.get('/api/v1/journal/structured', headers=headers)
+        assert s_list.status_code == 200
+        assert len(s_list.json()) >= 1
+

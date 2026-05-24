@@ -18,3 +18,18 @@ class JournalEntryModel(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     user = relationship('User', back_populates='journals')
+
+
+class StructuredJournalModel(Base):
+    __tablename__ = 'structured_journals'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'), index=True)
+    situation: Mapped[str] = mapped_column(Text)
+    thought: Mapped[str] = mapped_column(Text)
+    emotion: Mapped[str] = mapped_column(Text)
+    action: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    user = relationship('User', back_populates='structured_journals')
+

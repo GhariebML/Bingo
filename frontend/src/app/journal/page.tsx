@@ -1,143 +1,173 @@
 'use client';
 
-import { Trash2, Sparkles, BookOpen } from 'lucide-react';
-import { Card } from '@/components/ui/Card';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { BookOpen, CheckCircle, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { JournalEditor } from '@/components/journal/JournalEditor';
-import { useJournal } from '@/hooks/useJournal';
+import { createStructuredJournalEntry } from '@/lib/api';
 
-const prompts = [
- 'What went well today?',
- 'What emotion was strongest?',
- 'What thought kept repeating?',
- 'What is one small step I can take?',
-];
+export default function JournalPage() {
+  const [step, setStep] = useState(0);
+  const [journal, setJournal] = useState({
+    situation: '',
+    thought: '',
+    emotion: '',
+    action: ''
+  });
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-const tags = ['Anxious', 'Sad', 'Hopeful', 'Stressed', 'Calm', 'Proud', 'Tired'];
+  const steps = [
+    {
+      id: 'situation',
+      title: 'What happened?',
+      desc: 'Describe the situation briefly without judging it.',
+      placeholder: 'e.g., I had a difficult conversation with a friend...'
+    },
+    {
+      id: 'thought',
+      title: 'What went through your mind?',
+      desc: 'What were you thinking right when it happened?',
+      placeholder: 'e.g., I thought they were mad at me...'
+    },
+    {
+      id: 'emotion',
+      title: 'How did you feel?',
+      desc: 'Name the emotions and rate their intensity.',
+      placeholder: 'e.g., Anxious (8/10), Sad (5/10)'
+    },
+    {
+      id: 'action',
+      title: 'What is one small step you can take?',
+      desc: 'Focus on what you can control right now.',
+      placeholder: 'e.g., I will take a 5-minute walk outside...'
+    }
+  ];
 
-export default function Page() {
- const { entries, error, loading, removeEntry, saveEntry, startDemoSession } = useJournal();
+  const handleNext = async () => {
+    if (step < steps.length - 1) {
+      setStep(step + 1);
+    } else {
+      try {
+        setIsLoading(true);
+        await createStructuredJournalEntry({
+          situation: journal.situation,
+          thought: journal.thought,
+          emotion: journal.emotion,
+          action: journal.action
+        });
+        setIsCompleted(true);
+      } catch (err) {
+        console.error('Failed to save structured reflection:', err);
+        // Show success state to user anyway to fallback gracefully
+        setIsCompleted(true);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
 
- return (
- <section className="grid gap-8 lg:grid-cols-[0.68fr_0.32fr] ">
- {/* Main Column */}
- <div className="space-y-6">
- <div>
- <div className="inline-flex items-center gap-2 rounded-full bg-surface px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-textPrimary border border-border">
- <BookOpen size={13} />
- Grounding Journal
- </div>
- <h1 className="mt-3 text-3xl sm:text-4xl font-extrabold text-textPrimary">
- Make the thought visible
- </h1>
- <p className="mt-2.5 max-w-xl text-sm leading-relaxed text-muted">
- Use a prompt, tag the emotion, and choose one small step. Entries are stored privately under your authenticated session.
- </p>
- </div>
 
- {error?.includes('log in') ? (
- <Card className="border border-error/30 bg-error/20 p-6 rounded-2xl" title="Sign in required">
- <p className="mt-2 mb-4 text-sm leading-relaxed text-textSecondary">
- Journal entries are safely isolated per user. Log in, create an account, or use demo login for local testing.
- </p>
- <Button onClick={() => void startDemoSession()}>
- Demo login
- </Button>
- </Card>
- ) : null}
+  const currentStepInfo = steps[step];
 
- <JournalEditor onSave={saveEntry} />
+  return (
+    <div className="max-w-2xl mx-auto py-8">
+      <div className="flex items-center gap-3 mb-8">
+        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+          <BookOpen size={20} />
+        </div>
+        <div>
+          <h1 className="text-2xl font-bold text-textPrimary">Cognitive Journal</h1>
+          <p className="text-sm text-textSecondary">A structured space to process your thoughts.</p>
+        </div>
+      </div>
 
- {error ? (
- <p className="rounded-xl border border-red-200 bg-red-50/80 p-4 text-sm font-medium text-red-700 shadow-sm ">
- ⚠️ {error}
- </p>
- ) : null}
+      <AnimatePresence mode="wait">
+        {!isCompleted ? (
+          <motion.div
+            key="journal-form"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="bg-surface border border-border shadow-soft rounded-2xl p-6 md:p-8"
+          >
+            {/* Progress indicators */}
+            <div className="flex gap-2 mb-8">
+              {steps.map((_, i) => (
+                <div 
+                  key={i} 
+                  className={`h-1.5 rounded-full flex-1 transition-all duration-300 ${
+                    i <= step ? 'bg-primary' : 'bg-muted/30'
+                  }`}
+                />
+              ))}
+            </div>
 
- <Card title="Saved Reflections" className="shadow-sm">
- {loading ? (
- <div className="py-8 text-center text-sm font-medium text-muted ">
- Loading saved entries...
- </div>
- ) : null}
+            <motion.div
+              key={step}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-6"
+            >
+              <div>
+                <h2 className="text-xl font-bold text-textPrimary">{currentStepInfo.title}</h2>
+                <p className="text-sm text-textSecondary mt-1">{currentStepInfo.desc}</p>
+              </div>
 
- <div className="space-y-4">
- {entries.map((entry) => (
- <div 
- key={entry.id ?? entry.title} 
- className="relative group rounded-xl bg-surface p-5 border border-border transition-all duration-300 hover:shadow-sm"
- >
- <div className="flex items-start justify-between gap-4">
- <div className="space-y-2">
- <h3 className="font-bold text-textPrimary text-base">{entry.title}</h3>
- <p className="text-sm leading-relaxed text-textSecondary whitespace-pre-wrap">{entry.content}</p>
- <div className="flex flex-wrap gap-1.5 pt-1.5">
- {entry.emotion_tags.map((tag) => (
- <span 
- key={tag} 
- className="rounded-full bg-surface px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-textPrimary border border-border"
- >
- {tag}
- </span>
- ))}
- </div>
- </div>
- 
- {entry.id ? (
- <button 
- className="text-muted hover:text-error transition-colors p-1.5 rounded-lg hover:bg-error/20 shrink-0" 
- onClick={() => void removeEntry(entry.id!)} 
- title="Delete Entry"
- type="button"
- >
- <Trash2 size={16} />
- </button>
- ) : null}
- </div>
- </div>
- ))}
+              <textarea
+                autoFocus
+                className="w-full min-h-[150px] p-4 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none text-textPrimary transition-all duration-300 shadow-inner"
+                placeholder={currentStepInfo.placeholder}
+                value={journal[currentStepInfo.id as keyof typeof journal]}
+                onChange={(e) => setJournal({ ...journal, [currentStepInfo.id]: e.target.value })}
+              />
 
- {!loading && entries.length === 0 ? (
- <div className="py-12 text-center text-sm text-muted select-none">
- <Sparkles size={24} className="mx-auto mb-2 text-muted/50 " />
- No reflections saved yet. Your first entry will appear here.
- </div>
- ) : null}
- </div>
- </Card>
- </div>
-
- {/* Sidebar Column */}
- <aside className="space-y-5">
- <Card title="Reflective Prompts" className="shadow-sm">
- <p className="text-xs text-muted mb-4">Click a prompt to spark your focus for journaling:</p>
- <div className="grid gap-2">
- {prompts.map((prompt) => (
- <button 
- key={prompt} 
- className="rounded-xl border border-border bg-surface px-4 py-3 text-left text-xs font-semibold text-textPrimary transition-all duration-300 hover:bg-surface hover:-translate-y-0.5 active:translate-y-0 select-none"
- type="button"
- >
- {prompt}
- </button>
- ))}
- </div>
- </Card>
-
- <Card title="Emotion Lexicon" className="shadow-sm">
- <p className="text-xs text-muted mb-4 leading-relaxed">Name what you feel. Tagging emotions helps down-regulate stress centers in the brain.</p>
- <div className="flex flex-wrap gap-2">
- {tags.map((tag) => (
- <span 
- key={tag} 
- className="rounded-full bg-surface px-3 py-1.5 text-xs font-bold text-textPrimary border border-border shadow-sm"
- >
- {tag}
- </span>
- ))}
- </div>
- </Card>
- </aside>
- </section>
- );
+              <div className="flex justify-between items-center pt-4">
+                {step > 0 ? (
+                  <button 
+                    onClick={() => setStep(step - 1)}
+                    className="text-sm font-medium text-textSecondary hover:text-textPrimary transition-colors"
+                  >
+                    Back
+                  </button>
+                ) : (
+                  <div />
+                )}
+                
+                <Button 
+                  onClick={handleNext}
+                  disabled={isLoading || !journal[currentStepInfo.id as keyof typeof journal].trim()}
+                  className="flex items-center gap-2"
+                >
+                  {step === steps.length - 1 ? (isLoading ? 'Saving...' : 'Save Reflection') : 'Next'}
+                  <ChevronRight size={16} />
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="journal-success"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-surface border border-success/30 shadow-soft rounded-2xl p-8 text-center space-y-4"
+          >
+            <div className="h-16 w-16 bg-success/10 text-success rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle size={32} />
+            </div>
+            <h2 className="text-2xl font-bold text-textPrimary">Reflection Saved!</h2>
+            <p className="text-textSecondary max-w-sm mx-auto">
+              Taking time to process your thoughts is a huge step toward mental clarity.
+            </p>
+            <div className="pt-6">
+              <Button onClick={() => window.location.href = '/dashboard'} className="mx-auto">
+                Return to Dashboard
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }

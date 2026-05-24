@@ -7,3 +7,11 @@ export interface Exercise {
  steps: string[];
  recommended_for: string[];
 }
+
+export interface BreathingSession {
+  id?: number;
+  user_id?: number;
+  duration_seconds: number;
+  cycles: number;
+  created_at?: string;
+}

@@ -1,10 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { LayoutDashboard, Wifi, LogIn, ArrowRight } from 'lucide-react';
+import { LayoutDashboard, Wifi, LogIn } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
-import { InsightPanel } from '@/components/dashboard/InsightPanel';
 import { MoodChart } from '@/components/dashboard/MoodChart';
 import { ProgressCards } from '@/components/dashboard/ProgressCards';
 import { Button } from '@/components/ui/Button';
@@ -14,17 +12,75 @@ import type { MoodEntry } from '@/types/mood';
 import { MoodCheckIn } from '@/components/dashboard/MoodCheckIn';
 import { WellnessGrid } from '@/components/dashboard/WellnessGrid';
 
+// Import new well-being components
+import { VirtualTwin } from '@/components/dashboard/VirtualTwin';
+import { FutureMeNotes } from '@/components/dashboard/FutureMeNotes';
+import { PositiveMessages } from '@/components/dashboard/PositiveMessages';
+
 const fallbackMoodData = [
- { day: 'Mon', mood: 'Stressed', score: 4 },
- { day: 'Tue', mood: 'Anxious', score: 5 },
- { day: 'Wed', mood: 'Calmer', score: 6 },
- { day: 'Thu', mood: 'Hopeful', score: 7 },
+  { day: 'Mon', mood: 'Stressed', score: 4 },
+  { day: 'Tue', mood: 'Anxious', score: 5 },
+  { day: 'Wed', mood: 'Calmer', score: 6 },
+  { day: 'Thu', mood: 'Hopeful', score: 7 },
 ];
+
+const langCopy = {
+  en: {
+    dashboardTitle: 'Student Well-Being Dashboard',
+    tagline: 'Reflect on your emotional patterns, track energy levels, and build positive habits.',
+    guestMode: 'Offline / Guest Mode',
+    connectedMode: 'School Network Connected',
+    indicatorsTitle: 'Energy & Stress Indicators',
+    moodToday: 'Mood Today',
+    energyLabel: 'Energy Level',
+    stressLabel: 'Stress Level',
+    sleepWarningTitle: '🌙 Late-Night Sentry Alert',
+    sleepWarningDesc: 'Activity logged after 11:00 PM. High-quality rest is key to maintaining emotional energy.',
+    positiveMoments: 'Saved Positive Memories',
+    momentsSuffix: 'moments saved',
+    demoLogin: 'Quick Demo Login',
+    demoDesc: 'Simulate connection to your school well-being server'
+  },
+  ar: {
+    dashboardTitle: 'لوحة قياس الرفاهية النفسية',
+    tagline: 'منصة لتحليل الأنماط الوجدانية، إدارة مستويات الطاقة، وتعزيز المرونة النفسية.',
+    guestMode: 'وضع التصفح المؤقت / غير متصل',
+    connectedMode: 'اتصال آمن بشبكة الدعم المدرسي',
+    indicatorsTitle: 'المؤشرات الحيوية للطاقة والضغط النفسي',
+    moodToday: 'الحالة الوجدانية اليوم',
+    energyLabel: 'مؤشر الحيوية والطاقة',
+    stressLabel: 'مؤشر الإجهاد والتوتر',
+    sleepWarningTitle: '🌙 تنبيه الساعات المتأخرة',
+    sleepWarningDesc: 'تم رصد نشاط متأخر بعد الساعة 11:00 مساءً. نذكرك بأن جودة النوم تُعد الركيزة الأساسية للتعافي الذهني والجسدي.',
+    positiveMoments: 'رصيد الذكريات المعرفية الإيجابية',
+    momentsSuffix: 'لحظة إيجابية محفوظة',
+    demoLogin: 'دخول تجريبي للمنصة',
+    demoDesc: 'محاكاة الاتصال الآمن مع خوادم الدعم النفسي بالمدرسة'
+  },
+  eg: {
+    dashboardTitle: 'لوحة المتابعة النفسية',
+    tagline: 'راقب مشاعرك، افهم طاقتك، وابني عادات تخلي يومك أحسن.',
+    guestMode: 'وضع التجربة / أوفلاين',
+    connectedMode: 'متصل بأمان بشبكة مدرستك',
+    indicatorsTitle: 'مؤشرات الضغط النفسي والطاقة',
+    moodToday: 'الحالة المزاجية النهاردة',
+    energyLabel: 'مستوى النشاط والطاقة',
+    stressLabel: 'مستوى الإجهاد والضغط',
+    sleepWarningTitle: '🌙 تنبيه السهر والإرهاق',
+    sleepWarningDesc: 'سجلنا نشاط بعد 11 بالليل. افتكر إن نومك الكفاية هو اللي بيشحن طاقتك ويصفي ذهنك لليوم الجديد.',
+    positiveMoments: 'رصيد لحظاتك الحلوة',
+    momentsSuffix: 'ذكرى إيجابية شيلناها عشانك',
+    demoLogin: 'دخول تجريبي سريع',
+    demoDesc: 'جرب تربط حسابك بشكل افتراضي بسيستم المدرسة'
+  }
+};
 
 export default function Page() {
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [moodHistory, setMoodHistory] = useState<MoodEntry[]>([]);
   const [status, setStatus] = useState('Loading dashboard summary...');
+  const [lang, setLang] = useState('en');
+  const [momentsCount, setMomentsCount] = useState(0);
 
   async function load() {
     try {
@@ -35,6 +91,12 @@ export default function Page() {
     } catch {
       setStatus('Sign in or use demo login to synchronize your reflection dashboard.');
     }
+
+    // Sync saved positive moments count
+    const saved = localStorage.getItem('bingo_future_notes');
+    if (saved) {
+      setMomentsCount(JSON.parse(saved).length);
+    }
   }
 
   async function startDemoSession() {
@@ -44,136 +106,224 @@ export default function Page() {
 
   useEffect(() => {
     void load();
+
+    const updateLang = () => {
+      setLang(localStorage.getItem('bingo_lang') || 'en');
+    };
+    updateLang();
+    window.addEventListener('bingo_lang_changed', updateLang);
+
+    return () => window.removeEventListener('bingo_lang_changed', updateLang);
   }, []);
 
- const chartData = summary?.mood_trend?.length ? summary.mood_trend : fallbackMoodData;
- const emotions = summary?.most_common_emotions?.length ? summary.most_common_emotions : ['anxious', 'stressed', 'hopeful'];
- const isConnected = status.includes('Connected');
+  const chartData = summary?.mood_trend?.length ? summary.mood_trend : fallbackMoodData;
+  const isConnected = status.includes('Connected');
+  const copy = langCopy[lang as keyof typeof langCopy] || langCopy.en;
+  const isRtl = lang === 'ar' || lang === 'eg';
 
- return (
- <section className="space-y-8 animate-fade-in">
- {/* Header */}
- <div className="flex flex-wrap items-end justify-between gap-4 animate-fade-in-up">
- <div>
- <div className="inline-flex items-center gap-2 rounded-full bg-surface px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-textPrimary border border-border">
- <LayoutDashboard size={13} />
- Reflection Dashboard
- </div>
- <h1 className="mt-3 text-3xl sm:text-4xl font-extrabold text-textPrimary">
- Your reflection snapshot
- </h1>
- <p className="mt-2 text-sm text-muted leading-relaxed max-w-xl">
- Gentle progress tracking, common emotional vocabulary, and personalized wellness suggestions from your recent check-ins.
- {isConnected && (
- <span className="block mt-2 text-xs text-success font-semibold ">
- ✓ Dashboard loaded from backend APIs
- </span>
- )}
- </p>
- </div>
+  // Extract latest mood state for Virtual Twin and Indicators
+  const latestEntry = moodHistory[0];
+  const activeMoodRaw = latestEntry?.label?.toLowerCase() || 'calm';
+  const activeMood = ['happy', 'calm', 'tired', 'stressed', 'energetic', 'thoughtful'].includes(activeMoodRaw)
+    ? activeMoodRaw
+    : 'calm';
 
- {/* Dynamic Status Badge */}
- <div className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold border transition-colors select-none ${
- isConnected 
- ? 'bg-surface border-success/40 text-textPrimary' 
- : 'bg-surface border-border text-textPrimary'
- }`}>
- {isConnected ? (
- <>
- <span className="relative flex h-2 w-2">
- <span className=" absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
- <span className="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
- </span>
- <span>Backend Connected</span>
- </>
- ) : (
- <>
- <Wifi size={14} className="text-muted " />
- <span>Offline / Guest Mode</span>
- </>
- )}
- </div>
- </div>
+  // Calculate dynamic energy and stress levels
+  const getEnergyLevel = () => {
+    switch (activeMood) {
+      case 'energetic': return 90;
+      case 'happy': return 80;
+      case 'calm': return 65;
+      case 'thoughtful': return 50;
+      case 'stressed': return 40;
+      case 'tired': return 20;
+      default: return 60;
+    }
+  };
 
-  <div className="animate-fade-in-up delay-100">
-    <ProgressCards 
-      journals={summary?.journal_entries}
-      moods={summary?.mood_checkins}
-      exercises={summary?.exercises_tried}
-    />
-  </div>
+  const getStressLevel = () => {
+    switch (activeMood) {
+      case 'stressed': return 85;
+      case 'tired': return 60;
+      case 'thoughtful': return 40;
+      case 'happy': case 'energetic': return 20;
+      case 'calm': return 10;
+      default: return 30;
+    }
+  };
 
-  <div className="grid gap-6 md:grid-cols-2 animate-fade-in-up delay-150">
-    <MoodCheckIn onSuccess={load} />
-    <WellnessGrid moodHistory={moodHistory} />
-  </div>
+  // Check for sleep activity warning (e.g. log between 11 PM and 5 AM)
+  const hasSleepWarning = moodHistory.some(m => {
+    if (!m.created_at) return false;
+    const hour = new Date(m.created_at).getHours();
+    return hour >= 23 || hour < 5;
+  });
 
- {/* Connection Actions if guest */}
- {!isConnected ? (
- <Card className="border border-sand bg-surface py-5 px-6 shadow-sm rounded-2xl flex flex-wrap items-center justify-between gap-4 animate-fade-in-up delay-100">
- <div className="space-y-1">
- <p className="font-bold text-textPrimary text-sm">Demo session not started</p>
- <p className="text-xs text-muted">{status}</p>
- </div>
- <Button onClick={() => void startDemoSession()} className="flex items-center gap-2 text-xs py-2 px-4 bg-primary hover:bg-primary/90 text-white rounded-xl shadow-sm">
- <LogIn size={14} />
- <span>Quick Demo Login</span>
- </Button>
- </Card>
- ) : null}
+  return (
+    <section className={`space-y-8 animate-fade-in ${isRtl ? 'text-right' : 'text-left'}`} dir={isRtl ? 'rtl' : 'ltr'}>
+      {/* Header */}
+      <div className="flex flex-wrap items-end justify-between gap-4 animate-fade-in-up">
+        <div>
+          <div className="inline-flex items-center gap-2 rounded-full bg-surface px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-textPrimary border border-border">
+            <LayoutDashboard size={13} />
+            {copy.dashboardTitle}
+          </div>
+          <h1 className="mt-3 text-3xl sm:text-4xl font-extrabold text-textPrimary">
+            {lang === 'en' ? 'Welcome back!' : lang === 'ar' ? 'مرحبًا بك مجددًا!' : 'يا هلا بيك تاني!'}
+          </h1>
+          <p className="mt-2 text-sm text-textSecondary leading-relaxed max-w-xl">
+            {copy.tagline}
+          </p>
+        </div>
 
- <div className="grid gap-6 lg:grid-cols-[0.62fr_0.38fr] animate-fade-in-up delay-200">
- <Card title="Mood Over Time">
- <MoodChart data={chartData} />
- </Card>
- <InsightPanel />
- </div>
+        {/* Dynamic Status Badge */}
+        <div className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold border transition-colors select-none ${
+          isConnected 
+            ? 'bg-surface border-success/40 text-textPrimary' 
+            : 'bg-surface border-border text-textPrimary'
+        }`}>
+          {isConnected ? (
+            <>
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-success opacity-75 animate-ping"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
+              </span>
+              <span>{copy.connectedMode}</span>
+            </>
+          ) : (
+            <>
+              <Wifi size={14} className="text-muted" />
+              <span>{copy.guestMode}</span>
+            </>
+          )}
+        </div>
+      </div>
 
- <div className="grid gap-6 lg:grid-cols-[0.45fr_0.55fr] animate-fade-in-up delay-300">
- <Card title="Recommended Pacing">
- <p className="text-sm leading-relaxed text-textSecondary font-medium">
- &ldquo;{summary?.suggested_exercise ?? 'Try 4-7-8 breathing for two rounds before returning to your current work task.'}&rdquo;
- </p>
- <div className="mt-4 pt-3 border-t border-border grid gap-2 text-xs text-muted font-semibold select-none">
- <div className="flex justify-between border-b border-border pb-1">
- <span>Saved Journal Entries:</span>
- <span className="text-textPrimary font-bold">{summary?.journal_entries ?? 3}</span>
- </div>
- <div className="flex justify-between">
- <span>Mood Check-ins logged:</span>
- <span className="text-textPrimary font-bold">{summary?.mood_checkins ?? 5}</span>
- </div>
- </div>
- <div className="mt-4 flex flex-wrap gap-1.5">
- {emotions.map((tag) => (
- <span key={tag} className="rounded-full bg-surface border border-border px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-textPrimary">
- {tag}
- </span>
- ))}
- </div>
- </Card>
+      {/* Main Grid */}
+      <div className="grid gap-6 lg:grid-cols-[1fr_0.95fr] items-start">
+        
+        {/* Left Column: Avatar & Interactive Tracking */}
+        <div className="space-y-6">
+          {/* 1. Virtual Twin Avatar */}
+          <VirtualTwin currentMood={activeMood} />
 
- <Card className="overflow-hidden p-0 border border-border">
- <div className="grid items-center gap-4 sm:grid-cols-[0.45fr_0.55fr]">
- <div className="relative h-56 bg-surface">
- <Image 
- alt="Bingo in an ocean wellness illustration" 
- className="object-cover transition-transform duration-500 hover:scale-105" 
- fill 
- sizes="(min-width: 1024px) 520px, 100vw" 
- src="/bingo/bingo-calm.png" 
- priority
- />
- </div>
- <div className="p-6 space-y-2">
- <h2 className="text-lg font-bold text-textPrimary">Today&apos;s reflection</h2>
- <p className="text-xs leading-relaxed text-muted">
- {summary?.today_reflection ?? 'Your saved check-ins help Bingo suggest slower pacing, fewer open loops, and one clear, calming next step.'}
- </p>
- </div>
- </div>
- </Card>
- </div>
- </section>
- );
+          {/* 2. Mood check-in and wellness grid */}
+          <div className="grid gap-6 sm:grid-cols-1">
+            <MoodCheckIn onSuccess={load} />
+            <WellnessGrid moodHistory={moodHistory} />
+          </div>
+
+          {/* 3. Trend chart */}
+          <Card className="p-6 bg-surface">
+            <h3 className="text-base font-bold text-textPrimary mb-4">
+              {lang === 'en' ? 'Emotional Trends (Weekly)' : 'منحنى الحالة المزاجية (أسبوعي)'}
+            </h3>
+            <MoodChart data={chartData} />
+          </Card>
+        </div>
+
+        {/* Right Column: Health Indicators, Future Note saving, and Positive alerts */}
+        <div className="space-y-6">
+          
+          {/* 1. Mood, Energy & Stress Level Indicators */}
+          <Card className="p-6 bg-surface space-y-5">
+            <h3 className="text-base font-bold text-textPrimary border-b border-border/60 pb-2">
+              {copy.indicatorsTitle}
+            </h3>
+            
+            {/* Mood Today Indicator */}
+            <div className="flex items-center justify-between text-xs font-semibold">
+              <span className="text-textSecondary">{copy.moodToday}</span>
+              <span className="px-3 py-1 rounded-full bg-primary/10 text-primary capitalize font-bold">
+                {activeMood === 'happy' && '😊 Happy'}
+                {activeMood === 'calm' && '😌 Calm'}
+                {activeMood === 'tired' && '🥱 Tired'}
+                {activeMood === 'stressed' && '🤯 Stressed'}
+                {activeMood === 'energetic' && '⚡ Energetic'}
+                {activeMood === 'thoughtful' && '🧠 Thoughtful'}
+              </span>
+            </div>
+
+            {/* Energy Bar */}
+            <div className="space-y-1.5">
+              <div className="flex justify-between text-xs">
+                <span className="font-semibold text-textSecondary">{copy.energyLabel}</span>
+                <span className="font-bold text-textPrimary">{getEnergyLevel()}%</span>
+              </div>
+              <div className="h-2 w-full bg-background rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-secondary transition-all duration-1000 rounded-full" 
+                  style={{ width: `${getEnergyLevel()}%` }}
+                />
+              </div>
+            </div>
+
+            {/* Stress Bar */}
+            <div className="space-y-1.5">
+              <div className="flex justify-between text-xs">
+                <span className="font-semibold text-textSecondary">{copy.stressLabel}</span>
+                <span className="font-bold text-textPrimary">{getStressLevel()}%</span>
+              </div>
+              <div className="h-2 w-full bg-background rounded-full overflow-hidden">
+                <div 
+                  className={`h-full transition-all duration-1000 rounded-full ${
+                    getStressLevel() > 70 ? 'bg-error' : 'bg-primary'
+                  }`} 
+                  style={{ width: `${getStressLevel()}%` }}
+                />
+              </div>
+            </div>
+
+            {/* Positive moments saved */}
+            <div className="flex justify-between items-center text-xs border-t border-border/60 pt-4">
+              <span className="font-semibold text-textSecondary">{copy.positiveMoments}</span>
+              <span className="font-bold text-primary">
+                {momentsCount} {copy.momentsSuffix}
+              </span>
+            </div>
+
+            {/* Late-Night Sentry Warning Banner */}
+            {hasSleepWarning && (
+              <div className="p-4 rounded-xl border border-warning/20 bg-warning/5 text-xs flex gap-3 items-start animate-pulse">
+                <span className="text-xl">⚠️</span>
+                <div className="space-y-1">
+                  <h4 className="font-bold text-textPrimary">{copy.sleepWarningTitle}</h4>
+                  <p className="text-textSecondary leading-relaxed">{copy.sleepWarningDesc}</p>
+                </div>
+              </div>
+            )}
+          </Card>
+
+          {/* 2. Positive Micro-Messages card */}
+          <PositiveMessages />
+
+          {/* 3. Future Me Notes module */}
+          <FutureMeNotes currentMood={activeMood} />
+        </div>
+
+      </div>
+
+      {/* Connection Actions if guest */}
+      {!isConnected ? (
+        <Card className="p-6 border border-primary/10 bg-surface flex flex-wrap items-center justify-between gap-4 rounded-2xl">
+          <div className="space-y-1">
+            <p className="font-bold text-textPrimary text-sm">{copy.demoLogin}</p>
+            <p className="text-xs text-textSecondary">{copy.demoDesc}</p>
+          </div>
+          <Button onClick={() => void startDemoSession()} className="flex items-center gap-2 text-xs py-2 px-4">
+            <LogIn size={14} />
+            <span>{copy.demoLogin}</span>
+          </Button>
+        </Card>
+      ) : null}
+
+      <div className="pt-2">
+        <ProgressCards 
+          journals={summary?.journal_entries}
+          moods={summary?.mood_checkins}
+          exercises={summary?.exercises_tried}
+        />
+      </div>
+    </section>
+  );
 }

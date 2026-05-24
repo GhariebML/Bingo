@@ -1,40 +1,70 @@
+'use client';
+
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+
 const barColors: Record<string, string> = {
-  calm: 'from-primary to-primary/80',
-  stressed: 'from-[#D97862] to-[#E89078]',
-  anxious: 'from-[#5D6B89] to-[#7B8BAA]',
-  hopeful: 'from-emerald-500 to-emerald-300',
-  sad: 'from-blue-500 to-blue-300',
-  tired: 'from-amber-600 to-amber-400',
+  calm: '#2563eb',     // primary
+  stressed: '#ef4444', // error
+  anxious: '#64748b',  // slate
+  hopeful: '#10b981',  // emerald
+  sad: '#3b82f6',      // blue
+  tired: '#f59e0b',    // amber
+  happy: '#22c55e',    // green
+  energetic: '#f59e0b',// amber
+  thoughtful: '#8b5cf6'// violet
 };
 
 export function MoodChart({ data }: { data?: Array<{ day: string; mood: string; score: number }> }) {
-  const items = data ?? [
+  const items = data && data.length > 0 ? data : [
     { day: 'Mon', mood: 'Stressed', score: 4 },
     { day: 'Tue', mood: 'Anxious', score: 5 },
     { day: 'Wed', mood: 'Calm', score: 6 },
     { day: 'Thu', mood: 'Hopeful', score: 7 },
+    { day: 'Fri', mood: 'Happy', score: 8 },
   ];
 
   return (
-    <div className="space-y-4.5 py-2">
-      {items.map((item) => (
-        <div key={item.day} className="grid grid-cols-[3.5rem_1fr_5.5rem] items-center gap-4 text-xs font-bold select-none">
-          <span className="font-bold text-textPrimary uppercase tracking-wider">{item.day}</span>
-          
-          <div className="h-3.5 overflow-hidden rounded-full bg-surface border border-border p-[2px] shadow-inner">
-            <div 
-              className={`h-full rounded-full bg-gradient-to-r shadow-sm transition-all duration-1000 ease-out ${
-                barColors[item.mood.toLowerCase()] || 'from-secondary to-primary'
-              }`} 
-              style={{ width: `${item.score * 10}%` }} 
-            />
-          </div>
-          
-          <span className="text-right text-muted font-semibold tracking-wide bg-surface/60 rounded px-2 py-0.5 border border-border">
-            {item.mood}
-          </span>
-        </div>
-      ))}
+    <div className="h-[200px] w-full mt-4">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={items} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+          <XAxis 
+            dataKey="day" 
+            axisLine={false} 
+            tickLine={false} 
+            tick={{ fill: '#94a3b8', fontSize: 12, fontWeight: 600 }} 
+            dy={10} 
+          />
+          <YAxis 
+            hide 
+            domain={[0, 10]} 
+          />
+          <Tooltip
+            cursor={{ fill: 'rgba(148, 163, 184, 0.1)' }}
+            content={({ active, payload }) => {
+              if (active && payload && payload.length) {
+                const data = payload[0].payload;
+                return (
+                  <div className="bg-surface border border-border shadow-soft rounded-lg p-3">
+                    <p className="text-xs font-bold text-textSecondary uppercase mb-1">{data.day}</p>
+                    <p className="text-sm font-extrabold text-textPrimary">{data.mood}</p>
+                    <p className="text-xs font-medium text-muted mt-1">Score: {data.score}/10</p>
+                  </div>
+                );
+              }
+              return null;
+            }}
+          />
+          <Bar dataKey="score" radius={[4, 4, 4, 4]} barSize={24}>
+            {items.map((entry, index) => (
+              <Cell 
+                key={`cell-${index}`} 
+                fill={barColors[entry.mood.toLowerCase()] || '#14b8a6'} 
+              />
+            ))}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
     </div>
   );
 }
+

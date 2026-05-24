@@ -35,6 +35,9 @@ const config: Config = {
         'emoji-wiggle': 'emoji-wiggle 0.5s ease-in-out infinite',
         'emoji-bounce': 'emoji-bounce 0.6s ease-in-out infinite',
         'ripple-expand': 'ripple-out 4s cubic-bezier(0.1, 0.8, 0.3, 1) infinite',
+        'avatar-bob': 'avatar-bob 3s ease-in-out infinite',
+        'particle-drift': 'particle-drift 8s ease-in-out infinite',
+        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -78,6 +81,19 @@ const config: Config = {
         'ripple-out': {
           '0%': { transform: 'scale(1)', opacity: '0.4' },
           '100%': { transform: 'scale(1.7)', opacity: '0' },
+        },
+        'avatar-bob': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        'particle-drift': {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)', opacity: '0.6' },
+          '33%': { transform: 'translate(15px, -15px) scale(1.1)', opacity: '0.8' },
+          '66%': { transform: 'translate(-10px, 15px) scale(0.9)', opacity: '0.4' },
+        },
+        'pulse-glow': {
+          '0%, 100%': { opacity: '0.5', filter: 'blur(8px)' },
+          '50%': { opacity: '1', filter: 'blur(12px)' },
         },
       },
     },

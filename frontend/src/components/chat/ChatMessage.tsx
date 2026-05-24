@@ -1,5 +1,6 @@
 import { Badge } from '@/components/ui/Badge';
 import { BingoAvatar } from '@/components/ui/BingoAvatar';
+import { motion } from 'framer-motion';
 
 export function ChatMessage({
  role,
@@ -19,7 +20,13 @@ export function ChatMessage({
  const isUser = role === 'user';
 
  return (
- <div className={`flex items-start gap-3.5 ${isUser ? 'justify-end animate-slide-in-right' : 'justify-start animate-fade-in-up'}`}>
+ <motion.div 
+  layout
+  initial={{ opacity: 0, y: 15, scale: 0.95 }}
+  animate={{ opacity: 1, y: 0, scale: 1 }}
+  transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+  className={`flex items-start gap-3.5 ${isUser ? 'justify-end' : 'justify-start'}`}
+ >
  {!isUser ? (
  <div className="shrink-0 transition-transform hover:scale-105">
  <BingoAvatar size={40} />
@@ -53,6 +60,6 @@ export function ChatMessage({
  </div>
  ) : null}
  </div>
- </div>
+ </motion.div>
  );
 }

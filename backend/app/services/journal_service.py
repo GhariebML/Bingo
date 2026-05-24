@@ -55,3 +55,40 @@ def serialize_entry(entry: JournalEntryModel) -> JournalEntry:
         emotion_tags=[tag for tag in entry.emotion_tags.split(',') if tag],
         created_at=entry.created_at.isoformat() if entry.created_at else None,
     )
+
+
+from app.models.journal import StructuredJournalModel
+from app.schemas.journal_schema import StructuredJournal, StructuredJournalCreate
+
+def create_structured_entry(db: Session, user: User, payload: StructuredJournalCreate) -> StructuredJournal:
+    entry = StructuredJournalModel(
+        user_id=user.id,
+        situation=payload.situation,
+        thought=payload.thought,
+        emotion=payload.emotion,
+        action=payload.action,
+    )
+    db.add(entry)
+    db.commit()
+    db.refresh(entry)
+    return serialize_structured_entry(entry)
+
+def list_structured_entries(db: Session, user: User) -> list[StructuredJournal]:
+    entries = db.scalars(
+        select(StructuredJournalModel)
+        .where(StructuredJournalModel.user_id == user.id)
+        .order_by(StructuredJournalModel.created_at.desc())
+    ).all()
+    return [serialize_structured_entry(entry) for entry in entries]
+
+def serialize_structured_entry(entry: StructuredJournalModel) -> StructuredJournal:
+    return StructuredJournal(
+        id=entry.id,
+        user_id=entry.user_id,
+        situation=entry.situation,
+        thought=entry.thought,
+        emotion=entry.emotion,
+        action=entry.action,
+        created_at=entry.created_at.isoformat() if entry.created_at else None,
+    )
+

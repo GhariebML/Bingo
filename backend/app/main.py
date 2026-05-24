@@ -10,6 +10,8 @@ from contextlib import asynccontextmanager
 
 from contextvars import ContextVar
 from fastapi import Request
+from starlette.exceptions import HTTPException as StarletteHTTPException
+from app.core.exceptions import global_exception_handler, http_exception_handler
 
 is_test_mode: ContextVar[bool] = ContextVar('is_test_mode', default=False)
 
@@ -19,6 +21,9 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(title='Bingo API', version='0.1.0', lifespan=lifespan)
+
+app.add_exception_handler(Exception, global_exception_handler)
+app.add_exception_handler(StarletteHTTPException, http_exception_handler)
 
 @app.middleware("http")
 async def test_mode_middleware(request: Request, call_next):

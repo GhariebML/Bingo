@@ -3,17 +3,24 @@ import type { Metadata, Viewport } from 'next';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { BottomNav } from '@/components/layout/BottomNav';
-import { Plus_Jakarta_Sans, Manrope } from 'next/font/google';
+import { Inter, Cairo } from 'next/font/google';
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const cairo = Cairo({
+  subsets: ['arabic', 'latin'],
+  variable: '--font-cairo',
+  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+});
+
+const interHeading = Inter({
   subsets: ['latin'],
   variable: '--font-heading',
   weight: ['400', '500', '600', '700', '800'],
   display: 'swap',
 });
 
-const manrope = Manrope({
+const interSans = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
   weight: ['400', '500', '600', '700'],
@@ -53,7 +60,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${plusJakartaSans.variable} ${manrope.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${interHeading.variable} ${interSans.variable} ${cairo.variable}`} suppressHydrationWarning>
       <body className="relative min-h-screen overflow-x-hidden">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           {/* Calming Aurora background orbs */}

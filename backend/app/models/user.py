@@ -27,3 +27,6 @@ class User(Base):
     journals = relationship('JournalEntryModel', back_populates='user', cascade='all, delete-orphan')
     moods = relationship('MoodEntryModel', back_populates='user', cascade='all, delete-orphan')
     settings = relationship('UserSettings', back_populates='user', cascade='all, delete-orphan', uselist=False)
+    structured_journals = relationship('StructuredJournalModel', back_populates='user', cascade='all, delete-orphan')
+    breathing_sessions = relationship('BreathingSessionModel', back_populates='user', cascade='all, delete-orphan')
+
