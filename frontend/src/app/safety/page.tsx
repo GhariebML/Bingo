@@ -10,12 +10,12 @@ const langCopy = {
   en: {
     title: 'Well-Being, Safety & Privacy Guidelines',
     subtitle: 'Clear boundaries ensure a safe, supportive space for students, families, and schools.',
-    intro: 'Bingo is an emotional reflection companion, designed to support positive habits, self-reflection, and school well-being coordination. It does not replace therapists, doctors, or active crisis support.',
+    intro: 'Bingoo is an emotional reflection companion, designed to support positive habits, self-reflection, and school well-being coordination. It does not replace therapists, doctors, or active crisis support.',
     crisisTitle: 'Crisis Guidance',
     immediateHelp: 'Immediate Help Needed?',
     crisisDesc: 'If you may hurt yourself, hurt someone else, or are in immediate danger, please contact national emergency services or talk to a trusted adult right away.',
     helpline: 'Regional Emergency Resource',
-    notForTitle: 'Bingo is NOT a Medical Tool',
+    notForTitle: 'Bingoo is NOT a Medical Tool',
     notForList: [
       'Clinical Diagnosis (e.g. diagnosing depression)',
       'Medication Prescriptions or Advice',
@@ -32,7 +32,7 @@ const langCopy = {
     deleteSuccess: 'All local data, journal entries, and mood logs have been permanently deleted.',
     saveConsentBtn: 'Save Preferences',
     consentSaved: 'Consent preferences updated successfully!',
-    canHelpTitle: 'What Bingo can help with',
+    canHelpTitle: 'What Bingoo can help with',
     canHelpDesc: 'Compassionate reflection, structured journaling, science-backed grounding exercises, clarifying questions, and finding one small positive next step.',
     seekCareTitle: 'When to seek professional care',
     seekCareDesc: 'If your distress feels overwhelming, continuous, disrupts your daily life, or if you feel unsafe. Please connect with a licensed local therapist or medical professional.'
@@ -107,31 +107,31 @@ export default function Page() {
 
   useEffect(() => {
     const updateLang = () => {
-      setLang(localStorage.getItem('bingo_lang') || 'en');
+      setLang(localStorage.getItem('Bingoo_lang') || 'en');
     };
     updateLang();
-    window.addEventListener('bingo_lang_changed', updateLang);
+    window.addEventListener('Bingoo_lang_changed', updateLang);
 
     // Load initial consents from localStorage
-    setStudentConsented(localStorage.getItem('bingo_counselor_consent') === 'true');
-    setParentConsented(localStorage.getItem('bingo_parent_consent') === 'true');
+    setStudentConsented(localStorage.getItem('Bingoo_counselor_consent') === 'true');
+    setParentConsented(localStorage.getItem('Bingoo_parent_consent') === 'true');
 
-    return () => window.removeEventListener('bingo_lang_changed', updateLang);
+    return () => window.removeEventListener('Bingoo_lang_changed', updateLang);
   }, []);
 
   const savePreferences = () => {
-    localStorage.setItem('bingo_counselor_consent', String(studentConsented));
-    localStorage.setItem('bingo_parent_consent', String(parentConsented));
+    localStorage.setItem('Bingoo_counselor_consent', String(studentConsented));
+    localStorage.setItem('Bingoo_parent_consent', String(parentConsented));
     setSuccessMsg(langCopy[lang as keyof typeof langCopy]?.consentSaved || 'Saved!');
     setTimeout(() => setSuccessMsg(''), 3000);
   };
 
   const purgeAllData = () => {
     if (confirm(lang === 'en' ? 'Are you sure you want to permanently delete all journal entries and mood logs?' : 'هل أنت متأكد من رغبتك في حذف جميع المذكرات واليوميات نهائياً؟')) {
-      localStorage.removeItem('bingo_future_notes');
-      localStorage.removeItem('bingo_counselor_consent');
-      localStorage.removeItem('bingo_parent_consent');
-      localStorage.removeItem('bingo_msg_style');
+      localStorage.removeItem('Bingoo_future_notes');
+      localStorage.removeItem('Bingoo_counselor_consent');
+      localStorage.removeItem('Bingoo_parent_consent');
+      localStorage.removeItem('Bingoo_msg_style');
       setStudentConsented(false);
       setParentConsented(false);
       setSuccessMsg(langCopy[lang as keyof typeof langCopy]?.deleteSuccess || 'Deleted!');
@@ -203,7 +203,7 @@ export default function Page() {
             </div>
           </Card>
 
-          {/* Bingo Will Not Provide */}
+          {/* Bingoo Will Not Provide */}
           <Card className="border-t-4 border-t-primary bg-surface p-6">
             <h3 className="text-base font-bold text-textPrimary mb-4">{copy.notForTitle}</h3>
             <ul className="space-y-3">
@@ -283,12 +283,12 @@ export default function Page() {
         <div className="grid items-stretch md:grid-cols-[0.4fr_0.6fr]">
           <div className="relative min-h-[240px] md:min-h-full bg-primary/10">
             <Image 
-              alt="Bingo in a serious but supportive ocean scene" 
+              alt="Bingoo in a serious but supportive ocean scene" 
               className="object-cover" 
               fill 
               priority 
               sizes="(min-width: 1024px) 520px, 100vw" 
-              src="/bingo/bingo-support.png" 
+              src="/Bingoo/Bingoo-support.png" 
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/50 via-transparent to-transparent"></div>
           </div>

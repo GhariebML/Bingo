@@ -22,7 +22,7 @@ export default function Page() {
 
  return <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
  <div className="space-y-5">
- <p className="text-sm font-semibold uppercase tracking-wide text-muted">Bingo</p>
+ <p className="text-sm font-semibold uppercase tracking-wide text-muted">Bingoo</p>
  <h1 className="text-4xl font-bold text-ink">Create account</h1>
  <p className="max-w-2xl text-lg text-textSecondary">Set up a private account for mood, journal, and settings history.</p>
  <Card>
@@ -36,7 +36,7 @@ export default function Page() {
  </Card>
  </div>
  <Card title="Safety boundary">
- <p>Bingo offers supportive reflection, not therapy, diagnosis, medication advice, or emergency care.</p>
+ <p>Bingoo offers supportive reflection, not therapy, diagnosis, medication advice, or emergency care.</p>
  </Card>
  </section>;
 }

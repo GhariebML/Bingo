@@ -1,5 +1,5 @@
 import { Badge } from '@/components/ui/Badge';
-import { BingoAvatar } from '@/components/ui/BingoAvatar';
+import { BingooAvatar } from '@/components/ui/BingooAvatar';
 import { motion } from 'framer-motion';
 
 export function ChatMessage({
@@ -29,7 +29,7 @@ export function ChatMessage({
  >
  {!isUser ? (
  <div className="shrink-0 transition-transform hover:scale-105">
- <BingoAvatar size={40} />
+ <BingooAvatar size={40} />
  </div>
  ) : null}
  <div
@@ -43,7 +43,7 @@ export function ChatMessage({
  >
  {!isUser ? (
  <div className="flex items-center justify-between gap-4 mb-1 border-b border-border pb-1 select-none">
- <span className="text-[11px] font-extrabold uppercase tracking-widest text-muted">Bingo</span>
+ <span className="text-[11px] font-extrabold uppercase tracking-widest text-muted">Bingoo</span>
  {provider ? (
  <span className="text-[9px] font-bold uppercase tracking-wider text-muted bg-slate-100/60 rounded px-1.5 py-0.5">
  {provider} · {mode}

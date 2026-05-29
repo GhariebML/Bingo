@@ -89,7 +89,7 @@ export function PositiveMessages() {
   useEffect(() => {
     // Sync language
     const updateLang = () => {
-      const currentLang = localStorage.getItem('bingo_lang') || 'en';
+      const currentLang = localStorage.getItem('Bingoo_lang') || 'en';
       setLang(currentLang);
       // Default style based on language
       if (currentLang === 'eg') {
@@ -97,21 +97,21 @@ export function PositiveMessages() {
       }
     };
     updateLang();
-    window.addEventListener('bingo_lang_changed', updateLang);
+    window.addEventListener('Bingoo_lang_changed', updateLang);
 
     // Sync saved style preference
-    const savedStyle = localStorage.getItem('bingo_msg_style');
+    const savedStyle = localStorage.getItem('Bingoo_msg_style');
     if (savedStyle) {
       setMsgStyle(savedStyle as any);
     }
 
-    return () => window.removeEventListener('bingo_lang_changed', updateLang);
+    return () => window.removeEventListener('Bingoo_lang_changed', updateLang);
   }, []);
 
   const handleStyleChange = (style: typeof msgStyle) => {
     setMsgStyle(style);
     setCurrentIndex(0);
-    localStorage.setItem('bingo_msg_style', style);
+    localStorage.setItem('Bingoo_msg_style', style);
   };
 
   const getNextMessage = () => {

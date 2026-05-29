@@ -9,7 +9,7 @@ const initialMessages: ChatMessage[] = [
  id: 'welcome',
  role: 'assistant',
  content:
- 'Hi, I am Bingo. I can help you pause, name what you are feeling, and choose one small safe next step. I am not a therapist, doctor, emergency responder, or crisis line.',
+ 'Hi, I am Bingoo. I can help you pause, name what you are feeling, and choose one small safe next step. I am not a therapist, doctor, emergency responder, or crisis line.',
  category: 'welcome',
  suggestedExercise: 'One small step planning',
  },
@@ -55,7 +55,7 @@ export function useChat() {
  };
  setMessages((current) => [...current, assistantMessage]);
  } catch {
- setError('Bingo could not reach the local backend. Please make sure FastAPI is running on port 8000.');
+ setError('Bingoo could not reach the local backend. Please make sure FastAPI is running on port 8000.');
  setMessages((current) => [
  ...current,
  {

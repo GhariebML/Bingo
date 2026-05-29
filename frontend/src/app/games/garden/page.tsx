@@ -23,7 +23,7 @@ interface Particle {
 }
 
 /* ─── Constants ─── */
-const STORAGE_KEY = 'bingo_garden_flowers';
+const STORAGE_KEY = 'Bingoo_garden_flowers';
 
 const FLOWER_TYPES: { emoji: string; name: string }[] = [
   { emoji: '🌸', name: 'rose' },

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { login, mockLogin } from '@/lib/api';
 
 export default function Page() {
- const [email, setEmail] = useState('demo@bingo.local');
+ const [email, setEmail] = useState('demo@Bingoo.local');
  const [password, setPassword] = useState('demo-password');
  const [status, setStatus] = useState('Use demo login for local MVP testing.');
 
@@ -21,7 +21,7 @@ export default function Page() {
 
  return <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
  <div className="space-y-5">
- <p className="text-sm font-semibold uppercase tracking-wide text-muted">Bingo</p>
+ <p className="text-sm font-semibold uppercase tracking-wide text-muted">Bingoo</p>
  <h1 className="text-4xl font-bold text-ink">Log in</h1>
  <p className="max-w-2xl text-lg text-textSecondary">Return to your private wellness workspace.</p>
  <Card>
@@ -37,7 +37,7 @@ export default function Page() {
  </Card>
  </div>
  <Card title="Safety boundary">
- <p>Bingo offers supportive reflection, not therapy, diagnosis, medication advice, or emergency care.</p>
+ <p>Bingoo offers supportive reflection, not therapy, diagnosis, medication advice, or emergency care.</p>
  </Card>
  </section>;
 }

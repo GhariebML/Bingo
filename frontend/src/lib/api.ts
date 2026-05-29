@@ -34,7 +34,7 @@ const defaultMoods: MoodEntry[] = [
 
 const defaultUserProfile = {
  id: 1,
- email: 'demo@bingo.ai',
+ email: 'demo@Bingoo.ai',
  display_name: 'Demo Friend',
  email_verified: true,
  mfa_enabled: false,
@@ -145,7 +145,7 @@ function handleOfflineChat(payload: ChatRequest): ChatResponse {
 
  if (isCrisis) {
  return {
- reply: "I am really sorry you are feeling this. Your safety matters most right now. Contact local emergency services immediately and reach out to a trusted person who can stay with you now. If you can, move away from anything that could be used for harm. Bingo is not an emergency service or crisis line.",
+ reply: "I am really sorry you are feeling this. Your safety matters most right now. Contact local emergency services immediately and reach out to a trusted person who can stay with you now. If you can, move away from anything that could be used for harm. Bingoo is not an emergency service or crisis line.",
  risk_level: 'crisis',
  category: 'crisis',
  suggested_exercise: 'Contact emergency support',
@@ -207,7 +207,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
  if (response.status === 401) {
  throw new ApiError('Please log in again to continue.', response.status, details);
  }
- throw new ApiError('Bingo could not complete that request. Please try again.', response.status, details);
+ throw new ApiError('Bingoo could not complete that request. Please try again.', response.status, details);
  }
 
  if (response.status === 204) return undefined as T;
@@ -282,10 +282,10 @@ export async function getDashboardSummary(): Promise<DashboardSummary> {
   } catch (error) {
     if (isNetworkError(error)) {
       console.warn('FastAPI backend unreachable. Generating dashboard summary from local storage.');
-      const journals = JSON.parse(localStorage.getItem('bingo_journals') || JSON.stringify(defaultJournals));
-      const structuredJournals = JSON.parse(localStorage.getItem('bingo_structured_journals') || '[]');
-      const breathingSessions = JSON.parse(localStorage.getItem('bingo_breathing_sessions') || '[]');
-      const moods = JSON.parse(localStorage.getItem('bingo_moods') || JSON.stringify(defaultMoods));
+      const journals = JSON.parse(localStorage.getItem('Bingoo_journals') || JSON.stringify(defaultJournals));
+      const structuredJournals = JSON.parse(localStorage.getItem('Bingoo_structured_journals') || '[]');
+      const breathingSessions = JSON.parse(localStorage.getItem('Bingoo_breathing_sessions') || '[]');
+      const moods = JSON.parse(localStorage.getItem('Bingoo_moods') || JSON.stringify(defaultMoods));
 
       const emotionsMap: Record<string, number> = {};
       journals.forEach((j: any) => {
@@ -366,7 +366,7 @@ export async function getMoodTrend<T>() {
  return await request<T>('/api/v1/mood/mock-trend');
  } catch (error) {
  if (isNetworkError(error)) {
- const moods = JSON.parse(localStorage.getItem('bingo_moods') || JSON.stringify(defaultMoods));
+ const moods = JSON.parse(localStorage.getItem('Bingoo_moods') || JSON.stringify(defaultMoods));
  const trendPoints = moods.slice(0, 7).reverse().map((m: any) => {
  const date = new Date(m.created_at || Date.now());
  return {
@@ -387,8 +387,8 @@ export async function mockLogin(): Promise<AuthResponse> {
  } catch (error) {
  if (isNetworkError(error)) {
  console.warn('FastAPI backend unreachable. Activating local demo login session.');
- localStorage.setItem('bingo_session', 'mock-token');
- localStorage.setItem('bingo_user', JSON.stringify(defaultUserProfile));
+ localStorage.setItem('Bingoo_session', 'mock-token');
+ localStorage.setItem('Bingoo_user', JSON.stringify(defaultUserProfile));
  return Promise.resolve({
  token: 'mock-token',
  user: defaultUserProfile,
@@ -407,8 +407,8 @@ export async function register(email: string, password: string, display_name?: s
  } catch (error) {
  if (isNetworkError(error)) {
  const user = { ...defaultUserProfile, email, display_name: display_name || 'Wellness Friend' };
- localStorage.setItem('bingo_session', 'mock-token');
- localStorage.setItem('bingo_user', JSON.stringify(user));
+ localStorage.setItem('Bingoo_session', 'mock-token');
+ localStorage.setItem('Bingoo_user', JSON.stringify(user));
  return Promise.resolve({
  token: 'mock-token',
  user,
@@ -427,8 +427,8 @@ export async function login(email: string, password: string): Promise<AuthRespon
  } catch (error) {
  if (isNetworkError(error)) {
  const user = { ...defaultUserProfile, email };
- localStorage.setItem('bingo_session', 'mock-token');
- localStorage.setItem('bingo_user', JSON.stringify(user));
+ localStorage.setItem('Bingoo_session', 'mock-token');
+ localStorage.setItem('Bingoo_user', JSON.stringify(user));
  return Promise.resolve({
  token: 'mock-token',
  user,
@@ -443,8 +443,8 @@ export async function logout(): Promise<{ message: string }> {
  return await request<{ message: string }>('/api/v1/auth/logout', { method: 'POST' });
  } catch (error) {
  if (isNetworkError(error)) {
- localStorage.removeItem('bingo_session');
- localStorage.removeItem('bingo_user');
+ localStorage.removeItem('Bingoo_session');
+ localStorage.removeItem('Bingoo_user');
  return Promise.resolve({ message: 'Mock logout successful.' });
  }
  throw error;
@@ -457,9 +457,9 @@ export async function exportAccount<T>(): Promise<T> {
  } catch (error) {
  if (isNetworkError(error)) {
  const backup = {
- journals: JSON.parse(localStorage.getItem('bingo_journals') || '[]'),
- moods: JSON.parse(localStorage.getItem('bingo_moods') || '[]'),
- settings: JSON.parse(localStorage.getItem('bingo_settings') || '{}'),
+ journals: JSON.parse(localStorage.getItem('Bingoo_journals') || '[]'),
+ moods: JSON.parse(localStorage.getItem('Bingoo_moods') || '[]'),
+ settings: JSON.parse(localStorage.getItem('Bingoo_settings') || '{}'),
  };
  return Promise.resolve(backup as unknown as T);
  }
@@ -484,9 +484,9 @@ export async function listJournalEntries(): Promise<JournalEntry[]> {
  return await request<JournalEntry[]>('/api/v1/journal');
  } catch (error) {
  if (isNetworkError(error)) {
- const stored = localStorage.getItem('bingo_journals');
+ const stored = localStorage.getItem('Bingoo_journals');
  if (!stored) {
- localStorage.setItem('bingo_journals', JSON.stringify(defaultJournals));
+ localStorage.setItem('Bingoo_journals', JSON.stringify(defaultJournals));
  return Promise.resolve(defaultJournals);
  }
  return Promise.resolve(JSON.parse(stored));
@@ -500,7 +500,7 @@ export async function createJournalEntry(payload: CreateJournalEntry): Promise<J
  return await request<JournalEntry>('/api/v1/journal', { method: 'POST', body: JSON.stringify(payload) });
  } catch (error) {
  if (isNetworkError(error)) {
- const stored = localStorage.getItem('bingo_journals');
+ const stored = localStorage.getItem('Bingoo_journals');
  const list = stored ? JSON.parse(stored) : [...defaultJournals];
  const newEntry: JournalEntry = {
  id: Math.floor(Math.random() * 1000000),
@@ -511,7 +511,7 @@ export async function createJournalEntry(payload: CreateJournalEntry): Promise<J
  created_at: new Date().toISOString(),
  };
  list.unshift(newEntry);
- localStorage.setItem('bingo_journals', JSON.stringify(list));
+ localStorage.setItem('Bingoo_journals', JSON.stringify(list));
  return Promise.resolve(newEntry);
  }
  throw error;
@@ -523,9 +523,9 @@ export async function listMoodEntries(): Promise<MoodEntry[]> {
  return await request<MoodEntry[]>('/api/v1/mood');
  } catch (error) {
  if (isNetworkError(error)) {
- const stored = localStorage.getItem('bingo_moods');
+ const stored = localStorage.getItem('Bingoo_moods');
  if (!stored) {
- localStorage.setItem('bingo_moods', JSON.stringify(defaultMoods));
+ localStorage.setItem('Bingoo_moods', JSON.stringify(defaultMoods));
  return Promise.resolve(defaultMoods);
  }
  return Promise.resolve(JSON.parse(stored));
@@ -539,7 +539,7 @@ export async function createMoodEntry(payload: CreateMoodEntry): Promise<MoodEnt
  return await request<MoodEntry>('/api/v1/mood', { method: 'POST', body: JSON.stringify(payload) });
  } catch (error) {
  if (isNetworkError(error)) {
- const stored = localStorage.getItem('bingo_moods');
+ const stored = localStorage.getItem('Bingoo_moods');
  const list = stored ? JSON.parse(stored) : [...defaultMoods];
  const newEntry: MoodEntry = {
  id: Math.floor(Math.random() * 1000000),
@@ -549,7 +549,7 @@ export async function createMoodEntry(payload: CreateMoodEntry): Promise<MoodEnt
  created_at: new Date().toISOString(),
  };
  list.unshift(newEntry);
- localStorage.setItem('bingo_moods', JSON.stringify(list));
+ localStorage.setItem('Bingoo_moods', JSON.stringify(list));
  return Promise.resolve(newEntry);
  }
  throw error;
@@ -572,7 +572,7 @@ export async function getMoodSummary<T>(): Promise<T> {
  return await request<T>('/api/v1/mood/summary');
  } catch (error) {
  if (isNetworkError(error)) {
- const moods = JSON.parse(localStorage.getItem('bingo_moods') || JSON.stringify(defaultMoods));
+ const moods = JSON.parse(localStorage.getItem('Bingoo_moods') || JSON.stringify(defaultMoods));
  const intensities = moods.map((m: any) => m.intensity);
  const avg = intensities.length ? intensities.reduce((a: number, b: number) => a + b, 0) / intensities.length : 0;
  return Promise.resolve({
@@ -589,7 +589,7 @@ export async function getJournalEntry(entryId: number): Promise<JournalEntry> {
  return await request<JournalEntry>(`/api/v1/journal/${entryId}`);
  } catch (error) {
  if (isNetworkError(error)) {
- const journals = JSON.parse(localStorage.getItem('bingo_journals') || JSON.stringify(defaultJournals)) as JournalEntry[];
+ const journals = JSON.parse(localStorage.getItem('Bingoo_journals') || JSON.stringify(defaultJournals)) as JournalEntry[];
  const match = journals.find(e => e.id === entryId);
  if (match) return Promise.resolve(match);
  throw new ApiError('Journal entry not found', 404);
@@ -603,9 +603,9 @@ export async function deleteJournalEntry(entryId: number): Promise<{ message: st
  return await request<{ message: string }>(`/api/v1/journal/${entryId}`, { method: 'DELETE' });
  } catch (error) {
  if (isNetworkError(error)) {
- const journals = JSON.parse(localStorage.getItem('bingo_journals') || JSON.stringify(defaultJournals)) as JournalEntry[];
+ const journals = JSON.parse(localStorage.getItem('Bingoo_journals') || JSON.stringify(defaultJournals)) as JournalEntry[];
  const filtered = journals.filter(e => e.id !== entryId);
- localStorage.setItem('bingo_journals', JSON.stringify(filtered));
+ localStorage.setItem('Bingoo_journals', JSON.stringify(filtered));
  return Promise.resolve({ message: 'Deleted' });
  }
  throw error;
@@ -617,7 +617,7 @@ export async function getSettings(): Promise<UserSettings> {
  return await request<UserSettings>('/api/v1/settings');
  } catch (error) {
  if (isNetworkError(error)) {
- const stored = localStorage.getItem('bingo_settings');
+ const stored = localStorage.getItem('Bingoo_settings');
  if (!stored) {
  const defaultSettings: UserSettings = {
  preferred_language: 'English',
@@ -626,7 +626,7 @@ export async function getSettings(): Promise<UserSettings> {
  save_journal_history: true,
  save_mood_history: true,
  };
- localStorage.setItem('bingo_settings', JSON.stringify(defaultSettings));
+ localStorage.setItem('Bingoo_settings', JSON.stringify(defaultSettings));
  return Promise.resolve(defaultSettings);
  }
  return Promise.resolve(JSON.parse(stored));
@@ -640,7 +640,7 @@ export async function updateSettings(payload: UserSettings): Promise<UserSetting
  return await request<UserSettings>('/api/v1/settings', { method: 'PUT', body: JSON.stringify(payload) });
  } catch (error) {
  if (isNetworkError(error)) {
- localStorage.setItem('bingo_settings', JSON.stringify(payload));
+ localStorage.setItem('Bingoo_settings', JSON.stringify(payload));
  return Promise.resolve(payload);
  }
  throw error;
@@ -670,8 +670,8 @@ export async function getSafetyDisclaimer(): Promise<SafetyDisclaimer> {
   } catch (error) {
     if (isNetworkError(error)) {
       return Promise.resolve({
-        title: 'Bingo safety boundaries',
-        message: 'Bingo supports reflection, journaling, grounding, and small next steps. It is not a therapist, doctor, crisis line, or emergency service.',
+        title: 'Bingoo safety boundaries',
+        message: 'Bingoo supports reflection, journaling, grounding, and small next steps. It is not a therapist, doctor, crisis line, or emergency service.',
         crisis_guidance: 'I am really sorry you are facing this. If you or someone else may be in immediate danger, contact local emergency services now and reach a trusted person who can stay with you. I can stay with you for grounding, but I cannot replace urgent help.',
         not_for: ['diagnosis', 'medication advice', 'therapy replacement', 'emergency response'],
       });
@@ -685,7 +685,7 @@ export async function createStructuredJournalEntry(payload: CreateStructuredJour
     return await request<StructuredJournalEntry>('/api/v1/journal/structured', { method: 'POST', body: JSON.stringify(payload) });
   } catch (error) {
     if (isNetworkError(error)) {
-      const stored = localStorage.getItem('bingo_structured_journals');
+      const stored = localStorage.getItem('Bingoo_structured_journals');
       const list = stored ? JSON.parse(stored) : [];
       const newEntry: StructuredJournalEntry = {
         id: Math.floor(Math.random() * 1000000),
@@ -696,7 +696,7 @@ export async function createStructuredJournalEntry(payload: CreateStructuredJour
         created_at: new Date().toISOString(),
       };
       list.unshift(newEntry);
-      localStorage.setItem('bingo_structured_journals', JSON.stringify(list));
+      localStorage.setItem('Bingoo_structured_journals', JSON.stringify(list));
       return Promise.resolve(newEntry);
     }
     throw error;
@@ -708,7 +708,7 @@ export async function listStructuredJournalEntries(): Promise<StructuredJournalE
     return await request<StructuredJournalEntry[]>('/api/v1/journal/structured');
   } catch (error) {
     if (isNetworkError(error)) {
-      const stored = localStorage.getItem('bingo_structured_journals');
+      const stored = localStorage.getItem('Bingoo_structured_journals');
       return Promise.resolve(stored ? JSON.parse(stored) : []);
     }
     throw error;
@@ -720,7 +720,7 @@ export async function recordBreathingSession(payload: { duration_seconds: number
     return await request<BreathingSession>('/api/v1/exercises/breathing', { method: 'POST', body: JSON.stringify(payload) });
   } catch (error) {
     if (isNetworkError(error)) {
-      const stored = localStorage.getItem('bingo_breathing_sessions');
+      const stored = localStorage.getItem('Bingoo_breathing_sessions');
       const list = stored ? JSON.parse(stored) : [];
       const newEntry: BreathingSession = {
         id: Math.floor(Math.random() * 1000000),
@@ -729,7 +729,7 @@ export async function recordBreathingSession(payload: { duration_seconds: number
         created_at: new Date().toISOString(),
       };
       list.unshift(newEntry);
-      localStorage.setItem('bingo_breathing_sessions', JSON.stringify(list));
+      localStorage.setItem('Bingoo_breathing_sessions', JSON.stringify(list));
       return Promise.resolve(newEntry);
     }
     throw error;
@@ -741,7 +741,7 @@ export async function listBreathingSessions(): Promise<BreathingSession[]> {
     return await request<BreathingSession[]>('/api/v1/exercises/breathing');
   } catch (error) {
     if (isNetworkError(error)) {
-      const stored = localStorage.getItem('bingo_breathing_sessions');
+      const stored = localStorage.getItem('Bingoo_breathing_sessions');
       return Promise.resolve(stored ? JSON.parse(stored) : []);
     }
     throw error;

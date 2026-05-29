@@ -165,9 +165,9 @@ export default function MemoryMatchPage() {
   /* Persist best score */
   useEffect(() => {
     if (showCelebration) {
-      const prev = localStorage.getItem('bingo_memory_best');
+      const prev = localStorage.getItem('Bingoo_memory_best');
       if (!prev || moves < Number(prev)) {
-        localStorage.setItem('bingo_memory_best', String(moves));
+        localStorage.setItem('Bingoo_memory_best', String(moves));
       }
     }
   }, [showCelebration, moves]);
@@ -214,7 +214,7 @@ export default function MemoryMatchPage() {
   };
 
   const bestScore = typeof window !== 'undefined'
-    ? localStorage.getItem('bingo_memory_best')
+    ? localStorage.getItem('Bingoo_memory_best')
     : null;
 
   return (

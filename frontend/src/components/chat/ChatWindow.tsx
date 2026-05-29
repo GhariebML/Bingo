@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ChatInput } from './ChatInput';
 import { ChatMessage } from './ChatMessage';
 import { MoodSelector } from './MoodSelector';
-import { BingoAvatar } from '@/components/ui/BingoAvatar';
+import { BingooAvatar } from '@/components/ui/BingooAvatar';
 import { useChat } from '@/hooks/useChat';
 import { CrisisModal } from './CrisisModal';
 
@@ -60,7 +60,7 @@ export function ChatWindow({ quickPrompts = [] }: { quickPrompts?: string[] }) {
       <div className="min-h-[440px] max-h-[560px] overflow-y-auto space-y-5 rounded-2xl bg-background border border-border p-5 shadow-inner">
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-center space-y-3">
-            <BingoAvatar size={64} />
+            <BingooAvatar size={64} />
             <h3 className="text-lg font-bold text-textPrimary">Start a conversation</h3>
             <p className="max-w-xs text-xs text-muted leading-relaxed">
               Share what is on your mind, select your mood, or click any quick start prompt above.
@@ -82,7 +82,7 @@ export function ChatWindow({ quickPrompts = [] }: { quickPrompts?: string[] }) {
 
         {loading ? (
           <div className="flex items-start gap-3.5 ">
-            <BingoAvatar size={40} />
+            <BingooAvatar size={40} />
             <div className="rounded-2xl rounded-tl-none bg-surface/80 backdrop-blur px-5 py-4 border border-border shadow-sm flex items-center justify-center min-w-16">
               <div className="flex items-center gap-1.5 py-1">
                 <span className="h-2.5 w-2.5 rounded-full bg-primary/75 " style={{ animationDelay: '0ms' }} />

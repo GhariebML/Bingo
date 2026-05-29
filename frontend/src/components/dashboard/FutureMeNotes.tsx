@@ -64,18 +64,18 @@ export function FutureMeNotes({ currentMood = 'calm' }: FutureMeNotesProps) {
   useEffect(() => {
     // Sync language
     const updateLang = () => {
-      setLang(localStorage.getItem('bingo_lang') || 'en');
+      setLang(localStorage.getItem('Bingoo_lang') || 'en');
     };
     updateLang();
-    window.addEventListener('bingo_lang_changed', updateLang);
+    window.addEventListener('Bingoo_lang_changed', updateLang);
 
     // Sync saved notes
-    const saved = localStorage.getItem('bingo_future_notes');
+    const saved = localStorage.getItem('Bingoo_future_notes');
     if (saved) {
       setNotes(JSON.parse(saved));
     }
 
-    return () => window.removeEventListener('bingo_lang_changed', updateLang);
+    return () => window.removeEventListener('Bingoo_lang_changed', updateLang);
   }, []);
 
   // Monitor mood changes to trigger a positive note popup
@@ -97,14 +97,14 @@ export function FutureMeNotes({ currentMood = 'calm' }: FutureMeNotesProps) {
     };
     const updated = [newNote, ...notes];
     setNotes(updated);
-    localStorage.setItem('bingo_future_notes', JSON.stringify(updated));
+    localStorage.setItem('Bingoo_future_notes', JSON.stringify(updated));
     setInputText('');
   };
 
   const handleDelete = (id: string) => {
     const updated = notes.filter(note => note.id !== id);
     setNotes(updated);
-    localStorage.setItem('bingo_future_notes', JSON.stringify(updated));
+    localStorage.setItem('Bingoo_future_notes', JSON.stringify(updated));
   };
 
   const copy = langCopy[lang as keyof typeof langCopy] || langCopy.en;

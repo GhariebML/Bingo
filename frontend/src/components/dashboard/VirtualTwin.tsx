@@ -117,7 +117,7 @@ const langCopy = {
   }
 };
 
-const STORAGE_KEY = 'bingo_twin_customizations';
+const STORAGE_KEY = 'Bingoo_twin_customizations';
 
 export function VirtualTwin({ currentMood = 'calm' }: VirtualTwinProps) {
   const [lang, setLang] = useState('en');
@@ -130,10 +130,10 @@ export function VirtualTwin({ currentMood = 'calm' }: VirtualTwinProps) {
 
   useEffect(() => {
     const updateLang = () => {
-      setLang(localStorage.getItem('bingo_lang') || 'en');
+      setLang(localStorage.getItem('Bingoo_lang') || 'en');
     };
     updateLang();
-    window.addEventListener('bingo_lang_changed', updateLang);
+    window.addEventListener('Bingoo_lang_changed', updateLang);
 
     // Load customizations from localStorage
     try {
@@ -145,7 +145,7 @@ export function VirtualTwin({ currentMood = 'calm' }: VirtualTwinProps) {
       /* fallback */
     }
 
-    return () => window.removeEventListener('bingo_lang_changed', updateLang);
+    return () => window.removeEventListener('Bingoo_lang_changed', updateLang);
   }, []);
 
   const copy = langCopy[lang as keyof typeof langCopy] || langCopy.en;

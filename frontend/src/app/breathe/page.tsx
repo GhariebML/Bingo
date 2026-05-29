@@ -120,11 +120,11 @@ export default function BreathePage() {
 
   useEffect(() => {
     const updateLang = () => {
-      setLang(localStorage.getItem('bingo_lang') || 'en');
+      setLang(localStorage.getItem('Bingoo_lang') || 'en');
     };
     updateLang();
-    window.addEventListener('bingo_lang_changed', updateLang);
-    return () => window.removeEventListener('bingo_lang_changed', updateLang);
+    window.addEventListener('Bingoo_lang_changed', updateLang);
+    return () => window.removeEventListener('Bingoo_lang_changed', updateLang);
   }, []);
 
   const copy = langCopy[lang as keyof typeof langCopy] || langCopy.en;

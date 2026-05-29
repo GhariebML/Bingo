@@ -25,19 +25,16 @@ const config: Config = {
         glass: '0 8px 32px 0 rgba(0, 0, 0, 0.2)',
       },
       animation: {
-        'fade-in': 'fadeIn 0.3s ease-out forwards',
-        'fade-in-up': 'fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-        'slide-in-right': 'slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-        'scale-in': 'scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-        'float-orb-1': 'float-1 25s ease-in-out infinite',
-        'float-orb-2': 'float-2 30s ease-in-out infinite',
-        'float-orb-3': 'float-3 20s ease-in-out infinite',
+        'fade-in': 'fadeIn 0.4s ease-out forwards',
+        'fade-in-up': 'fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'slide-in-right': 'slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'scale-in': 'scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
         'emoji-wiggle': 'emoji-wiggle 0.5s ease-in-out infinite',
         'emoji-bounce': 'emoji-bounce 0.6s ease-in-out infinite',
-        'ripple-expand': 'ripple-out 4s cubic-bezier(0.1, 0.8, 0.3, 1) infinite',
+        'ripple-expand': 'ripple-out 3s cubic-bezier(0.1, 0.8, 0.3, 1) infinite',
         'avatar-bob': 'avatar-bob 3s ease-in-out infinite',
         'particle-drift': 'particle-drift 8s ease-in-out infinite',
-        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+        'pulse-soft': 'pulse-soft 3s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -56,19 +53,7 @@ const config: Config = {
           '0%': { opacity: '0', transform: 'scale(0.97)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
         },
-        'float-1': {
-          '0%, 100%': { transform: 'translate(0px, 0px) scale(1)' },
-          '33%': { transform: 'translate(40px, -60px) scale(1.1)' },
-          '66%': { transform: 'translate(-20px, 20px) scale(0.95)' },
-        },
-        'float-2': {
-          '0%, 100%': { transform: 'translate(0px, 0px) scale(1.05)' },
-          '50%': { transform: 'translate(-30px, 50px) scale(0.95)' },
-        },
-        'float-3': {
-          '0%, 100%': { transform: 'translate(0px, 0px) scale(0.95)' },
-          '40%': { transform: 'translate(50px, 30px) scale(1.05)' },
-        },
+
         'emoji-wiggle': {
           '0%, 100%': { transform: 'rotate(0deg)' },
           '25%': { transform: 'rotate(-6deg)' },
@@ -91,9 +76,9 @@ const config: Config = {
           '33%': { transform: 'translate(15px, -15px) scale(1.1)', opacity: '0.8' },
           '66%': { transform: 'translate(-10px, 15px) scale(0.9)', opacity: '0.4' },
         },
-        'pulse-glow': {
-          '0%, 100%': { opacity: '0.5', filter: 'blur(8px)' },
-          '50%': { opacity: '1', filter: 'blur(12px)' },
+        'pulse-soft': {
+          '0%, 100%': { opacity: '0.8', transform: 'scale(1)' },
+          '50%': { opacity: '1', transform: 'scale(1.02)' },
         },
       },
     },

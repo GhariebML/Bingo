@@ -7,8 +7,8 @@ export default function NotFound() {
     <div className="flex min-h-[70vh] flex-col items-center justify-center text-center space-y-8 animate-fade-in">
       <div className="relative h-48 w-48 overflow-hidden rounded-full border-4 border-surface shadow-soft">
         <Image 
-          src="/bingo/bingo-calm.png" 
-          alt="Bingo looking lost but calm" 
+          src="/Bingoo/Bingoo-calm.png" 
+          alt="Bingoo looking lost but calm" 
           fill 
           className="object-cover"
         />

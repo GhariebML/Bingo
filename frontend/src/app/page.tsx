@@ -10,13 +10,13 @@ const langCopy = {
   en: {
     heroBadge: '✨ Student Well-Being Companion',
     heroTitle: 'A safe, friendly space for students to understand their emotions.',
-    heroDesc: 'Not every struggle needs to become a crisis before someone listens. Bingo is an early-awareness, reflection, positive habit-building, and school well-being companion.',
+    heroDesc: 'Not every struggle needs to become a crisis before someone listens. Bingoo is an early-awareness, reflection, positive habit-building, and school well-being companion.',
     ctaPrimary: 'Start Your Check-in',
     ctaSecondary: 'For Schools & Partners',
     twinTitle: 'Meet Your Virtual Twin',
     twinDesc: 'Every student gets a friendly twin avatar that reflects their emotional journey, mood, and progress in a warm, non-judgmental way. It helps you recognize when to take a 2-minute breathing break or write down your thoughts.',
     positioningTitle: 'Our Safety Positioning',
-    positioningDesc: 'Bingo is not a medical diagnosis tool and is not a replacement for doctors, therapists, or school counselors. We focus on early awareness, reflection, and responsible escalation to human professionals when needed.',
+    positioningDesc: 'Bingoo is not a medical diagnosis tool and is not a replacement for doctors, therapists, or school counselors. We focus on early awareness, reflection, and responsible escalation to human professionals when needed.',
     featuresTitle: 'Built for Student Safety & Reflection',
     features: [
       { title: '✉️ Message to Future Me', body: 'Save positive thoughts and happy memories when you feel great. Surfaced automatically to lift you up on heavy days.' },
@@ -34,7 +34,7 @@ const langCopy = {
     faqTitle: 'Frequently Asked Questions',
     faqs: [
       { q: 'Is student data shared with school staff?', a: 'Private chat logs are strictly private and never shared. School counselors only receive anonymized trend metrics and risk alerts if a student triggers safety thresholds and consents.' },
-      { q: 'Is this a diagnostic tool?', a: 'No. Bingo does not diagnose clinical conditions like depression or anxiety. It is a reflection companion for positive habits.' }
+      { q: 'Is this a diagnostic tool?', a: 'No. Bingoo does not diagnose clinical conditions like depression or anxiety. It is a reflection companion for positive habits.' }
     ]
   },
   ar: {
@@ -104,11 +104,11 @@ export default function Page() {
 
   useEffect(() => {
     const updateLang = () => {
-      setLang(localStorage.getItem('bingo_lang') || 'en');
+      setLang(localStorage.getItem('Bingoo_lang') || 'en');
     };
     updateLang();
-    window.addEventListener('bingo_lang_changed', updateLang);
-    return () => window.removeEventListener('bingo_lang_changed', updateLang);
+    window.addEventListener('Bingoo_lang_changed', updateLang);
+    return () => window.removeEventListener('Bingoo_lang_changed', updateLang);
   }, []);
 
   const copy = langCopy[lang as keyof typeof langCopy] || langCopy.en;
@@ -148,12 +148,12 @@ export default function Page() {
         <Card className="overflow-hidden p-0 border border-border shadow-soft animate-fade-in-up delay-100 bg-surface">
           <div className="relative h-64 w-full bg-surface">
             <Image 
-              alt="Bingo Virtual Twin Preview" 
+              alt="Bingoo Virtual Twin Preview" 
               className="object-cover transition-transform duration-500 hover:scale-102" 
               fill 
               priority 
               sizes="(min-width: 1024px) 520px, 100vw" 
-              src="/bingo/bingo-hero.png" 
+              src="/Bingoo/Bingoo-hero.png" 
             />
           </div>
           

@@ -1,12 +1,12 @@
 import Image from 'next/image';
 
-export function BingoAvatar({ size = 48 }: { size?: number }) {
+export function BingooAvatar({ size = 48 }: { size?: number }) {
  return (
  <Image
- alt="Bingo character"
+ alt="Bingoo character"
  className="rounded-full border-2 border-border object-cover shadow-soft"
  height={size}
- src="/bingo/bingo-avatar.png"
+ src="/Bingoo/Bingoo-avatar.png"
  width={size}
  />
  );

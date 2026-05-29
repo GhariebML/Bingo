@@ -8,10 +8,10 @@ import { SafetyBanner } from '@/components/chat/SafetyBanner';
 
 const langCopy = {
   en: {
-    badge: 'Bingo Chat',
+    badge: 'Bingoo Chat',
     title: 'A gentle place to start',
-    desc: 'Bingo provides supportive, non-clinical responses. It is not a therapist, doctor, or emergency service, and cannot diagnose mental health conditions.',
-    sidebarTitle: 'Bingo is listening',
+    desc: 'Bingoo provides supportive, non-clinical responses. It is not a therapist, doctor, or emergency service, and cannot diagnose mental health conditions.',
+    sidebarTitle: 'Bingoo is listening',
     sidebarDesc: 'The chat uses safe emotional validation and suggests one small, actionable grounding step at a time.',
     tipsTitle: 'Reflection Tips',
     tips: [
@@ -83,11 +83,11 @@ export default function Page() {
 
   useEffect(() => {
     const updateLang = () => {
-      setLang(localStorage.getItem('bingo_lang') || 'en');
+      setLang(localStorage.getItem('Bingoo_lang') || 'en');
     };
     updateLang();
-    window.addEventListener('bingo_lang_changed', updateLang);
-    return () => window.removeEventListener('bingo_lang_changed', updateLang);
+    window.addEventListener('Bingoo_lang_changed', updateLang);
+    return () => window.removeEventListener('Bingoo_lang_changed', updateLang);
   }, []);
 
   const copy = langCopy[lang as keyof typeof langCopy] || langCopy.en;
@@ -120,12 +120,12 @@ export default function Page() {
         <Card className="overflow-hidden p-0 bg-surface">
           <div className="relative h-56">
             <Image 
-              alt="Bingo assistant avatar in an ocean scene" 
+              alt="Bingoo assistant avatar in an ocean scene" 
               className="object-cover" 
               fill 
               priority 
               sizes="(min-width: 1024px) 520px, 100vw" 
-              src="/bingo/bingo-avatar.png" 
+              src="/Bingoo/Bingoo-avatar.png" 
             />
           </div>
           <div className="p-5">

@@ -105,7 +105,7 @@ export default function Page() {
     }
 
     // Sync saved positive moments count
-    const saved = localStorage.getItem('bingo_future_notes');
+    const saved = localStorage.getItem('Bingoo_future_notes');
     if (saved) {
       setMomentsCount(JSON.parse(saved).length);
     }
@@ -120,12 +120,12 @@ export default function Page() {
     void load();
 
     const updateLang = () => {
-      setLang(localStorage.getItem('bingo_lang') || 'en');
+      setLang(localStorage.getItem('Bingoo_lang') || 'en');
     };
     updateLang();
-    window.addEventListener('bingo_lang_changed', updateLang);
+    window.addEventListener('Bingoo_lang_changed', updateLang);
 
-    return () => window.removeEventListener('bingo_lang_changed', updateLang);
+    return () => window.removeEventListener('Bingoo_lang_changed', updateLang);
   }, []);
 
   const chartData = summary?.mood_trend?.length ? summary.mood_trend : fallbackMoodData;

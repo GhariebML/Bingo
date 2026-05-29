@@ -24,24 +24,28 @@ export function Navbar() {
   const [lang, setLang] = useState('en');
 
   useEffect(() => {
-    const saved = localStorage.getItem('bingo_lang') || 'en';
+    const saved = localStorage.getItem('Bingoo_lang') || 'en';
     setLang(saved);
+    document.documentElement.dir = saved === 'ar' || saved === 'eg' ? 'rtl' : 'ltr';
+    document.documentElement.lang = saved;
   }, []);
 
   const handleLangChange = (newLang: string) => {
-    localStorage.setItem('bingo_lang', newLang);
+    localStorage.setItem('Bingoo_lang', newLang);
     setLang(newLang);
-    window.dispatchEvent(new Event('bingo_lang_changed'));
+    document.documentElement.dir = newLang === 'ar' || newLang === 'eg' ? 'rtl' : 'ltr';
+    document.documentElement.lang = newLang;
+    window.dispatchEvent(new Event('Bingoo_lang_changed'));
   };
 
   return (
     <nav className="sticky top-0 z-10 border-b border-border bg-background/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4 py-3">
         <Link className="flex items-center gap-2 font-bold text-textPrimary" href="/">
-          <span className="relative h-9 w-9 overflow-hidden rounded-lg bg-surface shadow-sm">
-            <Image alt="Bingo logo" fill sizes="36px" src="/bingo-logo.png" className="object-contain" priority />
+          <span className="relative h-10 w-10 overflow-hidden bg-transparent">
+            <Image alt="Bingoo logo" fill sizes="40px" src="/Bingoo-logo.png" className="object-contain" priority />
           </span>
-          Bingo
+          <span className="text-xl tracking-tight text-primary">Bingoo</span>
         </Link>
         <span className="rounded-full border border-border bg-surface px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-textPrimary">
           Student Portal

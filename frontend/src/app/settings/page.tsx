@@ -191,7 +191,7 @@ export default function Page() {
  <div className="flex items-center justify-between border-b border-slate-100 pb-4">
  <div>
  <h4 className="font-bold text-textPrimary font-heading text-base">Enable Real AI</h4>
- <p className="text-xs text-muted font-medium mt-0.5">Connect Bingo to live active model completion endpoints</p>
+ <p className="text-xs text-muted font-medium mt-0.5">Connect Bingoo to live active model completion endpoints</p>
  </div>
  <label className="relative inline-flex items-center cursor-pointer">
  <input
@@ -464,7 +464,7 @@ export default function Page() {
  <div className="bg-surface/40 border border-border p-3.5 rounded-xl space-y-1 shadow-sm">
  <span className="font-bold text-muted font-heading uppercase tracking-wider block text-[10px]">Local Application</span>
  <p className="text-textSecondary">
- The local Bingo uvicorn server now automatically routes completions directly to the Hugging Face Inference API using your newly configured token!
+ The local Bingoo uvicorn server now automatically routes completions directly to the Hugging Face Inference API using your newly configured token!
  </p>
  </div>
  <div className="bg-surface/40 border border-border p-3.5 rounded-xl space-y-1 shadow-sm">
@@ -479,7 +479,7 @@ export default function Page() {
  {/* Safety Card */}
  <Card className="border-t-4 border-t-secondary" title="Safety boundary">
  <p className="text-sm leading-relaxed text-textSecondary">
- Bingo offers supportive reflection, not therapy, diagnosis, medication advice, or emergency care. Real AI providers remain gated until clinical, legal, and privacy reviews are complete.
+ Bingoo offers supportive reflection, not therapy, diagnosis, medication advice, or emergency care. Real AI providers remain gated until clinical, legal, and privacy reviews are complete.
  </p>
  </Card>
  </div>

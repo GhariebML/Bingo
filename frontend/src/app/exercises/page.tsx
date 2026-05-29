@@ -47,11 +47,11 @@ export default function Page() {
  <div className="grid items-center gap-6 md:grid-cols-[0.4fr_0.6fr]">
  <div className="relative h-56 bg-surface">
  <Image 
- alt="Bingo in a calming underwater exercise scene" 
+ alt="Bingoo in a calming underwater exercise scene" 
  className="object-cover transition-transform duration-700 hover:scale-105" 
  fill 
  sizes="(min-width: 1024px) 520px, 100vw" 
- src="/bingo/bingo-ocean.png" 
+ src="/Bingoo/Bingoo-ocean.png" 
  priority
  />
  </div>

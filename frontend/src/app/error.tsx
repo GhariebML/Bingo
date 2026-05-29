@@ -22,7 +22,7 @@ export default function ErrorBoundary({ error, reset }: { error: Error & { diges
         <div className="space-y-2">
           <h2 className="text-2xl font-bold text-textPrimary">Something went wrong</h2>
           <p className="text-sm leading-relaxed text-textSecondary">
-            Bingo encountered an unexpected hiccup. Don't worry, your progress is safe. We can try loading this again.
+            Bingoo encountered an unexpected hiccup. Don't worry, your progress is safe. We can try loading this again.
           </p>
         </div>
         <div className="flex flex-col gap-3 pt-4">
